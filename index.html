@@ -553,7 +553,7 @@ nav {
   background: #fff; color: #111827; color-scheme: light;
   width: 210mm; max-width: 100%; min-height: 297mm;
   box-sizing: border-box; margin: 0 auto;
-  padding: 15mm 10mm; font-size: var(--doc-font-size, 20px); line-height: 1.6;
+  padding: 15mm 10mm; font-size: var(--doc-font-size, 13px); line-height: 1.6;
   display: flex; flex-direction: column;
 }
 #doc-preview { border-top: 4px solid var(--doc-theme); }
@@ -585,10 +585,12 @@ nav {
 .preview-table td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; }
 .preview-table td:last-child { text-align: right; }
 .preview-table tr:last-child td { border-bottom: none; }
-.preview-table .col-num { width: 6%; }
-.preview-table .col-item { width: 34%; }
-.preview-table .col-qty, .preview-table .col-unit { width: 12%; }
-.preview-table .col-price, .preview-table .col-total { width: 18%; }
+.preview-table .col-num { width: 5%; }
+.preview-table .col-item { width: 40%; }
+.preview-table .col-qty { width: 8%; white-space: nowrap; }
+.preview-table .col-unit { width: 10%; white-space: nowrap; }
+.preview-table .col-price { width: 18%; white-space: nowrap; }
+.preview-table .col-total { width: 19%; white-space: nowrap; }
 .preview-total { display: flex; justify-content: flex-end; margin-bottom: 20px; }
 .preview-total-box { min-width: 240px; padding-top: 8px; border-top: 1px solid #e5e7eb; }
 .preview-total-row { display: flex; justify-content: space-between; font-size: 0.923em; padding: 2px 0; color: #6b7280; }
@@ -1079,7 +1081,7 @@ nav {
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.fontsizelabel">ขนาดฟอนต์เอกสาร</div>
         <div style="display:flex;align-items:center;gap:12px">
           <button type="button" class="btn-outline" style="padding:6px 16px;font-size:16px;line-height:1" onclick="changeFontSize(-1)" aria-label="ลดขนาดฟอนต์">−</button>
-          <span id="font-size-display" style="min-width:44px;text-align:center;font-weight:600;font-size:14px">20px</span>
+          <span id="font-size-display" style="min-width:44px;text-align:center;font-weight:600;font-size:14px">13px</span>
           <button type="button" class="btn-outline" style="padding:6px 16px;font-size:16px;line-height:1" onclick="changeFontSize(1)" aria-label="เพิ่มขนาดฟอนต์">+</button>
         </div>
       </div>
@@ -1344,7 +1346,7 @@ let currentDocType = 'quotation';
 let items = [{ desc:'', qty:1, unit:'ชิ้น', price:0 }];
 let compareItems = [{ desc:'', prices:[0,0,0,0] }];
 let currentFont = "'Sarabun', sans-serif";
-let currentFontSize = 20;
+let currentFontSize = 13;
 let currentLang = localStorage.getItem('baidoc-lang') || 'th';
 
 const docInfo = {
@@ -2287,12 +2289,12 @@ function showSampleDoc(type, btn) {
 
   const itemsHtml = d.items.map((it,i)=>`
     <tr>
-      <td style="color:#9ca3af">${i+1}</td>
-      <td>${it.desc}</td>
-      <td style="text-align:center">${it.qty}</td>
-      <td style="text-align:center">${it.unit}</td>
-      <td style="text-align:right">${fmtSample(it.price)}</td>
-      <td style="text-align:right;font-weight:600">${fmtSample(it.qty*it.price)}</td>
+      <td style="color:#9ca3af;padding:6px 8px">${i+1}</td>
+      <td style="padding:6px 8px">${it.desc}</td>
+      <td style="text-align:center;white-space:nowrap;padding:6px 8px">${it.qty}</td>
+      <td style="text-align:center;white-space:nowrap;padding:6px 8px">${it.unit}</td>
+      <td style="text-align:right;white-space:nowrap;padding:6px 8px">${fmtSample(it.price)}</td>
+      <td style="text-align:right;font-weight:600;white-space:nowrap;padding:6px 8px">${fmtSample(it.qty*it.price)}</td>
     </tr>`).join('');
 
   const discRow = discAmt>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>ส่วนลด</span><span>-฿${fmtSample(discAmt)}</span></div>`:'';
@@ -2305,17 +2307,17 @@ function showSampleDoc(type, btn) {
     <div style="max-width:100%;margin:0 auto">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
         <div>
-          <div style="font-size:18px;font-weight:700;color:${themeColor}">${d.seller}</div>
-          <div style="font-size:11px;color:#6b7280;margin-top:3px">${d.sellerAddr}</div>
-          <div style="font-size:11px;color:#6b7280">Tel: ${d.sellerPhone}</div>
-          <div style="font-size:11px;color:#6b7280">${d.sellerEmail}</div>
-          ${d.sellerTax?`<div style="font-size:11px;color:#6b7280">เลขผู้เสียภาษี: ${d.sellerTax}</div>`:''}
+          <div style="font-size:14px;font-weight:700;color:${themeColor}">${d.seller}</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:3px">${d.sellerAddr}</div>
+          <div style="font-size:10px;color:#6b7280">Tel: ${d.sellerPhone}</div>
+          <div style="font-size:10px;color:#6b7280">${d.sellerEmail}</div>
+          ${d.sellerTax?`<div style="font-size:10px;color:#6b7280">เลขผู้เสียภาษี: ${d.sellerTax}</div>`:''}
         </div>
         <div style="text-align:right">
-          <div style="font-size:22px;font-weight:700">${docInfo[type]?.th||type}</div>
-          <div style="font-size:11px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${docInfo[type]?.en||type}</div>
-          <div style="font-size:12px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${themeColor}">${d.docNo}</b></div>
-          <div style="font-size:12px;color:#6b7280">วันที่: ${d.docDate}</div>
+          <div style="font-size:16px;font-weight:700">${docInfo[type]?.th||type}</div>
+          <div style="font-size:10px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${docInfo[type]?.en||type}</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${themeColor}">${d.docNo}</b></div>
+          <div style="font-size:11px;color:#6b7280">วันที่: ${d.docDate}</div>
         </div>
       </div>
       <div style="height:3px;background:${themeColor};border-radius:2px;opacity:0.7;margin-bottom:16px"></div>
@@ -2334,12 +2336,12 @@ function showSampleDoc(type, btn) {
       </div>
       <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px">
         <thead><tr>
-          <th class="col-num" style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px">#</th>
-          <th class="col-item" style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px">รายการ</th>
-          <th class="col-qty" style="background:${themeColor};color:white;padding:8px 10px;text-align:center;font-size:11px">จำนวน</th>
-          <th class="col-unit" style="background:${themeColor};color:white;padding:8px 10px;text-align:center;font-size:11px">หน่วย</th>
-          <th class="col-price" style="background:${themeColor};color:white;padding:8px 10px;text-align:right;font-size:11px">ราคา/หน่วย</th>
-          <th class="col-total" style="background:${themeColor};color:white;padding:8px 10px;text-align:right;font-size:11px">รวม</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:left;font-size:10px;width:5%">#</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:left;font-size:10px;width:40%">รายการ</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:center;font-size:10px;width:8%;white-space:nowrap">จำนวน</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:center;font-size:10px;width:10%;white-space:nowrap">หน่วย</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:right;font-size:10px;width:18%;white-space:nowrap">ราคา/หน่วย</th>
+          <th style="background:${themeColor};color:white;padding:6px 8px;text-align:right;font-size:10px;width:19%;white-space:nowrap">รวม</th>
         </tr></thead>
         <tbody>${itemsHtml}</tbody>
       </table>
