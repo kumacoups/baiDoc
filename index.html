@@ -10,25 +10,25 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --theme: #536850;
-  --theme-dark: #3f4f3c;
-  --theme-light: #e3e9d6;
-  --theme-bg: #eef0de;
-  --theme-rgb: 83,104,80;
+  --theme: #043222;
+  --theme-dark: #021a12;
+  --theme-light: #c8ddd1;
+  --theme-bg: #e8f0eb;
+  --theme-rgb: 4,50,34;
   --font-doc: 'Sarabun', sans-serif;
-  --text: #3f4f3c;
-  --text-muted: #7d8a72;
-  --border: #ecdfba;
-  --bg: #FFF3D5;
-  --white: #FFFCF2;
+  --text: #043222;
+  --text-muted: #4a6d5a;
+  --border: #d9c9b0;
+  --bg: #F6E9D9;
+  --white: #fdf6ee;
   --radius: 10px;
   /* Document-only theme: controlled by the color swatches in the form.
      Only affects the document preview / generated PDF, never the site UI. */
-  --doc-theme: #536850;
-  --doc-theme-dark: #3f4f3c;
-  --doc-theme-light: #e3e9d6;
-  --doc-theme-bg: #eef0de;
-  --doc-theme-rgb: 83,104,80;
+  --doc-theme: #043222;
+  --doc-theme-dark: #021a12;
+  --doc-theme-light: #c8ddd1;
+  --doc-theme-bg: #e8f0eb;
+  --doc-theme-rgb: 4,50,34;
 }
 
 html { color-scheme: light; }
@@ -344,7 +344,7 @@ nav {
   position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
 }
 .logo-preview-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.logo-preview-img { max-height: 64px; max-width: 160px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); }
+.logo-preview-img { max-height: 80px; max-width: 200px; width: auto; height: auto; object-fit: contain; object-position: left center; border-radius: 6px; border: 1px solid var(--border); display: block; }
 .logo-remove-btn {
   background: none; border: 1px solid var(--border); border-radius: 6px;
   padding: 5px 10px; font-size: 12px; cursor: pointer;
@@ -572,7 +572,7 @@ nav {
 /* DOC PREVIEW — always a fixed light "paper" look, independent of site dark mode, sized like A4 */
 #doc-preview {
   background: #fff; color: #111827; color-scheme: light;
-  width: 210mm; min-height: 297mm;
+  width: 210mm; min-height: auto;
   box-sizing: border-box; margin: 0;
   padding: 16mm 14mm; font-size: var(--doc-font-size, 13px); line-height: 1.55;
   font-family: var(--font-doc, 'Sarabun', sans-serif);
@@ -629,7 +629,7 @@ nav {
 .sig-box { border-top: 1px solid #e5e7eb; padding-top: 8px; font-size: 0.846em; color: #6b7280; text-align: center; }
 .sig-label { font-weight: 600; color: #111827; margin-bottom: 28px; }
 
-@page { size: A4; margin: 0; }
+@page { size: A4; margin: 12mm 10mm; }
 /* Print is handled via PDF blob (printPDF) — @media print kept as last-resort fallback */
 @media print {
   html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
@@ -641,16 +641,18 @@ nav {
     color-adjust: exact;
   }
   #doc-preview {
-    position: fixed; top: 0; left: 0;
-    width: 210mm; height: 297mm;
-    padding: 16mm 14mm; margin: 0;
+    position: absolute; top: 0; left: 0;
+    width: 210mm; height: auto; min-height: auto;
+    padding: 10mm 10mm; margin: 0;
     box-sizing: border-box;
     transform: none !important;
     font-family: 'Sarabun', sans-serif;
+    page-break-after: avoid;
+    break-after: avoid;
   }
   #preview-scaler { overflow: visible !important; height: auto !important; }
   .preview-table th {
-    background: var(--doc-theme, #536850) !important;
+    background: var(--doc-theme, #043222) !important;
     color: #fff !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -664,6 +666,8 @@ nav {
     print-color-adjust: exact;
   }
   .preview-table tr, .doc-sig, .doc-header { page-break-inside: avoid; break-inside: avoid; }
+  .doc-sig { margin-top: 16px; padding-top: 12px; }
+  * { orphans: 3; widows: 3; }
 }
 
 /* DOC PICKER MODAL */
@@ -1097,7 +1101,7 @@ nav {
       <div style="margin-bottom:20px">
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.colorlabel">สีธีม</div>
         <div class="color-swatches">
-          <div class="swatch active" style="background:#536850" data-color="#536850" data-rgb="83,104,80" title="Forest Green (ค่าเริ่มต้น)" onclick="setTheme(this)"></div>
+          <div class="swatch active" style="background:#043222" data-color="#043222" data-rgb="4,50,34" title="Evergreen Shadow (ค่าเริ่มต้น)" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#8AA5D0" data-color="#8AA5D0" data-rgb="138,165,208" title="Plombir" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#F0B200" data-color="#F0B200" data-rgb="240,178,0" title="Mango" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#55A867" data-color="#55A867" data-rgb="85,168,103" title="Pistachio" onclick="setTheme(this)"></div>
@@ -1105,11 +1109,11 @@ nav {
           <div class="swatch" style="background:#534AB7" data-color="#534AB7" data-rgb="83,74,183" title="Purple" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#E87A30" data-color="#E87A30" data-rgb="232,122,48" title="Orange" onclick="setTheme(this)"></div>
           <div class="swatch-custom" title="กำหนดเอง">
-            <input type="color" id="custom-color" value="#536850" oninput="setThemeCustom(this.value)">
+            <input type="color" id="custom-color" value="#043222" oninput="setThemeCustom(this.value)">
             <i class="ti ti-plus" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="theme-hint" id="theme-hint"><span data-i18n="theme.customlabel">สีกำหนดเอง:</span> <b id="theme-hex">#536850</b></div>
+        <div class="theme-hint" id="theme-hint"><span data-i18n="theme.customlabel">สีกำหนดเอง:</span> <b id="theme-hex">#043222</b></div>
       </div>
 
       <!-- FONT PICKER -->
@@ -1730,17 +1734,33 @@ async function downloadPDF(){
     const sortedCutsPx = Array.from(cutPoints).sort((a,b)=>a-b).map(v => v * domToCanvasScale);
 
     const pageHeightCanvasPx = pageH / (pageW / canvas.width); // page height converted to canvas px
+    // Trim trailing whitespace: detect actual content bottom by scanning canvas rows
+    let contentBottom = canvas.height;
+    const trimCtx = document.createElement('canvas').getContext('2d');
+    trimCtx.canvas.width = canvas.width; trimCtx.canvas.height = 1;
+    for (let y = canvas.height - 1; y > 0; y--) {
+      trimCtx.clearRect(0,0,canvas.width,1);
+      trimCtx.drawImage(canvas, 0, y, canvas.width, 1, 0, 0, canvas.width, 1);
+      const data = trimCtx.getImageData(0,0,canvas.width,1).data;
+      let nonWhite = false;
+      for (let i=0;i<data.length;i+=4){ if(data[i]<250||data[i+1]<250||data[i+2]<250){nonWhite=true;break;} }
+      if(nonWhite){ contentBottom = y + 1; break; }
+    }
+    const effectiveHeight = Math.min(canvas.height, contentBottom + 4); // +4px buffer
     let cursor = 0;
     let firstPage = true;
-    while (cursor < canvas.height - 1) {
+    while (cursor < effectiveHeight - 1) {
       const limit = cursor + pageHeightCanvasPx;
       let cut = null;
       for (const cp of sortedCutsPx) {
         if (cp > cursor && cp <= limit) cut = cp;
         if (cp > limit) break;
       }
-      if (!cut) cut = Math.min(limit, canvas.height); // fallback hard cut
+      if (!cut) cut = Math.min(limit, effectiveHeight); // fallback hard cut
+      cut = Math.min(cut, effectiveHeight);
       const sliceH = Math.max(1, Math.round(cut - cursor));
+      // Skip nearly-empty trailing slices (less than 2% of page height)
+      if (sliceH < pageHeightCanvasPx * 0.02 && cursor > 0) { cursor = cut; continue; }
 
       const sliceCanvas = document.createElement('canvas');
       sliceCanvas.width = canvas.width;
@@ -1798,13 +1818,28 @@ async function printPDF(){
     const sortedCutsPx = Array.from(cutPoints).sort((a,b)=>a-b).map(v=>v*domToCanvasScale);
 
     const pageHeightCanvasPx = pageH / (pageW / canvas.width);
+    // Trim trailing whitespace
+    let contentBottom2 = canvas.height;
+    const trimCtx2 = document.createElement('canvas').getContext('2d');
+    trimCtx2.canvas.width = canvas.width; trimCtx2.canvas.height = 1;
+    for (let y = canvas.height - 1; y > 0; y--) {
+      trimCtx2.clearRect(0,0,canvas.width,1);
+      trimCtx2.drawImage(canvas, 0, y, canvas.width, 1, 0, 0, canvas.width, 1);
+      const data = trimCtx2.getImageData(0,0,canvas.width,1).data;
+      let nonWhite = false;
+      for (let i=0;i<data.length;i+=4){ if(data[i]<250||data[i+1]<250||data[i+2]<250){nonWhite=true;break;} }
+      if(nonWhite){ contentBottom2 = y + 1; break; }
+    }
+    const effectiveHeight2 = Math.min(canvas.height, contentBottom2 + 4);
     let cursor = 0, firstPage = true;
-    while(cursor < canvas.height - 1){
+    while(cursor < effectiveHeight2 - 1){
       const limit = cursor + pageHeightCanvasPx;
       let cut = null;
       for(const cp of sortedCutsPx){ if(cp>cursor&&cp<=limit) cut=cp; if(cp>limit) break; }
-      if(!cut) cut = Math.min(limit, canvas.height);
+      if(!cut) cut = Math.min(limit, effectiveHeight2);
+      cut = Math.min(cut, effectiveHeight2);
       const sliceH = Math.max(1, Math.round(cut - cursor));
+      if (sliceH < pageHeightCanvasPx * 0.02 && cursor > 0) { cursor = cut; continue; }
       const sc = document.createElement('canvas');
       sc.width = canvas.width; sc.height = sliceH;
       const ctx = sc.getContext('2d');
@@ -2150,7 +2185,7 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
   const whtRow = whtAmt>0 ? `<div class="preview-total-row"><span>${t('pv.wht')} ${whtRate}%</span><span>-฿${fmtN(whtAmt)}</span></div>` : '';
   const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
   const logoHtml = currentLogo
-    ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`
+    ? `<img src="${currentLogo}" style="max-height:64px;max-width:160px;width:auto;height:auto;object-fit:contain;object-position:left center;display:block;margin-bottom:6px" alt="logo">`
     : '';
   return `
     <div class="doc-header">
@@ -2494,10 +2529,10 @@ function showSampleDoc(type, btn) {
   const vatRow = d.vat>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>VAT ${d.vat}%</span><span>฿${fmtSample(vat)}</span></div>`:'';
   const whtRow = d.wht>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>หัก WHT ${d.wht}%</span><span>-฿${fmtSample(wht)}</span></div>`:'';
 
-  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#536850';
+  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#043222';
 
   const sampleLogoHtml = currentLogo
-    ? `<img src="${currentLogo}" style="max-height:40px;max-width:110px;object-fit:contain;display:block;margin-bottom:4px" alt="logo">`
+    ? `<img src="${currentLogo}" style="max-height:48px;max-width:130px;width:auto;height:auto;object-fit:contain;object-position:left center;display:block;margin-bottom:4px" alt="logo">`
     : '';
   document.getElementById('sample-preview-area').innerHTML = `
     <div style="max-width:100%;margin:0 auto">
@@ -2543,7 +2578,7 @@ function showSampleDoc(type, btn) {
         <tbody>${itemsHtml}</tbody>
       </table>
       <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-        <div style="background:#eef0de;border-radius:10px;padding:12px 18px;min-width:220px">
+        <div style="background:#e8f0eb;border-radius:10px;padding:12px 18px;min-width:220px">
           <div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>ยอดรวมก่อน VAT</span><span>฿${fmtSample(sub)}</span></div>
           ${discRow}${vatRow}${whtRow}
           <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(13,148,136,0.2);margin-top:6px;padding-top:7px;font-size:15px;font-weight:700;color:${themeColor}"><span>ยอดสุทธิ</span><span>฿${fmtSample(grand)}</span></div>
@@ -2567,7 +2602,7 @@ function showSampleDoc(type, btn) {
 
 function renderCompareSample() {
   const d = sampleCompareData;
-  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#536850';
+  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#043222';
   const vL = d.vendors;
   const hCols = vL.map(v=>`<th style="background:${themeColor};color:white;padding:8px 10px;text-align:right;font-size:11px">${v}</th>`).join('');
   const rows = d.items.map((it,i)=>{
@@ -2599,10 +2634,10 @@ function renderCompareSample() {
           ${hCols}
         </tr></thead>
         <tbody>${rows}
-          <tr style="background:#eef0de"><td></td><td style="padding:6px 10px;font-weight:700">รวมทั้งหมด</td>${tCols}</tr>
+          <tr style="background:#e8f0eb"><td></td><td style="padding:6px 10px;font-weight:700">รวมทั้งหมด</td>${tCols}</tr>
         </tbody>
       </table>
-      <div style="margin-top:14px;padding:10px 14px;background:#eef0de;border-radius:8px;display:flex;align-items:center;gap:10px">
+      <div style="margin-top:14px;padding:10px 14px;background:#e8f0eb;border-radius:8px;display:flex;align-items:center;gap:10px">
         <i class="ti ti-trophy" style="color:${themeColor};font-size:20px" aria-hidden="true"></i>
         <div><div style="font-weight:600;font-size:13px">เสนอราคาต่ำสุด</div>
         <div style="font-size:12px;color:#6b7280">${vL[winIdx]} เสนอราคาต่ำสุดที่ ฿${fmtSample(minT)}</div></div>
