@@ -3,27 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Kanit:wght@400;500;600;700&family=Bai+Jamjuree:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --theme: #0d9488;
-  --theme-dark: #0f766e;
-  --theme-light: #ccfbf1;
-  --theme-bg: #f0fdfa;
-  --theme-rgb: 13,148,136;
+  --theme: #536850;
+  --theme-dark: #3f4f3c;
+  --theme-light: #e3e9d6;
+  --theme-bg: #eef0de;
+  --theme-rgb: 83,104,80;
   --font-doc: 'Sarabun', sans-serif;
-  --text: #111827;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --bg: #f9fafb;
-  --white: #ffffff;
+  --text: #3f4f3c;
+  --text-muted: #7d8a72;
+  --border: #ecdfba;
+  --bg: #FFF3D5;
+  --white: #FFFCF2;
   --radius: 10px;
+  /* Document-only theme: controlled by the color swatches in the form.
+     Only affects the document preview / generated PDF, never the site UI. */
+  --doc-theme: #536850;
+  --doc-theme-dark: #3f4f3c;
+  --doc-theme-light: #e3e9d6;
+  --doc-theme-bg: #eef0de;
+  --doc-theme-rgb: 83,104,80;
 }
 
+html { color-scheme: light; }
 html[data-mode="dark"] {
+  color-scheme: dark;
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --border: #334155;
@@ -159,7 +169,7 @@ nav {
 .btn-primary:hover { filter: brightness(0.92); }
 .btn-primary:active { transform: scale(0.98); }
 .btn-outline {
-  background: white; color: var(--text);
+  background: var(--white); color: var(--text);
   border: 1.5px solid var(--border); padding: 11px 24px;
   border-radius: var(--radius); font-size: 15px; font-weight: 500;
   cursor: pointer; font-family: 'Sarabun', sans-serif;
@@ -220,6 +230,42 @@ nav {
 .feat-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
 .feat-body { font-size: 12px; color: var(--text-muted); }
 
+/* CAPABILITIES (what the site can do) */
+.cap-grid {
+  max-width: 920px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+.cap-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; display: flex; gap: 12px; align-items: flex-start;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.cap-item:hover { border-color: var(--theme); box-shadow: 0 4px 16px rgba(var(--theme-rgb),0.10); }
+.cap-title { font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+.cap-body { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+/* HOW IT WORKS */
+.steps-wrap {
+  max-width: 860px; margin: 30px auto 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.step {
+  background: var(--theme-bg); border-radius: 14px;
+  padding: 20px 16px; text-align: center;
+  transition: background 0.3s;
+}
+.step-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--theme); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; margin: 0 auto 10px;
+  transition: background 0.3s;
+}
+.step-title { font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
+.step-body { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
+
 /* FORM PAGE */
 #form-page { display: none; max-width: 920px; margin: 0 auto; padding: 28px 20px; }
 .page-header {
@@ -272,7 +318,7 @@ nav {
   position: relative;
 }
 .swatch:hover { transform: scale(1.15); }
-.swatch.active { border-color: white; box-shadow: 0 0 0 3px var(--theme); }
+.swatch.active { border-color: white; box-shadow: 0 0 0 3px var(--doc-theme); }
 .swatch-custom {
   width: 36px; height: 36px; border-radius: 50%;
   border: 2px dashed var(--border); cursor: pointer;
@@ -284,7 +330,7 @@ nav {
 .swatch-custom input[type="color"] {
   position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; border: none;
 }
-.swatch-custom:hover { border-color: var(--theme); }
+.swatch-custom:hover { border-color: var(--doc-theme); }
 .theme-hint { font-size: 12px; color: var(--text-muted); }
 
 /* FONT PICKER */
@@ -297,9 +343,9 @@ nav {
   padding: 12px 8px; cursor: pointer; text-align: center;
   transition: border-color 0.15s, background 0.15s;
 }
-.font-card:hover { border-color: var(--theme); }
-.font-card.selected { border-color: var(--theme); background: var(--theme-bg); }
-.font-sample { font-size: 20px; font-weight: 500; margin-bottom: 4px; color: var(--theme); }
+.font-card:hover { border-color: var(--doc-theme); }
+.font-card.selected { border-color: var(--doc-theme); background: var(--doc-theme-bg); }
+.font-sample { font-size: 20px; font-weight: 500; margin-bottom: 4px; color: var(--doc-theme); }
 .font-name { font-size: 11px; color: var(--text-muted); }
 
 /* FORM LAYOUT */
@@ -497,37 +543,37 @@ nav {
 /* DOC PREVIEW */
 #doc-preview { padding: 30px; font-size: 13px; line-height: 1.6; }
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.doc-company-name { font-size: 18px; font-weight: 700; color: var(--theme); }
+.doc-company-name { font-size: 18px; font-weight: 700; color: var(--doc-theme); }
 .doc-company-info { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
 .doc-title-block { text-align: right; }
 .doc-title { font-size: 22px; font-weight: 700; }
 .doc-number { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-.doc-divider { height: 3px; background: var(--theme); border-radius: 2px; margin-bottom: 18px; opacity: 0.7; }
+.doc-divider { height: 3px; background: var(--doc-theme); border-radius: 2px; margin-bottom: 18px; opacity: 0.7; }
 .doc-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .doc-party-label {
   font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--theme); margin-bottom: 4px;
+  letter-spacing: 1px; color: var(--doc-theme); margin-bottom: 4px;
 }
 .doc-party-name { font-weight: 600; font-size: 13px; }
 .doc-party-info { font-size: 11px; color: var(--text-muted); }
 .doc-meta {
-  background: var(--theme-bg); border-radius: 8px;
+  background: var(--doc-theme-bg); border-radius: 8px;
   padding: 10px 14px; display: flex; gap: 20px;
   margin-bottom: 16px; flex-wrap: wrap;
 }
-.doc-meta-item label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--theme); font-weight: 600; display: block; margin-bottom: 1px; }
+.doc-meta-item label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--doc-theme); font-weight: 600; display: block; margin-bottom: 1px; }
 .doc-meta-item span { font-size: 12px; font-weight: 500; }
 .preview-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
-.preview-table th { background: var(--theme); color: white; text-align: left; padding: 8px 10px; font-size: 11px; font-weight: 500; }
+.preview-table th { background: var(--doc-theme); color: white; text-align: left; padding: 8px 10px; font-size: 11px; font-weight: 500; }
 .preview-table th:last-child { text-align: right; }
 .preview-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
 .preview-table td:last-child { text-align: right; }
 .preview-table tr:last-child td { border-bottom: none; }
 .preview-table tr:nth-child(even) td { background: var(--bg); }
 .preview-total { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-.preview-total-box { background: var(--theme-bg); border-radius: 10px; padding: 12px 18px; min-width: 220px; }
+.preview-total-box { background: var(--doc-theme-bg); border-radius: 10px; padding: 12px 18px; min-width: 220px; }
 .preview-total-row { display: flex; justify-content: space-between; font-size: 12px; padding: 2px 0; color: var(--text-muted); }
-.preview-total-row.grand { border-top: 1px solid rgba(var(--theme-rgb),0.2); margin-top: 6px; padding-top: 7px; font-size: 15px; font-weight: 700; color: var(--theme-dark); }
+.preview-total-row.grand { border-top: 1px solid rgba(var(--doc-theme-rgb),0.2); margin-top: 6px; padding-top: 7px; font-size: 15px; font-weight: 700; color: var(--doc-theme-dark); }
 .doc-notes { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 11px; color: var(--text-muted); margin-bottom: 16px; }
 .doc-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
 .sig-box { border-top: 1px solid var(--border); padding-top: 8px; font-size: 11px; color: var(--text-muted); text-align: center; }
@@ -633,7 +679,7 @@ nav {
             <i class="ti ti-world" aria-hidden="true"></i> EN — English
           </button>
           <button class="lang-option" id="lang-opt-zh" onclick="applyLang('zh');toggleLangMenu()">
-            <i class="ti ti-world" aria-hidden="true"></i> ZH — 中文
+            <i class="ti ti-world" aria-hidden="true"></i> CN — 中文
           </button>
         </div>
       </div>
@@ -659,10 +705,77 @@ nav {
     </div>
   </div>
 
+  <!-- CAPABILITIES: what the site can do -->
+  <div class="section" id="capabilities-section">
+    <div class="section-label" data-i18n="cap.label">BaiDoc คืออะไร</div>
+    <div class="section-title" data-i18n="cap.title">เว็บแอปสร้างเอกสารธุรกิจครบวงจร</div>
+    <div class="section-sub" data-i18n="cap.sub">ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว</div>
+    <div class="cap-grid">
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-files" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 15 ประเภท</div>
+        <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี สัญญาว่าจ้าง หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน และคู่เทียบใบเสนอราคา</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-calculator" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap2.title">คำนวณยอดเงินให้อัตโนมัติ</div>
+        <div class="cap-body" data-i18n="cap2.body">ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-template" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap3.title">ดูตัวอย่างและใช้เป็นเทมเพลตได้</div>
+        <div class="cap-body" data-i18n="cap3.body">ดูหน้าตาเอกสารจริงของทุกประเภท แล้วกดใช้เป็นเทมเพลตเพื่อโหลดข้อมูลตัวอย่างไปแก้ไขต่อได้เลย ไม่ต้องเริ่มจากศูนย์</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-palette" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap4.title">ปรับแต่งสีธีมและฟอนต์</div>
+        <div class="cap-body" data-i18n="cap4.body">เลือกสีธีมหรือกำหนดสีเอง พร้อมฟอนต์ภาษาไทยหลายแบบ ให้เอกสารตรงกับแบรนด์ของธุรกิจ</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-file-type-pdf" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap5.title">พรีวิว พิมพ์ และดาวน์โหลด PDF</div>
+        <div class="cap-body" data-i18n="cap5.body">ตรวจดูเอกสารก่อนใช้งานจริง แล้วพิมพ์หรือบันทึกเป็นไฟล์ PDF คุณภาพสูงส่งลูกค้าได้ทันที</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-language" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap6.title">ใช้งานได้ 3 ภาษา</div>
+        <div class="cap-body" data-i18n="cap6.body">สลับหน้าเว็บระหว่างภาษาไทย อังกฤษ และจีนได้ทุกเมื่อ</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-moon" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap7.title">โหมดมืด/สว่าง</div>
+        <div class="cap-body" data-i18n="cap7.body">สลับธีมมืดหรือสว่างได้ตามความสะดวกในการใช้งาน</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-shield-lock" aria-hidden="true"></i></div>
+        <div><div class="cap-title" data-i18n="cap8.title">ปลอดภัยและฟรีตลอดไป</div>
+        <div class="cap-body" data-i18n="cap8.body">ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน</div></div>
+      </div>
+    </div>
+
+    <div class="steps-wrap">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title" data-i18n="step1.title">เลือกประเภทเอกสาร</div>
+        <div class="step-body" data-i18n="step1.body">เลือกจาก 15 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title" data-i18n="step2.title">กรอกข้อมูลและปรับแต่ง</div>
+        <div class="step-body" data-i18n="step2.body">ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title" data-i18n="step3.title">พรีวิวแล้วดาวน์โหลด</div>
+        <div class="step-body" data-i18n="step3.body">ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section" id="doc-types-section">
     <div class="section-label" data-i18n="doctypes.label">เอกสารที่รองรับ</div>
     <div class="section-title" data-i18n="doctypes.title">เลือกประเภทเอกสาร</div>
-    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 9 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
+    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 15 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
     <div class="doc-grid">
       <div class="doc-card" onclick="selectDoc('quotation')">
         <i class="ti ti-file-description doc-icon" aria-hidden="true"></i>
@@ -709,6 +822,36 @@ nav {
         <div class="doc-name" data-i18n="doc.deposit.name">ใบมัดจำ</div>
         <div class="doc-desc">Deposit Receipt</div>
       </div>
+      <div class="doc-card" onclick="selectDoc('taxinvoice')">
+        <i class="ti ti-receipt-tax doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.taxinvoice.name">ใบกำกับภาษี</div>
+        <div class="doc-desc">Tax Invoice</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('debitnote')">
+        <i class="ti ti-file-plus doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.debitnote.name">ใบเพิ่มหนี้</div>
+        <div class="doc-desc">Debit Note</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('serviceagreement')">
+        <i class="ti ti-file-signature doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
+        <div class="doc-desc">Service Agreement</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('whtcert')">
+        <i class="ti ti-certificate doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.whtcert.name">หนังสือรับรองหักภาษี ณ ที่จ่าย</div>
+        <div class="doc-desc">WHT Certificate</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('workorder')">
+        <i class="ti ti-clipboard-list doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.workorder.name">ใบสั่งงาน</div>
+        <div class="doc-desc">Work Order</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('jobcompletion')">
+        <i class="ti ti-clipboard-check doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div>
+        <div class="doc-desc">Job Completion Note</div>
+      </div>
     </div>
   </div>
 
@@ -734,6 +877,17 @@ nav {
       <button class="sample-tab" onclick="showSampleDoc('invoice',this)">ใบแจ้งหนี้</button>
       <button class="sample-tab" onclick="showSampleDoc('receipt',this)">ใบเสร็จรับเงิน</button>
       <button class="sample-tab" onclick="showSampleDoc('delivery',this)">ใบส่งของ</button>
+      <button class="sample-tab" onclick="showSampleDoc('comparison',this)">คู่เทียบใบเสนอราคา</button>
+      <button class="sample-tab" onclick="showSampleDoc('billing',this)">ใบวางบิล</button>
+      <button class="sample-tab" onclick="showSampleDoc('creditnote',this)">ใบลดหนี้</button>
+      <button class="sample-tab" onclick="showSampleDoc('po',this)">ใบสั่งซื้อ</button>
+      <button class="sample-tab" onclick="showSampleDoc('deposit',this)">ใบมัดจำ</button>
+      <button class="sample-tab" onclick="showSampleDoc('taxinvoice',this)">ใบกำกับภาษี</button>
+      <button class="sample-tab" onclick="showSampleDoc('debitnote',this)">ใบเพิ่มหนี้</button>
+      <button class="sample-tab" onclick="showSampleDoc('serviceagreement',this)">สัญญาว่าจ้าง</button>
+      <button class="sample-tab" onclick="showSampleDoc('whtcert',this)">หนังสือรับรองหักภาษี ณ ที่จ่าย</button>
+      <button class="sample-tab" onclick="showSampleDoc('workorder',this)">ใบสั่งงาน</button>
+      <button class="sample-tab" onclick="showSampleDoc('jobcompletion',this)">ใบส่งมอบงาน</button>
     </div>
 
     <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07)">
@@ -746,8 +900,9 @@ nav {
       <div id="sample-preview-area" style="padding:30px;font-family:'Sarabun',sans-serif;font-size:13px;line-height:1.6;max-height:600px;overflow-y:auto"></div>
     </div>
 
-    <div style="text-align:center;margin-top:20px">
-      <button class="btn-primary" onclick="openDocPicker()"><i class="ti ti-file-plus" aria-hidden="true"></i> สร้างเอกสารของคุณเอง</button>
+    <div style="text-align:center;margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-primary" id="use-sample-btn" onclick="useSampleAsTemplate()"><i class="ti ti-edit" aria-hidden="true"></i> ใช้ตัวอย่างนี้เป็นเทมเพลต</button>
+      <button class="btn-outline" onclick="openDocPicker()"><i class="ti ti-file-plus" aria-hidden="true"></i> สร้างเอกสารของคุณเอง</button>
     </div>
   </div>
 
@@ -805,6 +960,30 @@ nav {
           <i class="ti ti-coin doc-icon" aria-hidden="true"></i>
           <div class="doc-name" data-i18n="doc.deposit.name">ใบมัดจำ</div><div class="doc-desc">Deposit Receipt</div>
         </div>
+        <div class="doc-card" id="card-taxinvoice" onclick="selectDoc('taxinvoice')">
+          <i class="ti ti-receipt-tax doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.taxinvoice.name">ใบกำกับภาษี</div><div class="doc-desc">Tax Invoice</div>
+        </div>
+        <div class="doc-card" id="card-debitnote" onclick="selectDoc('debitnote')">
+          <i class="ti ti-file-plus doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.debitnote.name">ใบเพิ่มหนี้</div><div class="doc-desc">Debit Note</div>
+        </div>
+        <div class="doc-card" id="card-serviceagreement" onclick="selectDoc('serviceagreement')">
+          <i class="ti ti-file-signature doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div><div class="doc-desc">Service Agreement</div>
+        </div>
+        <div class="doc-card" id="card-whtcert" onclick="selectDoc('whtcert')">
+          <i class="ti ti-certificate doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.whtcert.name">หนังสือรับรองหักภาษี ณ ที่จ่าย</div><div class="doc-desc">WHT Certificate</div>
+        </div>
+        <div class="doc-card" id="card-workorder" onclick="selectDoc('workorder')">
+          <i class="ti ti-clipboard-list doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.workorder.name">ใบสั่งงาน</div><div class="doc-desc">Work Order</div>
+        </div>
+        <div class="doc-card" id="card-jobcompletion" onclick="selectDoc('jobcompletion')">
+          <i class="ti ti-clipboard-check doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div><div class="doc-desc">Job Completion Note</div>
+        </div>
       </div>
     </div>
   </div>
@@ -820,7 +999,7 @@ nav {
       <div style="margin-bottom:20px">
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.colorlabel">สีธีม</div>
         <div class="color-swatches">
-          <div class="swatch active" style="background:#0d9488" data-color="#0d9488" data-rgb="13,148,136" title="Teal (ค่าเริ่มต้น)" onclick="setTheme(this)"></div>
+          <div class="swatch active" style="background:#536850" data-color="#536850" data-rgb="83,104,80" title="Forest Green (ค่าเริ่มต้น)" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#8AA5D0" data-color="#8AA5D0" data-rgb="138,165,208" title="Plombir" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#F0B200" data-color="#F0B200" data-rgb="240,178,0" title="Mango" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#55A867" data-color="#55A867" data-rgb="85,168,103" title="Pistachio" onclick="setTheme(this)"></div>
@@ -828,11 +1007,11 @@ nav {
           <div class="swatch" style="background:#534AB7" data-color="#534AB7" data-rgb="83,74,183" title="Purple" onclick="setTheme(this)"></div>
           <div class="swatch" style="background:#E87A30" data-color="#E87A30" data-rgb="232,122,48" title="Orange" onclick="setTheme(this)"></div>
           <div class="swatch-custom" title="กำหนดเอง">
-            <input type="color" id="custom-color" value="#0d9488" oninput="setThemeCustom(this.value)">
+            <input type="color" id="custom-color" value="#536850" oninput="setThemeCustom(this.value)">
             <i class="ti ti-plus" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="theme-hint" id="theme-hint"><span data-i18n="theme.customlabel">สีกำหนดเอง:</span> <b id="theme-hex">#0d9488</b></div>
+        <div class="theme-hint" id="theme-hint"><span data-i18n="theme.customlabel">สีกำหนดเอง:</span> <b id="theme-hex">#536850</b></div>
       </div>
 
       <!-- FONT PICKER -->
@@ -1087,6 +1266,36 @@ nav {
         <div class="picker-name" data-i18n="doc.deposit.name">ใบมัดจำ</div>
         <div class="picker-en">Deposit Receipt</div>
       </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('taxinvoice')">
+        <i class="ti ti-receipt-tax picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.taxinvoice.name">ใบกำกับภาษี</div>
+        <div class="picker-en">Tax Invoice</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('debitnote')">
+        <i class="ti ti-file-plus picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.debitnote.name">ใบเพิ่มหนี้</div>
+        <div class="picker-en">Debit Note</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('serviceagreement')">
+        <i class="ti ti-file-signature picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
+        <div class="picker-en">Service Agreement</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('whtcert')">
+        <i class="ti ti-certificate picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.whtcert.name">หนังสือรับรองหักภาษี ณ ที่จ่าย</div>
+        <div class="picker-en">WHT Certificate</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('workorder')">
+        <i class="ti ti-clipboard-list picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.workorder.name">ใบสั่งงาน</div>
+        <div class="picker-en">Work Order</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('jobcompletion')">
+        <i class="ti ti-clipboard-check picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div>
+        <div class="picker-en">Job Completion Note</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1107,7 +1316,13 @@ const docInfo = {
   billing:    { th:'ใบวางบิล',           en:'Billing Note',     zh:'对账单',     prefix:'BN'  },
   creditnote: { th:'ใบลดหนี้',           en:'Credit Note',      zh:'贷项通知单', prefix:'CN'  },
   po:         { th:'ใบสั่งซื้อ',         en:'Purchase Order',   zh:'采购订单',   prefix:'PO'  },
-  deposit:    { th:'ใบมัดจำ',            en:'Deposit Receipt',  zh:'押金收据',   prefix:'DP'  }
+  deposit:    { th:'ใบมัดจำ',            en:'Deposit Receipt',  zh:'押金收据',   prefix:'DP'  },
+  taxinvoice:      { th:'ใบกำกับภาษี',              en:'Tax Invoice',          zh:'税务发票',     prefix:'TXI' },
+  debitnote:       { th:'ใบเพิ่มหนี้',               en:'Debit Note',           zh:'借项通知单',   prefix:'DN'  },
+  serviceagreement:{ th:'สัญญาว่าจ้าง',              en:'Service Agreement',    zh:'服务协议',     prefix:'SA'  },
+  whtcert:         { th:'หนังสือรับรองหักภาษี ณ ที่จ่าย', en:'WHT Certificate', zh:'预扣税证明书', prefix:'WHT' },
+  workorder:       { th:'ใบสั่งงาน',                 en:'Work Order',           zh:'工作单',       prefix:'WO'  },
+  jobcompletion:   { th:'ใบส่งมอบงาน',               en:'Job Completion Note',  zh:'工作完成单',   prefix:'JC'  }
 };
 
 /* ===== I18N DICTIONARY ===== */
@@ -1117,7 +1332,25 @@ const I18N = {
     'hero.badge':'ฟรี 100% ไม่ต้องสมัครสมาชิก','hero.title1':'สร้างเอกสารธุรกิจ','hero.title2':'ออนไลน์ฟรี',
     'hero.desc':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้ และอื่นๆ ดาวน์โหลด PDF ได้ทันที',
     'hero.start':'เริ่มสร้างเอกสาร','hero.sample':'ดูตัวอย่าง',
-    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 9 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
+    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 15 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
+    'cap.label':'BaiDoc คืออะไร','cap.title':'เว็บแอปสร้างเอกสารธุรกิจครบวงจร',
+    'cap.sub':'ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว',
+    'cap1.title':'สร้างเอกสารได้ 15 ประเภท',
+    'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี สัญญาว่าจ้าง หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน และคู่เทียบใบเสนอราคา',
+    'cap2.title':'คำนวณยอดเงินให้อัตโนมัติ',
+    'cap2.body':'ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที',
+    'cap3.title':'ดูตัวอย่างและใช้เป็นเทมเพลตได้',
+    'cap3.body':'ดูหน้าตาเอกสารจริงของทุกประเภท แล้วกดใช้เป็นเทมเพลตเพื่อโหลดข้อมูลตัวอย่างไปแก้ไขต่อได้เลย ไม่ต้องเริ่มจากศูนย์',
+    'cap4.title':'ปรับแต่งสีธีมและฟอนต์',
+    'cap4.body':'เลือกสีธีมหรือกำหนดสีเอง พร้อมฟอนต์ภาษาไทยหลายแบบ ให้เอกสารตรงกับแบรนด์ของธุรกิจ',
+    'cap5.title':'พรีวิว พิมพ์ และดาวน์โหลด PDF',
+    'cap5.body':'ตรวจดูเอกสารก่อนใช้งานจริง แล้วพิมพ์หรือบันทึกเป็นไฟล์ PDF คุณภาพสูงส่งลูกค้าได้ทันที',
+    'cap6.title':'ใช้งานได้ 3 ภาษา','cap6.body':'สลับหน้าเว็บระหว่างภาษาไทย อังกฤษ และจีนได้ทุกเมื่อ',
+    'cap7.title':'โหมดมืด/สว่าง','cap7.body':'สลับธีมมืดหรือสว่างได้ตามความสะดวกในการใช้งาน',
+    'cap8.title':'ปลอดภัยและฟรีตลอดไป','cap8.body':'ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน',
+    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 15 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
+    'step2.title':'กรอกข้อมูลและปรับแต่ง','step2.body':'ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ',
+    'step3.title':'พรีวิวแล้วดาวน์โหลด','step3.body':'ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที',
     'features.label':'ทำไมต้องใช้ BaiDoc','features.title':'ง่าย เร็ว ฟรี',
     'feat1.title':'พร้อมใช้ทันที','feat1.body':'ไม่ต้องติดตั้ง ไม่ต้องสมัคร เปิดแล้วใช้ได้เลย',
     'feat2.title':'ดาวน์โหลด PDF ฟรี','feat2.body':'พิมพ์หรือบันทึก PDF คุณภาพสูงพร้อมส่งลูกค้า',
@@ -1141,10 +1374,18 @@ const I18N = {
     'pv.preview':'พรีวิว —',
     'doc.quotation.name':'ใบเสนอราคา','doc.invoice.name':'ใบแจ้งหนี้','doc.receipt.name':'ใบเสร็จรับเงิน','doc.delivery.name':'ใบส่งของ',
     'doc.comparison.name':'คู่เทียบราคา','doc.billing.name':'ใบวางบิล','doc.creditnote.name':'ใบลดหนี้','doc.po.name':'ใบสั่งซื้อ','doc.deposit.name':'ใบมัดจำ',
+    'doc.taxinvoice.name':'ใบกำกับภาษี','doc.debitnote.name':'ใบเพิ่มหนี้','doc.serviceagreement.name':'สัญญาว่าจ้าง',
+    'doc.whtcert.name':'หนังสือรับรองหักภาษี ณ ที่จ่าย','doc.workorder.name':'ใบสั่งงาน','doc.jobcompletion.name':'ใบส่งมอบงาน',
     'sig.quotation0':'ผู้เสนอราคา','sig.quotation1':'ผู้อนุมัติ','sig.invoice0':'ผู้ออกใบแจ้งหนี้','sig.invoice1':'ผู้รับเอกสาร',
     'sig.receipt0':'ผู้รับเงิน','sig.receipt1':'ผู้จ่ายเงิน','sig.delivery0':'ผู้ส่งของ','sig.delivery1':'ผู้รับของ',
     'sig.billing0':'ผู้วางบิล','sig.billing1':'ผู้รับวางบิล','sig.creditnote0':'ผู้ออกใบลดหนี้','sig.creditnote1':'ผู้รับเอกสาร',
     'sig.po0':'ผู้สั่งซื้อ','sig.po1':'ผู้รับออเดอร์','sig.deposit0':'ผู้รับมัดจำ','sig.deposit1':'ผู้จ่ายมัดจำ',
+    'sig.taxinvoice0':'ผู้ออกใบกำกับภาษี','sig.taxinvoice1':'ผู้รับเอกสาร',
+    'sig.debitnote0':'ผู้ออกใบเพิ่มหนี้','sig.debitnote1':'ผู้รับเอกสาร',
+    'sig.serviceagreement0':'ผู้ว่าจ้าง','sig.serviceagreement1':'ผู้รับจ้าง',
+    'sig.whtcert0':'ผู้หักภาษี ณ ที่จ่าย','sig.whtcert1':'ผู้ถูกหักภาษี',
+    'sig.workorder0':'ผู้สั่งงาน','sig.workorder1':'ผู้รับงาน',
+    'sig.jobcompletion0':'ผู้ส่งมอบงาน','sig.jobcompletion1':'ผู้ตรวจรับงาน',
     'sig.default0':'ผู้ออกเอกสาร','sig.default1':'ผู้รับเอกสาร'
   },
   en: {
@@ -1152,7 +1393,25 @@ const I18N = {
     'hero.badge':'100% Free, No Sign-up Required','hero.title1':'Create Business Documents','hero.title2':'Online for Free',
     'hero.desc':'Quotations, invoices, receipts, delivery orders, billing notes, credit notes and more. Download as PDF instantly.',
     'hero.start':'Start Creating','hero.sample':'View Sample',
-    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'9 document types covering every business need',
+    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'15 document types covering every business need',
+    'cap.label':'What is BaiDoc','cap.title':'A Complete Business Document Toolkit',
+    'cap.sub':'From filling in details to a ready-to-send PDF — every step happens right here on this page.',
+    'cap1.title':'Create 15 Document Types',
+    'cap1.body':'Quotations, invoices, receipts, delivery orders, billing notes, credit/debit notes, purchase orders, deposit receipts, tax invoices, service agreements, WHT certificates, work orders, job completion notes, and price comparisons.',
+    'cap2.title':'Automatic Calculations',
+    'cap2.body':'Add your items and the app instantly calculates VAT, discounts, and withholding tax (WHT), plus the final total.',
+    'cap3.title':'Live Samples You Can Reuse as Templates',
+    'cap3.body':'Preview a realistic sample of every document type, then load it straight into the editor to customize instead of starting from scratch.',
+    'cap4.title':'Customizable Colors & Fonts',
+    'cap4.body':'Pick a theme color (or set your own) and choose from several Thai fonts to match your brand.',
+    'cap5.title':'Preview, Print & Download PDF',
+    'cap5.body':'Check everything looks right, then print or save a high-quality PDF ready to send to clients.',
+    'cap6.title':'Available in 3 Languages','cap6.body':'Switch the whole site between Thai, English, and Chinese anytime.',
+    'cap7.title':'Light & Dark Mode','cap7.body':'Toggle between light and dark themes for comfortable viewing.',
+    'cap8.title':'Private, Secure & Always Free','cap8.body':'Everything runs in your browser — no data is sent to a server, no sign-up, no cost.',
+    'step1.title':'Choose a Document Type','step1.body':'Pick from 15 business document types, or preview a sample first.',
+    'step2.title':'Fill In & Customize','step2.body':'Enter seller, buyer, and item details, then choose your theme color and font.',
+    'step3.title':'Preview & Download','step3.body':'Double-check the details, then print or save it as a PDF to send.',
     'features.label':'Why Use BaiDoc','features.title':'Easy, Fast, Free',
     'feat1.title':'Ready Instantly','feat1.body':'No install, no sign-up. Open and start using right away.',
     'feat2.title':'Free PDF Download','feat2.body':'Print or save a high-quality PDF ready to send to clients.',
@@ -1176,10 +1435,18 @@ const I18N = {
     'pv.preview':'Preview —',
     'doc.quotation.name':'Quotation','doc.invoice.name':'Invoice','doc.receipt.name':'Receipt','doc.delivery.name':'Delivery Order',
     'doc.comparison.name':'Price Comparison','doc.billing.name':'Billing Note','doc.creditnote.name':'Credit Note','doc.po.name':'Purchase Order','doc.deposit.name':'Deposit Receipt',
+    'doc.taxinvoice.name':'Tax Invoice','doc.debitnote.name':'Debit Note','doc.serviceagreement.name':'Service Agreement',
+    'doc.whtcert.name':'WHT Certificate','doc.workorder.name':'Work Order','doc.jobcompletion.name':'Job Completion Note',
     'sig.quotation0':'Quoted By','sig.quotation1':'Approved By','sig.invoice0':'Issued By','sig.invoice1':'Received By',
     'sig.receipt0':'Received By','sig.receipt1':'Paid By','sig.delivery0':'Delivered By','sig.delivery1':'Received By',
     'sig.billing0':'Billed By','sig.billing1':'Received By','sig.creditnote0':'Issued By','sig.creditnote1':'Received By',
     'sig.po0':'Ordered By','sig.po1':'Received By','sig.deposit0':'Received By','sig.deposit1':'Paid By',
+    'sig.taxinvoice0':'Issued By','sig.taxinvoice1':'Received By',
+    'sig.debitnote0':'Issued By','sig.debitnote1':'Received By',
+    'sig.serviceagreement0':'Client','sig.serviceagreement1':'Contractor',
+    'sig.whtcert0':'Withholding Agent','sig.whtcert1':'Payee',
+    'sig.workorder0':'Ordered By','sig.workorder1':'Received By',
+    'sig.jobcompletion0':'Delivered By','sig.jobcompletion1':'Accepted By',
     'sig.default0':'Issued By','sig.default1':'Received By'
   },
   zh: {
@@ -1187,7 +1454,25 @@ const I18N = {
     'hero.badge':'100% 免费，无需注册','hero.title1':'创建商业文件','hero.title2':'在线免费制作',
     'hero.desc':'报价单、发票、收据、送货单、对账单、贷项通知单等。即时下载PDF。',
     'hero.start':'开始创建','hero.sample':'查看示例',
-    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持9种类型，满足所有业务需求',
+    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持15种类型，满足所有业务需求',
+    'cap.label':'BaiDoc 是什么','cap.title':'一站式商业文件制作工具',
+    'cap.sub':'从填写资料到生成可直接发送的PDF文件，所有步骤都在同一个页面完成',
+    'cap1.title':'可制作15种文件类型',
+    'cap1.body':'报价单、发票、收据、送货单、对账单、贷项/借项通知单、采购订单、押金收据、税务发票、服务协议、预扣税证明书、工作单、工作完成单，以及价格比较单',
+    'cap2.title':'自动计算金额',
+    'cap2.body':'输入商品/服务项目后，系统会自动计算增值税(VAT)、折扣与预扣税(WHT)，并即时显示总金额',
+    'cap3.title':'预览示例并可作为模板使用',
+    'cap3.body':'查看每种文件类型的真实示例，点击即可将示例数据载入编辑器直接修改，无需从零开始',
+    'cap4.title':'自定义颜色与字体',
+    'cap4.body':'选择主题色或自定义颜色，并可选择多种泰文字体，让文件风格符合您的品牌',
+    'cap5.title':'预览、打印与下载PDF',
+    'cap5.body':'使用前先检查文件内容，再打印或保存为高质量PDF文件发送给客户',
+    'cap6.title':'支持3种语言','cap6.body':'随时在泰语、英语和中文之间切换整个网站',
+    'cap7.title':'明暗模式切换','cap7.body':'可根据需要切换明亮或深色主题',
+    'cap8.title':'安全、私密且永久免费','cap8.body':'所有操作均在浏览器中完成，不会将数据发送到服务器，无需注册，也无需付费',
+    'step1.title':'选择文件类型','step1.body':'从15种商业文件类型中选择，或先查看示例再决定',
+    'step2.title':'填写资料并自定义','step2.body':'输入卖方、买方与商品信息，并选择喜欢的主题色与字体',
+    'step3.title':'预览后下载','step3.body':'核对内容无误后，打印或保存为PDF文件发送',
     'features.label':'为什么选择 BaiDoc','features.title':'简单、快速、免费',
     'feat1.title':'即刻可用','feat1.body':'无需安装，无需注册，打开即可使用',
     'feat2.title':'免费下载PDF','feat2.body':'打印或保存高质量PDF，可直接发送给客户',
@@ -1211,10 +1496,18 @@ const I18N = {
     'pv.preview':'预览 —',
     'doc.quotation.name':'报价单','doc.invoice.name':'发票','doc.receipt.name':'收据','doc.delivery.name':'送货单',
     'doc.comparison.name':'价格比较','doc.billing.name':'对账单','doc.creditnote.name':'贷项通知单','doc.po.name':'采购订单','doc.deposit.name':'押金收据',
+    'doc.taxinvoice.name':'税务发票','doc.debitnote.name':'借项通知单','doc.serviceagreement.name':'服务协议',
+    'doc.whtcert.name':'预扣税证明书','doc.workorder.name':'工作单','doc.jobcompletion.name':'工作完成单',
     'sig.quotation0':'报价人','sig.quotation1':'审批人','sig.invoice0':'开票人','sig.invoice1':'收件人',
     'sig.receipt0':'收款人','sig.receipt1':'付款人','sig.delivery0':'送货人','sig.delivery1':'收货人',
     'sig.billing0':'对账人','sig.billing1':'收件人','sig.creditnote0':'开单人','sig.creditnote1':'收件人',
     'sig.po0':'采购人','sig.po1':'接单人','sig.deposit0':'收款人','sig.deposit1':'付款人',
+    'sig.taxinvoice0':'开票人','sig.taxinvoice1':'收件人',
+    'sig.debitnote0':'开单人','sig.debitnote1':'收件人',
+    'sig.serviceagreement0':'委托方','sig.serviceagreement1':'受托方',
+    'sig.whtcert0':'扣缴义务人','sig.whtcert1':'被扣缴人',
+    'sig.workorder0':'下单人','sig.workorder1':'接单人',
+    'sig.jobcompletion0':'交付人','sig.jobcompletion1':'验收人',
     'sig.default0':'开单方','sig.default1':'收件方'
   }
 };
@@ -1235,7 +1528,7 @@ function applyLang(lang){
   currentLang = lang;
   localStorage.setItem('baidoc-lang', lang);
   // update dropdown label & active option
-  const labels = {th:'TH', en:'EN', zh:'ZH'};
+  const labels = {th:'TH', en:'EN', zh:'CN'};
   document.getElementById('lang-label').textContent = labels[lang]||lang.toUpperCase();
   document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
   const activeOpt = document.getElementById('lang-opt-'+lang);
@@ -1355,11 +1648,13 @@ function lighten(hex, pct) {
 }
 function applyTheme(hex) {
   const root = document.documentElement;
-  root.style.setProperty('--theme', hex);
-  root.style.setProperty('--theme-dark', darken(hex, 28));
-  root.style.setProperty('--theme-light', lighten(hex, 0.75));
-  root.style.setProperty('--theme-bg', lighten(hex, 0.92));
-  root.style.setProperty('--theme-rgb', hexToRgb(hex));
+  // Only the document/PDF theme changes here — the site's own UI theme
+  // (--theme, --theme-dark, --theme-bg, --theme-rgb) stays fixed on purpose.
+  root.style.setProperty('--doc-theme', hex);
+  root.style.setProperty('--doc-theme-dark', darken(hex, 28));
+  root.style.setProperty('--doc-theme-light', lighten(hex, 0.75));
+  root.style.setProperty('--doc-theme-bg', lighten(hex, 0.92));
+  root.style.setProperty('--doc-theme-rgb', hexToRgb(hex));
   document.getElementById('theme-hex').textContent = hex;
   document.getElementById('custom-color').value = hex;
 }
@@ -1422,7 +1717,7 @@ function selectDoc(type) {
   document.getElementById('wht-rate').value = '0';
   document.getElementById('vat-rate').value = '7';
   // Show/hide fields
-  document.getElementById('due-date-row').style.display = (type==='invoice'||type==='billing') ? 'block' : 'none';
+  document.getElementById('due-date-row').style.display = (type==='invoice'||type==='billing'||type==='taxinvoice') ? 'block' : 'none';
   const isCmp = type === 'comparison';
   document.getElementById('items-section').style.display = isCmp ? 'none' : 'block';
   document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
@@ -1555,7 +1850,7 @@ function showPreview(){
 }
 
 function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
-  const dueDateRow = ((currentDocType==='invoice'||currentDocType==='billing') && getV('doc-due-date'))
+  const dueDateRow = ((currentDocType==='invoice'||currentDocType==='billing'||currentDocType==='taxinvoice') && getV('doc-due-date'))
     ? `<div class="doc-meta-item"><label>${t('pv.duedate')}</label><span>${getV('doc-due-date')}</span></div>` : '';
   const sigMap = {
     quotation: [t('sig.quotation0'),t('sig.quotation1')],
@@ -1565,7 +1860,13 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     billing:   [t('sig.billing0'),t('sig.billing1')],
     creditnote:[t('sig.creditnote0'),t('sig.creditnote1')],
     po:        [t('sig.po0'),t('sig.po1')],
-    deposit:   [t('sig.deposit0'),t('sig.deposit1')]
+    deposit:   [t('sig.deposit0'),t('sig.deposit1')],
+    taxinvoice:      [t('sig.taxinvoice0'),t('sig.taxinvoice1')],
+    debitnote:       [t('sig.debitnote0'),t('sig.debitnote1')],
+    serviceagreement:[t('sig.serviceagreement0'),t('sig.serviceagreement1')],
+    whtcert:         [t('sig.whtcert0'),t('sig.whtcert1')],
+    workorder:       [t('sig.workorder0'),t('sig.workorder1')],
+    jobcompletion:   [t('sig.jobcompletion0'),t('sig.jobcompletion1')]
   };
   const sigs=sigMap[currentDocType]||[t('sig.default0'),t('sig.default1')];
   const itemsHtml=items.map((it,i)=>`
@@ -1593,7 +1894,7 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
       <div class="doc-title-block">
         <div class="doc-title">${info[currentLang]}</div>
         <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">${info.en}</div>
-        <div class="doc-number">${t('pv.docno')} <b style="color:var(--theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
         <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
       </div>
     </div>
@@ -1647,12 +1948,12 @@ function buildCmpPreview(info){
   const rows=compareItems.map((it,i)=>{
     const prices=Array.from({length:n},(_,j)=>+it.prices?.[j]||0);
     const minP=Math.min(...prices.filter(p=>p>0));
-    const pCols=prices.map(p=>`<td style="text-align:right;${p>0&&p===minP?'color:var(--theme-dark);font-weight:700':''}">฿${fmtN(p)}</td>`).join('');
+    const pCols=prices.map(p=>`<td style="text-align:right;${p>0&&p===minP?'color:var(--doc-theme-dark);font-weight:700':''}">฿${fmtN(p)}</td>`).join('');
     return `<tr><td style="color:var(--text-muted)">${i+1}</td><td>${it.desc||'-'}</td>${pCols}</tr>`;
   }).join('');
   const totals=Array.from({length:n},(_,j)=>compareItems.reduce((s,it)=>s+(+it.prices?.[j]||0),0));
   const minT=Math.min(...totals.filter(v=>v>0));
-  const tCols=totals.map(v=>`<td style="text-align:right;font-weight:700;${v>0&&v===minT?'color:var(--theme-dark)':''}">${v>0?'฿'+fmtN(v):'-'}</td>`).join('');
+  const tCols=totals.map(v=>`<td style="text-align:right;font-weight:700;${v>0&&v===minT?'color:var(--doc-theme-dark)':''}">${v>0?'฿'+fmtN(v):'-'}</td>`).join('');
   const winIdx=totals.indexOf(minT);
   return `
     <div class="doc-header">
@@ -1660,7 +1961,7 @@ function buildCmpPreview(info){
       <div class="doc-title-block">
         <div class="doc-title">${info[currentLang]}</div>
         <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">${info.en}</div>
-        <div class="doc-number">${t('pv.docno')} <b style="color:var(--theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
       </div>
     </div>
     <div class="doc-divider"></div>
@@ -1668,11 +1969,11 @@ function buildCmpPreview(info){
     <table class="preview-table">
       <thead><tr><th style="width:28px">#</th><th>${t('th.item')}</th>${hCols}</tr></thead>
       <tbody>${rows}
-        <tr style="background:var(--theme-bg)"><td></td><td style="font-weight:700">${t('pv.grandall')}</td>${tCols}</tr>
+        <tr style="background:var(--doc-theme-bg)"><td></td><td style="font-weight:700">${t('pv.grandall')}</td>${tCols}</tr>
       </tbody>
     </table>
-    ${minT>0?`<div style="margin-top:14px;padding:10px 14px;background:var(--theme-bg);border-radius:8px;display:flex;align-items:center;gap:10px">
-      <i class="ti ti-trophy" style="color:var(--theme);font-size:20px" aria-hidden="true"></i>
+    ${minT>0?`<div style="margin-top:14px;padding:10px 14px;background:var(--doc-theme-bg);border-radius:8px;display:flex;align-items:center;gap:10px">
+      <i class="ti ti-trophy" style="color:var(--doc-theme);font-size:20px" aria-hidden="true"></i>
       <div><div style="font-weight:600;font-size:13px">${t('pv.lowest')}</div>
       <div style="font-size:12px;color:var(--text-muted)">${vL[winIdx]} ${t('pv.offered')} ฿${fmtN(minT)}</div></div></div>`:''}
     ${getV('doc-notes')?`<div class="doc-notes" style="margin-top:12px"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:''}`;
@@ -1741,14 +2042,166 @@ const sampleData = {
     vat: 7, wht: 0, disc: 2000,
     notes: 'ส่งมอบ ณ คลังสินค้าลูกค้า / พนักงานส่งของจะโทรแจ้งก่อน 30 นาที',
     sigs: ['ผู้ส่งของ','ผู้รับของ']
+  },
+  billing: {
+    seller: 'บริษัท พรีเมียร์ ดิสทริบิวชั่น จำกัด', sellerAddr: '77 ถนนสุขุมวิท แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110',
+    sellerPhone: '02-661-2020', sellerEmail: 'account@premierdist.co.th', sellerTax: '0-1055-22110-99-4',
+    buyer: 'บริษัท เซ็นทรัล มาร์เก็ตติ้ง จำกัด', buyerAddr: '999 ถนนพระราม 1 เขตปทุมวัน กรุงเทพฯ 10330', buyerTax: '0-1055-88991-22-5',
+    docNo: 'BN-2568-033', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าสินค้าตามใบแจ้งหนี้ INV-2568-014', qty:1, unit:'รายการ', price:52000},
+      {desc:'ค่าสินค้าตามใบแจ้งหนี้ INV-2568-015', qty:1, unit:'รายการ', price:31500},
+      {desc:'ค่าสินค้าตามใบแจ้งหนี้ INV-2568-016', qty:1, unit:'รายการ', price:18700},
+    ],
+    vat: 0, wht: 0, disc: 0,
+    notes: 'กรุณาชำระเงินภายในวันที่ครบกำหนด มิฉะนั้นจะคิดดอกเบี้ยผิดนัดชำระ 1.5% ต่อเดือน',
+    sigs: ['ผู้วางบิล','ผู้รับวางบิล']
+  },
+  creditnote: {
+    seller: 'บริษัท ไบร์ท อิเล็กทรอนิกส์ จำกัด', sellerAddr: '35 ถนนรัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพฯ 10400',
+    sellerPhone: '02-274-6688', sellerEmail: 'finance@brightelec.co.th', sellerTax: '0-1055-45566-77-8',
+    buyer: 'บริษัท เมกะ โฮมมาร์ท จำกัด', buyerAddr: '88 ถนนบางนา-ตราด กม.5 เขตบางนา กรุงเทพฯ 10260', buyerTax: '0-1055-33445-56-9',
+    docNo: 'CN-2568-012', docDate: '27/06/2568',
+    items: [
+      {desc:'คืนสินค้าชำรุด รุ่น BE-220 (อ้างอิงใบแจ้งหนี้ INV-2568-009)', qty:5, unit:'ชิ้น', price:1490},
+      {desc:'ส่วนลดพิเศษหลังการตรวจสอบคุณภาพ', qty:1, unit:'รายการ', price:800},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ใบลดหนี้ฉบับนี้ออกเพื่อปรับปรุงยอดหนี้ตามใบแจ้งหนี้เลขที่ INV-2568-009',
+    sigs: ['ผู้ออกใบลดหนี้','ผู้รับเอกสาร']
+  },
+  po: {
+    seller: 'บริษัท กรีนฟู้ด อินดัสทรี จำกัด', sellerAddr: '120 ถนนเทพารักษ์ ตำบลบางเสาธง อำเภอบางเสาธง สมุทรปราการ 10570',
+    sellerPhone: '02-315-7799', sellerEmail: 'purchasing@greenfood.co.th', sellerTax: '0-1055-56677-88-0',
+    buyer: 'ห้างหุ้นส่วนจำกัด วัตถุดิบไทย', buyerAddr: '210 ถนนพุทธมณฑลสาย 4 เขตทวีวัฒนา กรุงเทพฯ 10170', buyerTax: '0-1055-99001-11-2',
+    docNo: 'PO-2568-078', docDate: '27/06/2568',
+    items: [
+      {desc:'แป้งสาลีอเนกประสงค์ ถุง 25 กก.', qty:40, unit:'ถุง', price:520},
+      {desc:'น้ำตาลทรายขาว ถุง 25 กก.', qty:30, unit:'ถุง', price:640},
+      {desc:'น้ำมันปาล์ม ถัง 18 ลิตร', qty:20, unit:'ถัง', price:980},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ขอให้จัดส่งภายใน 7 วันทำการ พร้อมใบกำกับภาษีเต็มรูปแบบ',
+    sigs: ['ผู้สั่งซื้อ','ผู้รับออเดอร์']
+  },
+  deposit: {
+    seller: 'บริษัท แกรนด์ อีเวนต์ จำกัด', sellerAddr: '58 ถนนรามคำแหง แขวงหัวหมาก เขตบางกะปิ กรุงเทพฯ 10240',
+    sellerPhone: '02-318-4455', sellerEmail: 'events@grandevent.co.th', sellerTax: '0-1055-11002-23-4',
+    buyer: 'คุณศิริพร เจริญสุข', buyerAddr: '25/8 หมู่บ้านสวนทอง ถนนกรุงเทพกรีฑา เขตสะพานสูง กรุงเทพฯ 10250', buyerTax: '',
+    docNo: 'DP-2568-019', docDate: '27/06/2568',
+    items: [
+      {desc:'มัดจำค่าเช่าสถานที่จัดงานแต่งงาน (30%)', qty:1, unit:'งาน', price:45000},
+      {desc:'มัดจำค่าตกแต่งดอกไม้และเวที', qty:1, unit:'งาน', price:15000},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ยอดมัดจำนี้จะนำไปหักออกจากยอดชำระเต็มจำนวนในวันจัดงาน สงวนสิทธิ์ไม่คืนมัดจำหากยกเลิกภายใน 15 วันก่อนวันงาน',
+    sigs: ['ผู้รับมัดจำ','ผู้จ่ายมัดจำ']
+  },
+  taxinvoice: {
+    seller: 'บริษัท เอเชีย โลจิสติกส์ เซอร์วิส จำกัด', sellerAddr: '99 ถนนบางนา-ตราด กม.10 เขตบางนา กรุงเทพฯ 10260',
+    sellerPhone: '02-398-6611', sellerEmail: 'billing@asialogistics.co.th', sellerTax: '0-1055-77889-90-1',
+    buyer: 'บริษัท สยาม อิมปอร์ต เอ็กซ์พอร์ต จำกัด', buyerAddr: '48 ถนนสีลม เขตบางรัก กรุงเทพฯ 10500', buyerTax: '0-1055-22334-45-6',
+    docNo: 'TXI-2568-051', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าขนส่งสินค้าทางบก (กรุงเทพฯ-เชียงใหม่)', qty:6, unit:'เที่ยว', price:8500},
+      {desc:'ค่าบริการคลังสินค้าและกระจายสินค้า', qty:1, unit:'เดือน', price:22000},
+    ],
+    vat: 7, wht: 1, disc: 0,
+    notes: 'ใบกำกับภาษีฉบับเต็มรูปแบบตามประมวลรัษฎากร กรุณาตรวจสอบความถูกต้องก่อนนำไปใช้สิทธิภาษีซื้อ',
+    sigs: ['ผู้ออกใบกำกับภาษี','ผู้รับเอกสาร']
+  },
+  debitnote: {
+    seller: 'บริษัท ออฟฟิศ ซัพพลาย โปร จำกัด', sellerAddr: '15 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900',
+    sellerPhone: '02-580-2233', sellerEmail: 'sales@officesupplypro.co.th', sellerTax: '0-1055-66778-89-2',
+    buyer: 'บริษัท เวิลด์ไวด์ เทรดดิ้ง จำกัด', buyerAddr: '300 ถนนเจริญกรุง เขตบางรัก กรุงเทพฯ 10500', buyerTax: '0-1055-33221-10-3',
+    docNo: 'DN-2568-008', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าขนส่งเพิ่มเติมกรณีเร่งด่วน (อ้างอิงใบแจ้งหนี้ INV-2568-011)', qty:1, unit:'รายการ', price:1500},
+      {desc:'ส่วนต่างราคาสินค้าที่ปรับเพิ่มตามสัญญา', qty:1, unit:'รายการ', price:3200},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ใบเพิ่มหนี้ฉบับนี้ออกเพื่อเรียกเก็บส่วนต่างเพิ่มเติมจากใบแจ้งหนี้เลขที่ INV-2568-011',
+    sigs: ['ผู้ออกใบเพิ่มหนี้','ผู้รับเอกสาร']
+  },
+  serviceagreement: {
+    seller: 'บริษัท ครีเอทีฟ สตูดิโอ จำกัด', sellerAddr: '22 ซอยสุขุมวิท 31 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110',
+    sellerPhone: '02-258-9911', sellerEmail: 'contact@creativestudio.co.th', sellerTax: '0-1055-44332-21-0',
+    buyer: 'บริษัท เนกซ์เจน สตาร์ทอัพ จำกัด', buyerAddr: '10 อาคารทรู ดิจิทัล ปาร์ค ถนนสุขุมวิท เขตบางจาก กรุงเทพฯ 10260', buyerTax: '0-1055-99887-66-5',
+    docNo: 'SA-2568-006', docDate: '27/06/2568',
+    items: [
+      {desc:'ออกแบบและพัฒนาแบรนด์องค์กร (Brand Identity)', qty:1, unit:'โครงการ', price:65000},
+      {desc:'ผลิตวิดีโอแนะนำองค์กร ความยาว 3 นาที', qty:1, unit:'ชิ้น', price:35000},
+      {desc:'จัดทำเว็บไซต์บริษัท (5 หน้า)', qty:1, unit:'โครงการ', price:28000},
+    ],
+    vat: 7, wht: 3, disc: 0,
+    notes: 'ระยะเวลาดำเนินงาน 60 วันนับจากวันเซ็นสัญญา ชำระเงินงวดที่ 1 จำนวน 50% เมื่อเซ็นสัญญา ส่วนที่เหลือชำระเมื่องานเสร็จสมบูรณ์',
+    sigs: ['ผู้ว่าจ้าง','ผู้รับจ้าง']
+  },
+  whtcert: {
+    seller: 'บริษัท เอ็นเนอร์จี โซลูชั่นส์ จำกัด', sellerAddr: '150 ถนนวิภาวดีรังสิต แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900',
+    sellerPhone: '02-940-1122', sellerEmail: 'hr@energysolutions.co.th', sellerTax: '0-1055-11224-56-7',
+    buyer: 'บริษัท ที่ปรึกษาบัญชี พาร์ทเนอร์ จำกัด', buyerAddr: '40 ถนนสาทรใต้ เขตสาทร กรุงเทพฯ 10120', buyerTax: '0-1055-88776-54-3',
+    docNo: 'WHT-2568-027', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าที่ปรึกษาบัญชีและภาษี ประจำเดือนมิถุนายน 2568', qty:1, unit:'เดือน', price:25000},
+    ],
+    vat: 0, wht: 3, disc: 0,
+    notes: 'หัก ณ ที่จ่ายตามมาตรา 3 เตรส แห่งประมวลรัษฎากร ประเภทเงินได้: ค่าจ้างทำของ/ค่าบริการวิชาชีพ',
+    sigs: ['ผู้หักภาษี ณ ที่จ่าย','ผู้ถูกหักภาษี']
+  },
+  workorder: {
+    seller: 'บริษัท โฮมแคร์ เมนเทนแนนซ์ จำกัด', sellerAddr: '18 ถนนกาญจนาภิเษก แขวงบางแค เขตบางแค กรุงเทพฯ 10160',
+    sellerPhone: '02-454-7788', sellerEmail: 'service@homecaremaintenance.co.th', sellerTax: '0-1055-22556-78-9',
+    buyer: 'อาคารชุด ริเวอร์วิว เรสซิเดนซ์', buyerAddr: '77 ถนนเจริญนคร เขตคลองสาน กรุงเทพฯ 10600', buyerTax: '',
+    docNo: 'WO-2568-064', docDate: '27/06/2568',
+    items: [
+      {desc:'ตรวจเช็คและบำรุงรักษาระบบปั๊มน้ำส่วนกลาง', qty:1, unit:'งาน', price:3500},
+      {desc:'ซ่อมแซมระบบไฟฟ้าโถงลิฟต์ชั้น 1-3', qty:1, unit:'งาน', price:4800},
+      {desc:'ทำความสะอาดถังเก็บน้ำใต้ดิน', qty:2, unit:'ถัง', price:2200},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'กำหนดเข้าดำเนินงานวันที่ 30 มิ.ย. 2568 เวลา 09:00-16:00 น. โปรดแจ้งเจ้าหน้าที่นิติบุคคลก่อนเข้าปฏิบัติงาน',
+    sigs: ['ผู้สั่งงาน','ผู้รับงาน']
+  },
+  jobcompletion: {
+    seller: 'บริษัท ดีไซน์ บิลด์ คอนสตรัคชั่น จำกัด', sellerAddr: '66 ถนนกรุงเทพกรีฑา แขวงหัวหมาก เขตบางกะปิ กรุงเทพฯ 10240',
+    sellerPhone: '02-379-2255', sellerEmail: 'project@designbuild.co.th', sellerTax: '0-1055-33667-89-0',
+    buyer: 'บริษัท โกลบอล พร็อพเพอร์ตี้ จำกัด', buyerAddr: '5 ถนนรัชดาภิเษก เขตห้วยขวาง กรุงเทพฯ 10310', buyerTax: '0-1055-11335-57-9',
+    docNo: 'JC-2568-015', docDate: '27/06/2568',
+    items: [
+      {desc:'งานตกแต่งภายในสำนักงานชั้น 5 (แล้วเสร็จ 100%)', qty:1, unit:'งาน', price:380000},
+      {desc:'งานติดตั้งระบบไฟฟ้าและแสงสว่าง', qty:1, unit:'งาน', price:95000},
+      {desc:'งานทาสีและตกแต่งผนัง', qty:1, unit:'งาน', price:52000},
+    ],
+    vat: 7, wht: 3, disc: 0,
+    notes: 'งานทั้งหมดส่งมอบตรงตามแบบและระยะเวลาที่กำหนดในสัญญา รอการตรวจรับและอนุมัติเบิกจ่ายงวดสุดท้าย',
+    sigs: ['ผู้ส่งมอบงาน','ผู้ตรวจรับงาน']
   }
+};
+
+/* Sample data for the vendor price-comparison document, which uses a different shape */
+const sampleCompareData = {
+  seller: 'บริษัท กรีนฟู้ด อินดัสทรี จำกัด',
+  docNo: 'PC-2568-014', docDate: '27/06/2568',
+  vendors: ['ห้างหุ้นส่วนจำกัด วัตถุดิบไทย', 'บริษัท ฟาร์มเฟรช ซัพพลาย จำกัด', 'บริษัท ไทยแอกโกร โฮลเซล จำกัด'],
+  items: [
+    {desc:'แป้งสาลีอเนกประสงค์ ถุง 25 กก.', prices:[520,545,510]},
+    {desc:'น้ำตาลทรายขาว ถุง 25 กก.', prices:[640,625,650]},
+    {desc:'น้ำมันปาล์ม ถัง 18 ลิตร', prices:[980,995,970]},
+    {desc:'เกลือป่นบรรจุถุง 1 กก.', prices:[18,17,19]},
+  ],
+  notes: 'เปรียบเทียบราคาผู้เสนอราคา 3 ราย เพื่อประกอบการตัดสินใจจัดซื้อประจำไตรมาส'
 };
 
 function fmtSample(n){ return n.toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
+let currentSampleType = 'quotation';
+
 function showSampleDoc(type, btn) {
   document.querySelectorAll('.sample-tab').forEach(t=>t.classList.remove('active'));
   if(btn) btn.classList.add('active');
+  currentSampleType = type;
+  if(type === 'comparison') { renderCompareSample(); return; }
   const d = sampleData[type];
   if(!d) return;
   const sub = d.items.reduce((s,it)=>s+it.qty*it.price,0);
@@ -1772,7 +2225,7 @@ function showSampleDoc(type, btn) {
   const vatRow = d.vat>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>VAT ${d.vat}%</span><span>฿${fmtSample(vat)}</span></div>`:'';
   const whtRow = d.wht>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>หัก WHT ${d.wht}%</span><span>-฿${fmtSample(wht)}</span></div>`:'';
 
-  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#0d9488';
+  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#536850';
 
   document.getElementById('sample-preview-area').innerHTML = `
     <div style="max-width:560px;margin:0 auto">
@@ -1817,7 +2270,7 @@ function showSampleDoc(type, btn) {
         <tbody>${itemsHtml}</tbody>
       </table>
       <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-        <div style="background:#f0fdfa;border-radius:10px;padding:12px 18px;min-width:220px">
+        <div style="background:#eef0de;border-radius:10px;padding:12px 18px;min-width:220px">
           <div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:#6b7280"><span>ยอดรวมก่อน VAT</span><span>฿${fmtSample(sub)}</span></div>
           ${discRow}${vatRow}${whtRow}
           <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(13,148,136,0.2);margin-top:6px;padding-top:7px;font-size:15px;font-weight:700;color:${themeColor}"><span>ยอดสุทธิ</span><span>฿${fmtSample(grand)}</span></div>
@@ -1837,6 +2290,91 @@ function showSampleDoc(type, btn) {
         </div>
       </div>
     </div>`;
+}
+
+function renderCompareSample() {
+  const d = sampleCompareData;
+  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#536850';
+  const vL = d.vendors;
+  const hCols = vL.map(v=>`<th style="background:${themeColor};color:white;padding:8px 10px;text-align:right;font-size:11px">${v}</th>`).join('');
+  const rows = d.items.map((it,i)=>{
+    const minP = Math.min(...it.prices);
+    const pCols = it.prices.map(p=>`<td style="text-align:right;padding:6px 10px;${p===minP?`color:${themeColor};font-weight:700`:''}">฿${fmtSample(p)}</td>`).join('');
+    return `<tr><td style="color:#9ca3af;padding:6px 10px">${i+1}</td><td style="padding:6px 10px">${it.desc}</td>${pCols}</tr>`;
+  }).join('');
+  const totals = vL.map((_,j)=>d.items.reduce((s,it)=>s+it.prices[j],0));
+  const minT = Math.min(...totals);
+  const tCols = totals.map(v=>`<td style="text-align:right;padding:6px 10px;font-weight:700;${v===minT?`color:${themeColor}`:''}">฿${fmtSample(v)}</td>`).join('');
+  const winIdx = totals.indexOf(minT);
+
+  document.getElementById('sample-preview-area').innerHTML = `
+    <div style="max-width:560px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+        <div><div style="font-size:18px;font-weight:700;color:${themeColor}">${d.seller}</div></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700">${docInfo.comparison?.th||'คู่เทียบใบเสนอราคา'}</div>
+          <div style="font-size:11px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${docInfo.comparison?.en||'Price Comparison'}</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${themeColor}">${d.docNo}</b></div>
+          <div style="font-size:12px;color:#6b7280">วันที่: ${d.docDate}</div>
+        </div>
+      </div>
+      <div style="height:3px;background:${themeColor};border-radius:2px;opacity:0.7;margin-bottom:16px"></div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px">
+        <thead><tr>
+          <th style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px;width:28px">#</th>
+          <th style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px">รายการ</th>
+          ${hCols}
+        </tr></thead>
+        <tbody>${rows}
+          <tr style="background:#eef0de"><td></td><td style="padding:6px 10px;font-weight:700">รวมทั้งหมด</td>${tCols}</tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;padding:10px 14px;background:#eef0de;border-radius:8px;display:flex;align-items:center;gap:10px">
+        <i class="ti ti-trophy" style="color:${themeColor};font-size:20px" aria-hidden="true"></i>
+        <div><div style="font-weight:600;font-size:13px">เสนอราคาต่ำสุด</div>
+        <div style="font-size:12px;color:#6b7280">${vL[winIdx]} เสนอราคาต่ำสุดที่ ฿${fmtSample(minT)}</div></div>
+      </div>
+      ${d.notes?`<div style="background:#f9fafb;border-radius:8px;padding:10px 12px;font-size:11px;color:#6b7280;margin-top:16px"><b>หมายเหตุ:</b> ${d.notes}</div>`:''}
+    </div>`;
+}
+
+/* Load the currently-shown sample document into the real, editable creation form */
+function useSampleAsTemplate() {
+  const type = currentSampleType;
+  selectDoc(type); // resets the form for this doc type, switches to the form page
+
+  if (type === 'comparison') {
+    const d = sampleCompareData;
+    document.getElementById('seller-name').value = d.seller;
+    document.getElementById('vendor-count').value = String(d.vendors.length);
+    updateVendors();
+    ['v1','v2','v3','v4'].forEach((id,i)=>{
+      const el = document.getElementById(id);
+      if(el) el.value = d.vendors[i] || '';
+    });
+    document.getElementById('doc-notes').value = d.notes || '';
+    compareItems = d.items.map(it => ({ desc: it.desc, prices: [it.prices[0]||0, it.prices[1]||0, it.prices[2]||0, it.prices[3]||0] }));
+    renderCompareItems();
+  } else {
+    const d = sampleData[type];
+    if (!d) return;
+    document.getElementById('seller-name').value = d.seller || '';
+    document.getElementById('seller-address').value = d.sellerAddr || '';
+    document.getElementById('seller-phone').value = d.sellerPhone || '';
+    document.getElementById('seller-email').value = d.sellerEmail || '';
+    document.getElementById('seller-tax').value = d.sellerTax || '';
+    document.getElementById('buyer-name').value = d.buyer || '';
+    document.getElementById('buyer-address').value = d.buyerAddr || '';
+    document.getElementById('buyer-tax').value = d.buyerTax || '';
+    document.getElementById('doc-notes').value = d.notes || '';
+    document.getElementById('vat-rate').value = String(d.vat ?? 7);
+    document.getElementById('wht-rate').value = String(d.wht ?? 0);
+    document.getElementById('discount-type').value = 'thb';
+    document.getElementById('discount-value').value = String(d.disc ?? 0);
+    items = d.items.map(it => ({ desc: it.desc, qty: it.qty, unit: it.unit, price: it.price }));
+    renderItems();
+    calcTotal();
+  }
 }
 
 // Init
