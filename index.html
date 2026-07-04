@@ -572,10 +572,19 @@ nav {
 /* DOC PREVIEW — always a fixed light "paper" look, independent of site dark mode, sized like A4 */
 #doc-preview {
   background: #fff; color: #111827; color-scheme: light;
-  width: 210mm; max-width: 100%; min-height: 297mm;
+  width: 210mm;
   box-sizing: border-box; margin: 0 auto;
-  padding: 15mm 10mm; font-size: var(--doc-font-size, 13px); line-height: 1.6;
+  padding: 14mm 12mm; font-size: var(--doc-font-size, 13px); line-height: 1.55;
   display: flex; flex-direction: column;
+  transform-origin: top center;
+}
+/* Scale preview to fit container width on small screens */
+@media (max-width: 860px) {
+  #preview-modal > .modal-box { max-width: 100%; }
+  #doc-preview {
+    transform: scale(calc((min(100vw, 700px) - 40px) / 794px));
+    margin-bottom: calc((min(100vw, 700px) - 40px) / 794px * 297mm - 297mm);
+  }
 }
 #doc-preview { border-top: 4px solid var(--doc-theme); }
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
@@ -600,18 +609,18 @@ nav {
 .doc-meta-item label { font-size: 0.769em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--doc-theme); font-weight: 600; display: block; margin-bottom: 1px; }
 .doc-meta-item span { font-size: 0.923em; font-weight: 500; }
 .preview-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 0.923em; margin-bottom: 14px; }
-.preview-table th, .preview-table td { overflow-wrap: break-word; word-break: break-word; }
-.preview-table th { background: transparent; color: var(--doc-theme-dark); text-align: left; padding: 8px 10px; font-size: 0.769em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--doc-theme); }
+.preview-table th, .preview-table td { overflow-wrap: break-word; word-break: normal; }
+.preview-table th { background: transparent; color: var(--doc-theme-dark); text-align: left; padding: 7px 8px; font-size: 0.769em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--doc-theme); }
 .preview-table th:last-child { text-align: right; }
-.preview-table td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; }
+.preview-table td { padding: 7px 8px; border-bottom: 1px solid #e5e7eb; }
 .preview-table td:last-child { text-align: right; }
 .preview-table tr:last-child td { border-bottom: none; }
-.preview-table .col-num { width: 5%; }
-.preview-table .col-item { width: 40%; }
-.preview-table .col-qty { width: 8%; white-space: nowrap; }
-.preview-table .col-unit { width: 10%; white-space: nowrap; }
-.preview-table .col-price { width: 18%; white-space: nowrap; }
-.preview-table .col-total { width: 19%; white-space: nowrap; }
+.preview-table .col-num { width: 4%; }
+.preview-table .col-item { width: 42%; word-break: break-word; }
+.preview-table .col-qty { width: 7%; text-align: center; white-space: nowrap; overflow: hidden; }
+.preview-table .col-unit { width: 9%; text-align: center; white-space: nowrap; overflow: hidden; }
+.preview-table .col-price { width: 19%; text-align: right; white-space: nowrap; overflow: hidden; }
+.preview-table .col-total { width: 19%; text-align: right; white-space: nowrap; overflow: hidden; font-weight: 600; }
 .preview-total { display: flex; justify-content: flex-end; margin-bottom: 20px; }
 .preview-total-box { min-width: 240px; padding-top: 8px; border-top: 1px solid #e5e7eb; }
 .preview-total-row { display: flex; justify-content: space-between; font-size: 0.923em; padding: 2px 0; color: #6b7280; }
@@ -2007,12 +2016,12 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
   const sigs=sigMap[currentDocType]||[t('sig.default0'),t('sig.default1')];
   const itemsHtml=items.map((it,i)=>`
     <tr>
-      <td style="color:#9ca3af">${i+1}</td>
-      <td>${it.desc||'-'}</td>
-      <td style="text-align:center">${it.qty}</td>
-      <td style="text-align:center">${it.unit}</td>
-      <td style="text-align:right">${fmtN(it.price)}</td>
-      <td style="text-align:right;font-weight:600">${fmtN(it.qty*it.price)}</td>
+      <td class="col-num" style="color:#9ca3af">${i+1}</td>
+      <td class="col-item">${it.desc||'-'}</td>
+      <td class="col-qty">${it.qty}</td>
+      <td class="col-unit">${it.unit}</td>
+      <td class="col-price">${fmtN(it.price)}</td>
+      <td class="col-total">${fmtN(it.qty*it.price)}</td>
     </tr>`).join('');
   const discRow = discAmt>0 ? `<div class="preview-total-row"><span>${t('pv.discount')}</span><span>-฿${fmtN(discAmt)}</span></div>` : '';
   const vatRow = vr>0 ? `<div class="preview-total-row"><span>VAT ${vr}%</span><span>฿${fmtN(vat)}</span></div>` : '';
