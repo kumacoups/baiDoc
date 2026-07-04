@@ -573,19 +573,13 @@ nav {
 #doc-preview {
   background: #fff; color: #111827; color-scheme: light;
   width: 210mm; min-height: 297mm;
-  box-sizing: border-box; margin: 0 auto;
+  box-sizing: border-box; margin: 0;
   padding: 16mm 14mm; font-size: var(--doc-font-size, 13px); line-height: 1.55;
+  font-family: var(--font-doc, 'Sarabun', sans-serif);
   display: flex; flex-direction: column;
-  transform-origin: top center;
+  transform-origin: top left;
 }
-/* Scale preview to fit container width on small screens */
-@media (max-width: 860px) {
-  #preview-modal > .modal-box { max-width: 100%; }
-  #doc-preview {
-    transform: scale(calc((min(100vw, 700px) - 40px) / 794px));
-    margin-bottom: calc((min(100vw, 700px) - 40px) / 794px * 297mm - 297mm);
-  }
-}
+/* Scale handled by JS scaleDocPreview() */
 #doc-preview { border-top: 4px solid var(--doc-theme); }
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 .doc-company-name { font-size: 1.385em; font-weight: 700; color: var(--doc-theme); }
@@ -1300,7 +1294,9 @@ nav {
         <button class="close-btn" onclick="closePreview()" aria-label="ปิด"><i class="ti ti-x" aria-hidden="true"></i></button>
       </div>
     </div>
-    <div id="doc-preview"></div>
+    <div id="preview-scaler" style="width:100%;overflow:hidden;background:#f3f4f6;padding:0">
+      <div id="doc-preview"></div>
+    </div>
   </div>
 </div>
 
@@ -1398,6 +1394,7 @@ let items = [{ desc:'', qty:1, unit:'ชิ้น', price:0 }];
 let compareItems = [{ desc:'', prices:[0,0,0,0] }];
 let currentFont = "'Sarabun', sans-serif";
 let currentFontSize = 13;
+document.documentElement.style.setProperty('--font-doc', currentFont);
 let currentLogo = null; // base64 data URL
 let currentLang = localStorage.getItem('baidoc-lang') || 'th';
 
@@ -1684,7 +1681,16 @@ async function downloadPDF(){
   btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> ...';
   try{
     const node = document.getElementById('doc-preview');
+    // Temporarily remove CSS transform so html2canvas captures full resolution
+    const savedTransform = node.style.transform;
+    const savedOrigin = node.style.transformOrigin;
+    node.style.transform = 'none';
+    node.style.transformOrigin = 'top left';
     const canvas = await html2canvas(node, { scale: 2, backgroundColor:'#ffffff', useCORS:true });
+    node.style.transform = savedTransform;
+    node.style.transformOrigin = savedOrigin;
+    // Re-adjust scaler height after restoring transform
+    requestAnimationFrame(scaleDocPreview);
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation:'portrait', unit:'pt', format:'a4' });
     const pageW = pdf.internal.pageSize.getWidth();
@@ -1793,6 +1799,7 @@ function setFont(el) {
   document.querySelectorAll('.font-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   currentFont = el.dataset.font;
+  document.documentElement.style.setProperty('--font-doc', currentFont);
   document.getElementById('doc-preview').style.fontFamily = currentFont;
 }
 
@@ -1975,6 +1982,20 @@ function remCmp(i){ if(compareItems.length<=1) return; compareItems.splice(i,1);
 /* PREVIEW */
 function getV(id){ return document.getElementById(id)?.value||''; }
 
+function scaleDocPreview() {
+  const scaler = document.getElementById('preview-scaler');
+  const preview = document.getElementById('doc-preview');
+  if (!scaler || !preview) return;
+  const containerW = scaler.clientWidth || scaler.offsetWidth || 350;
+  const docW = 794; // 210mm in px at 96dpi
+  const scale = Math.min(1, containerW / docW);
+  preview.style.transform = scale < 1 ? `scale(${scale})` : '';
+  preview.style.transformOrigin = 'top left';
+  // Adjust scaler height to match scaled document height
+  const docH = preview.scrollHeight;
+  scaler.style.height = scale < 1 ? (docH * scale) + 'px' : '';
+}
+
 function showPreview(){
   const info=docInfo[currentDocType];
   const sub=items.reduce((s,it)=>s+(it.qty*it.price),0);
@@ -1996,6 +2017,8 @@ function showPreview(){
   preview.style.setProperty('--doc-font-size', currentFontSize + 'px');
   document.getElementById('modal-title').textContent = t('pv.preview')+' '+info[currentLang];
   document.getElementById('preview-modal').classList.add('open');
+  // Wait for layout then scale
+  requestAnimationFrame(() => requestAnimationFrame(scaleDocPreview));
 }
 
 function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
