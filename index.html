@@ -332,6 +332,27 @@ nav {
 .swatch-custom:hover { border-color: var(--doc-theme); }
 .theme-hint { font-size: 12px; color: var(--text-muted); }
 
+/* LOGO UPLOAD */
+.logo-upload-area {
+  border: 2px dashed var(--border); border-radius: 12px;
+  padding: 18px; text-align: center; cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative; overflow: hidden;
+}
+.logo-upload-area:hover { border-color: var(--theme); background: var(--theme-bg); }
+.logo-upload-area input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.logo-preview-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.logo-preview-img { max-height: 64px; max-width: 160px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); }
+.logo-remove-btn {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 10px; font-size: 12px; cursor: pointer;
+  color: var(--text-muted); font-family: 'Sarabun', sans-serif;
+  transition: border-color 0.15s, color 0.15s;
+}
+.logo-remove-btn:hover { border-color: #ef4444; color: #ef4444; }
+
 /* FONT PICKER */
 .font-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -864,7 +885,7 @@ nav {
         <div class="doc-desc">Debit Note</div>
       </div>
       <div class="doc-card" onclick="selectDoc('serviceagreement')">
-        <i class="ti ti-file-signature doc-icon" aria-hidden="true"></i>
+        <i class="ti ti-pen doc-icon" aria-hidden="true"></i>
         <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
         <div class="doc-desc">Service Agreement</div>
       </div>
@@ -1000,7 +1021,7 @@ nav {
           <div class="doc-name" data-i18n="doc.debitnote.name">ใบเพิ่มหนี้</div><div class="doc-desc">Debit Note</div>
         </div>
         <div class="doc-card" id="card-serviceagreement" onclick="selectDoc('serviceagreement')">
-          <i class="ti ti-file-signature doc-icon" aria-hidden="true"></i>
+          <i class="ti ti-pen doc-icon" aria-hidden="true"></i>
           <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div><div class="doc-desc">Service Agreement</div>
         </div>
         <div class="doc-card" id="card-whtcert" onclick="selectDoc('whtcert')">
@@ -1026,6 +1047,23 @@ nav {
       <i class="ti ti-chevron-down" aria-hidden="true"></i>
     </div>
     <div class="acc-body">
+      <!-- LOGO UPLOAD -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">โลโก้บริษัท</div>
+        <div id="logo-drop-area" class="logo-upload-area">
+          <input type="file" id="logo-file-input" accept="image/*" onchange="handleLogoUpload(event)">
+          <div id="logo-placeholder">
+            <i class="ti ti-photo-up" style="font-size:28px;color:var(--text-muted);display:block;margin-bottom:6px"></i>
+            <div style="font-size:13px;color:var(--text-muted)">คลิกหรือลากรูปมาวาง</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">PNG, JPG, SVG — แนะนำพื้นหลังโปร่งใส</div>
+          </div>
+          <div id="logo-preview-wrap" class="logo-preview-wrap" style="display:none;justify-content:center">
+            <img id="logo-preview-img" class="logo-preview-img" src="" alt="โลโก้">
+            <button type="button" class="logo-remove-btn" onclick="removeLogo(event)"><i class="ti ti-x"></i> ลบโลโก้</button>
+          </div>
+        </div>
+      </div>
+
       <!-- COLOR THEME -->
       <div style="margin-bottom:20px">
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.colorlabel">สีธีม</div>
@@ -1318,7 +1356,7 @@ nav {
         <div class="picker-en">Debit Note</div>
       </div>
       <div class="picker-card" onclick="closeDocPicker();selectDoc('serviceagreement')">
-        <i class="ti ti-file-signature picker-icon"></i>
+        <i class="ti ti-pen picker-icon"></i>
         <div class="picker-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
         <div class="picker-en">Service Agreement</div>
       </div>
@@ -1347,6 +1385,7 @@ let items = [{ desc:'', qty:1, unit:'ชิ้น', price:0 }];
 let compareItems = [{ desc:'', prices:[0,0,0,0] }];
 let currentFont = "'Sarabun', sans-serif";
 let currentFontSize = 13;
+let currentLogo = null; // base64 data URL
 let currentLang = localStorage.getItem('baidoc-lang') || 'th';
 
 const docInfo = {
@@ -1744,6 +1783,27 @@ function setFont(el) {
   document.getElementById('doc-preview').style.fontFamily = currentFont;
 }
 
+function handleLogoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    currentLogo = ev.target.result;
+    document.getElementById('logo-preview-img').src = currentLogo;
+    document.getElementById('logo-placeholder').style.display = 'none';
+    document.getElementById('logo-preview-wrap').style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+}
+function removeLogo(e){
+  e.stopPropagation();
+  currentLogo = null;
+  document.getElementById('logo-file-input').value = '';
+  document.getElementById('logo-preview-img').src = '';
+  document.getElementById('logo-placeholder').style.display = 'block';
+  document.getElementById('logo-preview-wrap').style.display = 'none';
+}
+
 function changeFontSize(delta){
   currentFontSize = Math.max(10, Math.min(24, currentFontSize + delta));
   document.getElementById('font-size-display').textContent = currentFontSize + 'px';
@@ -1958,9 +2018,13 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
   const vatRow = vr>0 ? `<div class="preview-total-row"><span>VAT ${vr}%</span><span>฿${fmtN(vat)}</span></div>` : '';
   const whtRow = whtAmt>0 ? `<div class="preview-total-row"><span>${t('pv.wht')} ${whtRate}%</span><span>-฿${fmtN(whtAmt)}</span></div>` : '';
   const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const logoHtml = currentLogo
+    ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`
+    : '';
   return `
     <div class="doc-header">
       <div>
+        ${logoHtml}
         <div class="doc-company-name">${getV('seller-name')||'-'}</div>
         <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
         ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
@@ -2303,10 +2367,14 @@ function showSampleDoc(type, btn) {
 
   const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#536850';
 
+  const sampleLogoHtml = currentLogo
+    ? `<img src="${currentLogo}" style="max-height:40px;max-width:110px;object-fit:contain;display:block;margin-bottom:4px" alt="logo">`
+    : '';
   document.getElementById('sample-preview-area').innerHTML = `
     <div style="max-width:100%;margin:0 auto">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
         <div>
+          ${sampleLogoHtml}
           <div style="font-size:14px;font-weight:700;color:${themeColor}">${d.seller}</div>
           <div style="font-size:10px;color:#6b7280;margin-top:3px">${d.sellerAddr}</div>
           <div style="font-size:10px;color:#6b7280">Tel: ${d.sellerPhone}</div>
