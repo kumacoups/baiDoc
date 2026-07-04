@@ -553,7 +553,7 @@ nav {
   background: #fff; color: #111827; color-scheme: light;
   width: 210mm; max-width: 100%; min-height: 297mm;
   box-sizing: border-box; margin: 0 auto;
-  padding: 15mm; font-size: var(--doc-font-size, 13px); line-height: 1.6;
+  padding: 15mm 10mm; font-size: var(--doc-font-size, 13px); line-height: 1.6;
   display: flex; flex-direction: column;
 }
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
@@ -604,11 +604,11 @@ nav {
   #doc-preview, #doc-preview * { visibility: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   #doc-preview {
     position: absolute; top: 0; left: 0;
-    width: 210mm; max-width: none; height: 297mm; min-height: 0;
-    padding: 15mm; margin: 0; box-sizing: border-box;
-    overflow: hidden;
-    transform: scale(var(--print-scale, 1));
-    transform-origin: top center;
+    width: 210mm; max-width: none; min-height: 297mm;
+    padding: 15mm 10mm; margin: 0; box-sizing: border-box;
+  }
+  .preview-table tr, .doc-sig, .preview-total, .doc-header {
+    page-break-inside: avoid; break-inside: avoid;
   }
 }
 
@@ -1620,28 +1620,6 @@ function loadSample(){
   renderItems(); calcTotal();
 }
 
-/* ===== FIT DOCUMENT TO A SINGLE PRINTED PAGE ===== */
-function fitDocToOnePage(){
-  const node = document.getElementById('doc-preview');
-  if(!node) return;
-  node.style.setProperty('--print-scale', '1');
-  const naturalHeight = node.scrollHeight; // full content height in px, ignores overflow:hidden clipping
-  const pxPerMm = 96 / 25.4;
-  const pageHeightPx = 297 * pxPerMm;
-  const scale = Math.min(1, pageHeightPx / naturalHeight);
-  node.style.setProperty('--print-scale', scale.toFixed(4));
-}
-function resetDocScale(){
-  document.getElementById('doc-preview')?.style.setProperty('--print-scale', '1');
-}
-window.addEventListener('beforeprint', fitDocToOnePage);
-window.addEventListener('afterprint', resetDocScale);
-if (window.matchMedia) {
-  window.matchMedia('print').addEventListener('change', (mql) => {
-    if (mql.matches) fitDocToOnePage(); else resetDocScale();
-  });
-}
-
 /* ===== DOWNLOAD AS PDF ===== */
 async function downloadPDF(){
   const btn = document.getElementById('download-btn');
@@ -1656,13 +1634,20 @@ async function downloadPDF(){
     const pdf = new jsPDF({ orientation:'portrait', unit:'pt', format:'a4' });
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
-    // Shrink-to-fit: scale the whole document image so it always lands on a single A4 page,
-    // instead of slicing it across multiple pages.
-    const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
-    const imgW = canvas.width * ratio;
-    const imgH = canvas.height * ratio;
-    const x = (pageW - imgW) / 2;
-    pdf.addImage(imgData, 'PNG', x, 0, imgW, imgH);
+    // Fill the page at full width. If content is taller than one A4 page,
+    // continue it onto additional pages instead of shrinking everything down.
+    const imgW = pageW;
+    const imgH = (canvas.height * imgW) / canvas.width;
+    let heightLeft = imgH;
+    let position = 0;
+    pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
+    heightLeft -= pageH;
+    while(heightLeft > 0){
+      position = heightLeft - imgH;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
+      heightLeft -= pageH;
+    }
     const info = docInfo[currentDocType];
     const fname = `${getV('doc-number')||info.prefix}-${(getV('seller-name')||'document').replace(/[^a-zA-Z0-9ก-๙]+/g,'_')}.pdf`;
     pdf.save(fname);
