@@ -572,9 +572,9 @@ nav {
 /* DOC PREVIEW — always a fixed light "paper" look, independent of site dark mode, sized like A4 */
 #doc-preview {
   background: #fff; color: #111827; color-scheme: light;
-  width: 210mm;
+  width: 210mm; min-height: 297mm;
   box-sizing: border-box; margin: 0 auto;
-  padding: 14mm 12mm; font-size: var(--doc-font-size, 13px); line-height: 1.55;
+  padding: 16mm 14mm; font-size: var(--doc-font-size, 13px); line-height: 1.55;
   display: flex; flex-direction: column;
   transform-origin: top center;
 }
@@ -608,20 +608,24 @@ nav {
 }
 .doc-meta-item label { font-size: 0.769em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--doc-theme); font-weight: 600; display: block; margin-bottom: 1px; }
 .doc-meta-item span { font-size: 0.923em; font-weight: 500; }
-.preview-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 0.923em; margin-bottom: 14px; }
+.preview-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 0.923em; margin-bottom: 0; }
 .preview-table th, .preview-table td { overflow-wrap: break-word; word-break: normal; }
-.preview-table th { background: transparent; color: var(--doc-theme-dark); text-align: left; padding: 7px 8px; font-size: 0.769em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--doc-theme); }
-.preview-table th:last-child { text-align: right; }
-.preview-table td { padding: 7px 8px; border-bottom: 1px solid #e5e7eb; }
+.preview-table th { background: var(--doc-theme); color: #fff; text-align: left; padding: 9px 10px; font-size: 0.769em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: none; }
+.preview-table th:first-child { border-radius: 0; }
+.preview-table th:last-child { text-align: right; border-radius: 0; }
+.preview-table td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; }
 .preview-table td:last-child { text-align: right; }
-.preview-table tr:last-child td { border-bottom: none; }
+.preview-table tbody tr:nth-child(even) td { background: #f5f0ea; }
+.preview-table tbody tr:last-child td { border-bottom: none; }
 .preview-table .col-num { width: 4%; }
 .preview-table .col-item { width: 42%; word-break: break-word; }
 .preview-table .col-qty { width: 7%; text-align: center; white-space: nowrap; overflow: hidden; }
 .preview-table .col-unit { width: 9%; text-align: center; white-space: nowrap; overflow: hidden; }
 .preview-table .col-price { width: 19%; text-align: right; white-space: nowrap; overflow: hidden; }
 .preview-table .col-total { width: 19%; text-align: right; white-space: nowrap; overflow: hidden; font-weight: 600; }
-.preview-total { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+/* Grand total footer row — matches warehouse tfoot style */
+.preview-table tfoot tr td { background: #ebf0f8 !important; color: var(--doc-theme); font-weight: 700; font-size: 1em; padding: 10px 10px; border-bottom: none; }
+.preview-total { display: flex; justify-content: flex-end; margin-bottom: 20px; margin-top: 0; }
 .preview-total-box { min-width: 240px; padding-top: 8px; border-top: 1px solid #e5e7eb; }
 .preview-total-row { display: flex; justify-content: space-between; font-size: 0.923em; padding: 2px 0; color: #6b7280; }
 .preview-total-row.grand { border-top: 1.5px solid var(--doc-theme); margin-top: 6px; padding-top: 7px; font-size: 1.154em; font-weight: 700; color: var(--doc-theme-dark); }
@@ -639,7 +643,7 @@ nav {
   #doc-preview {
     position: absolute; top: 0; left: 0;
     width: 210mm; max-width: none; min-height: 297mm;
-    padding: 15mm 10mm; margin: 0; box-sizing: border-box;
+    padding: 16mm 14mm; margin: 0; box-sizing: border-box;
   }
   .preview-table tr, .doc-sig, .preview-total, .doc-header {
     page-break-inside: avoid; break-inside: avoid;
@@ -894,7 +898,7 @@ nav {
         <div class="doc-desc">Debit Note</div>
       </div>
       <div class="doc-card" onclick="selectDoc('serviceagreement')">
-        <i class="ti ti-pen doc-icon" aria-hidden="true"></i>
+        <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 8px" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
         <div class="doc-desc">Service Agreement</div>
       </div>
@@ -1030,7 +1034,7 @@ nav {
           <div class="doc-name" data-i18n="doc.debitnote.name">ใบเพิ่มหนี้</div><div class="doc-desc">Debit Note</div>
         </div>
         <div class="doc-card" id="card-serviceagreement" onclick="selectDoc('serviceagreement')">
-          <i class="ti ti-pen doc-icon" aria-hidden="true"></i>
+          <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 8px" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
           <div class="doc-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div><div class="doc-desc">Service Agreement</div>
         </div>
         <div class="doc-card" id="card-whtcert" onclick="selectDoc('whtcert')">
@@ -1365,7 +1369,7 @@ nav {
         <div class="picker-en">Debit Note</div>
       </div>
       <div class="picker-card" onclick="closeDocPicker();selectDoc('serviceagreement')">
-        <i class="ti ti-pen picker-icon"></i>
+        <svg class="picker-icon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 8px" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         <div class="picker-name" data-i18n="doc.serviceagreement.name">สัญญาว่าจ้าง</div>
         <div class="picker-en">Service Agreement</div>
       </div>
@@ -2066,16 +2070,15 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     <table class="preview-table">
       <thead><tr><th class="col-num">#</th><th class="col-item">${t('th.item')}</th><th class="col-qty" style="text-align:center">${t('th.qty')}</th><th class="col-unit" style="text-align:center">${t('th.unit')}</th><th class="col-price" style="text-align:right">${t('th.price')}</th><th class="col-total">${t('th.total')}</th></tr></thead>
       <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand ? `<tr><td colspan="5" style="text-align:right;font-weight:600;color:#6b7280;font-size:0.9em">${t('pv.subtotal')}</td><td style="text-align:right;color:#6b7280;font-size:0.9em">฿${fmtN(sub)}</td></tr>` : ''}
+        ${discAmt>0 ? `<tr><td colspan="5" style="text-align:right;color:#6b7280;font-size:0.9em">${t('pv.discount')}</td><td style="text-align:right;color:#6b7280;font-size:0.9em">-฿${fmtN(discAmt)}</td></tr>` : ''}
+        ${vr>0 ? `<tr><td colspan="5" style="text-align:right;color:#6b7280;font-size:0.9em">VAT ${vr}%</td><td style="text-align:right;color:#6b7280;font-size:0.9em">฿${fmtN(vat)}</td></tr>` : ''}
+        ${whtAmt>0 ? `<tr><td colspan="5" style="text-align:right;color:#6b7280;font-size:0.9em">${t('pv.wht')} ${whtRate}%</td><td style="text-align:right;color:#6b7280;font-size:0.9em">-฿${fmtN(whtAmt)}</td></tr>` : ''}
+        <tr><td colspan="5" style="text-align:right">${t('pv.grand')}</td><td style="text-align:right">฿${fmtN(grand)}</td></tr>
+      </tfoot>
     </table>
-    <div class="preview-total">
-      <div class="preview-total-box">
-        <div class="preview-total-row"><span>${t('pv.subtotal')}</span><span>฿${fmtN(sub)}</span></div>
-        ${discRow}
-        ${vatRow}
-        ${whtRow}
-        <div class="preview-total-row grand"><span>${t('pv.grand')}</span><span>฿${fmtN(grand)}</span></div>
-      </div>
-    </div>
+    <div style="margin-bottom:20px"></div>
     ${notesHtml}
     <div class="doc-sig">
       <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
@@ -2117,9 +2120,8 @@ function buildCmpPreview(info){
     <div class="doc-meta"><div class="doc-meta-item"><label>${t('f.docdate')}</label><span>${getV('doc-date')||'-'}</span></div></div>
     <table class="preview-table">
       <thead><tr><th style="width:28px">#</th><th>${t('th.item')}</th>${hCols}</tr></thead>
-      <tbody>${rows}
-        <tr style="background:var(--doc-theme-bg)"><td></td><td style="font-weight:700">${t('pv.grandall')}</td>${tCols}</tr>
-      </tbody>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td></td><td>${t('pv.grandall')}</td>${tCols}</tr></tfoot>
     </table>
     ${minT>0?`<div style="margin-top:14px;padding:10px 14px;background:var(--doc-theme-bg);border-radius:8px;display:flex;align-items:center;gap:10px">
       <i class="ti ti-trophy" style="color:var(--doc-theme);font-size:20px" aria-hidden="true"></i>
