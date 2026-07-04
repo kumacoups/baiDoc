@@ -553,7 +553,7 @@ nav {
   background: #fff; color: #111827; color-scheme: light;
   width: 210mm; max-width: 100%; min-height: 297mm;
   box-sizing: border-box; margin: 0 auto;
-  padding: 15mm 10mm; font-size: var(--doc-font-size, 13px); line-height: 1.6;
+  padding: 15mm 10mm; font-size: var(--doc-font-size, 20px); line-height: 1.6;
   display: flex; flex-direction: column;
 }
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
@@ -924,7 +924,7 @@ nav {
         <div style="width:10px;height:10px;border-radius:50%;background:#26de81;opacity:0.7"></div>
         <span style="font-size:11px;color:var(--text-muted);margin-left:8px">ตัวอย่างเอกสาร — BaiDoc</span>
       </div>
-      <div id="sample-preview-area" style="width:210mm;max-width:100%;min-height:297mm;box-sizing:border-box;margin:0 auto;padding:15mm;font-family:'Sarabun',sans-serif;font-size:13px;line-height:1.6;overflow-x:auto"></div>
+      <div id="sample-preview-area" style="width:210mm;max-width:100%;min-height:297mm;box-sizing:border-box;margin:0 auto;padding:15mm;font-family:'Sarabun',sans-serif;font-size:20px;line-height:1.6;overflow-x:auto"></div>
     </div>
 
     <div style="text-align:center;margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
@@ -1077,7 +1077,7 @@ nav {
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.fontsizelabel">ขนาดฟอนต์เอกสาร</div>
         <div style="display:flex;align-items:center;gap:12px">
           <button type="button" class="btn-outline" style="padding:6px 16px;font-size:16px;line-height:1" onclick="changeFontSize(-1)" aria-label="ลดขนาดฟอนต์">−</button>
-          <span id="font-size-display" style="min-width:44px;text-align:center;font-weight:600;font-size:14px">13px</span>
+          <span id="font-size-display" style="min-width:44px;text-align:center;font-weight:600;font-size:14px">20px</span>
           <button type="button" class="btn-outline" style="padding:6px 16px;font-size:16px;line-height:1" onclick="changeFontSize(1)" aria-label="เพิ่มขนาดฟอนต์">+</button>
         </div>
       </div>
@@ -1342,7 +1342,7 @@ let currentDocType = 'quotation';
 let items = [{ desc:'', qty:1, unit:'ชิ้น', price:0 }];
 let compareItems = [{ desc:'', prices:[0,0,0,0] }];
 let currentFont = "'Sarabun', sans-serif";
-let currentFontSize = 13;
+let currentFontSize = 20;
 let currentLang = localStorage.getItem('baidoc-lang') || 'th';
 
 const docInfo = {
@@ -1629,24 +1629,48 @@ async function downloadPDF(){
   try{
     const node = document.getElementById('doc-preview');
     const canvas = await html2canvas(node, { scale: 2, backgroundColor:'#ffffff', useCORS:true });
-    const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation:'portrait', unit:'pt', format:'a4' });
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
-    // Fill the page at full width. If content is taller than one A4 page,
-    // continue it onto additional pages instead of shrinking everything down.
     const imgW = pageW;
-    const imgH = (canvas.height * imgW) / canvas.width;
-    let heightLeft = imgH;
-    let position = 0;
-    pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
-    heightLeft -= pageH;
-    while(heightLeft > 0){
-      position = heightLeft - imgH;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
-      heightLeft -= pageH;
+
+    // Collect "safe" cut points (in DOM px) — right before each top-level section
+    // and each table row — so a page break never lands in the middle of a row
+    // or section. Fall back to a hard cut only if a single element is taller
+    // than a full page (very rare).
+    const domToCanvasScale = canvas.width / node.offsetWidth;
+    const cutPoints = new Set([0, node.scrollHeight]);
+    Array.from(node.children).forEach(el => cutPoints.add(el.offsetTop));
+    node.querySelectorAll('tr').forEach(tr => cutPoints.add(tr.offsetTop));
+    const sortedCutsPx = Array.from(cutPoints).sort((a,b)=>a-b).map(v => v * domToCanvasScale);
+
+    const pageHeightCanvasPx = pageH / (pageW / canvas.width); // page height converted to canvas px
+    let cursor = 0;
+    let firstPage = true;
+    while (cursor < canvas.height - 1) {
+      const limit = cursor + pageHeightCanvasPx;
+      let cut = null;
+      for (const cp of sortedCutsPx) {
+        if (cp > cursor && cp <= limit) cut = cp;
+        if (cp > limit) break;
+      }
+      if (!cut) cut = Math.min(limit, canvas.height); // fallback hard cut
+      const sliceH = Math.max(1, Math.round(cut - cursor));
+
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = sliceH;
+      const ctx = sliceCanvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+      ctx.drawImage(canvas, 0, cursor, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
+      const sliceImgH = sliceH * (pageW / canvas.width);
+      if (!firstPage) pdf.addPage();
+      pdf.addImage(sliceCanvas.toDataURL('image/png'), 'PNG', 0, 0, imgW, sliceImgH);
+      firstPage = false;
+      cursor = cut;
     }
     const info = docInfo[currentDocType];
     const fname = `${getV('doc-number')||info.prefix}-${(getV('seller-name')||'document').replace(/[^a-zA-Z0-9ก-๙]+/g,'_')}.pdf`;
@@ -1717,7 +1741,7 @@ function setFont(el) {
 }
 
 function changeFontSize(delta){
-  currentFontSize = Math.max(10, Math.min(18, currentFontSize + delta));
+  currentFontSize = Math.max(10, Math.min(24, currentFontSize + delta));
   document.getElementById('font-size-display').textContent = currentFontSize + 'px';
   document.getElementById('doc-preview').style.setProperty('--doc-font-size', currentFontSize + 'px');
   document.getElementById('sample-preview-area').style.fontSize = currentFontSize + 'px';
