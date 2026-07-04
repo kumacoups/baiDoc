@@ -630,18 +630,40 @@ nav {
 .sig-label { font-weight: 600; color: #111827; margin-bottom: 28px; }
 
 @page { size: A4; margin: 0; }
+/* Print is handled via PDF blob (printPDF) — @media print kept as last-resort fallback */
 @media print {
   html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
   body * { visibility: hidden; }
-  #doc-preview, #doc-preview * { visibility: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #doc-preview, #doc-preview * {
+    visibility: visible;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
   #doc-preview {
-    position: absolute; top: 0; left: 0;
-    width: 210mm; max-width: none; min-height: 297mm;
-    padding: 16mm 14mm; margin: 0; box-sizing: border-box;
+    position: fixed; top: 0; left: 0;
+    width: 210mm; height: 297mm;
+    padding: 16mm 14mm; margin: 0;
+    box-sizing: border-box;
+    transform: none !important;
+    font-family: 'Sarabun', sans-serif;
   }
-  .preview-table tr, .doc-sig, .preview-total, .doc-header {
-    page-break-inside: avoid; break-inside: avoid;
+  #preview-scaler { overflow: visible !important; height: auto !important; }
+  .preview-table th {
+    background: var(--doc-theme, #536850) !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
+  .preview-table tbody tr:nth-child(even) td {
+    background: #f5f0ea !important;
+    print-color-adjust: exact;
+  }
+  .preview-table tfoot tr td {
+    background: #ebf0f8 !important;
+    print-color-adjust: exact;
+  }
+  .preview-table tr, .doc-sig, .doc-header { page-break-inside: avoid; break-inside: avoid; }
 }
 
 /* DOC PICKER MODAL */
@@ -1288,7 +1310,7 @@ nav {
         <button class="btn-outline" id="download-btn" onclick="downloadPDF()" style="font-size:13px;padding:6px 14px">
           <i class="ti ti-download" aria-hidden="true"></i> <span data-i18n="btn.download">ดาวน์โหลด</span>
         </button>
-        <button class="btn-primary" onclick="window.print()" style="font-size:13px;padding:6px 14px">
+        <button class="btn-primary" id="print-btn" onclick="printPDF()" style="font-size:13px;padding:6px 14px">
           <i class="ti ti-printer" aria-hidden="true"></i> <span data-i18n="btn.print">พิมพ์ / PDF</span>
         </button>
         <button class="close-btn" onclick="closePreview()" aria-label="ปิด"><i class="ti ti-x" aria-hidden="true"></i></button>
@@ -1743,6 +1765,79 @@ async function downloadPDF(){
   }finally{
     btn.disabled = false;
     btn.innerHTML = original;
+  }
+}
+
+/* ===== PRINT AS PDF (same pipeline as download) ===== */
+async function printPDF(){
+  const btn = document.getElementById('print-btn');
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> ...';
+  try{
+    const node = document.getElementById('doc-preview');
+    // Remove transform so canvas captures full A4 resolution
+    const savedTransform = node.style.transform;
+    const savedOrigin   = node.style.transformOrigin;
+    node.style.transform      = 'none';
+    node.style.transformOrigin= 'top left';
+    const canvas = await html2canvas(node,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    node.style.transform      = savedTransform;
+    node.style.transformOrigin= savedOrigin;
+    requestAnimationFrame(scaleDocPreview);
+
+    const { jsPDF } = window.jspdf;
+    const pdf    = new jsPDF({orientation:'portrait',unit:'pt',format:'a4'});
+    const pageW  = pdf.internal.pageSize.getWidth();
+    const pageH  = pdf.internal.pageSize.getHeight();
+
+    const domToCanvasScale  = canvas.width / node.offsetWidth;
+    const cutPoints = new Set([0, node.scrollHeight]);
+    Array.from(node.children).forEach(el => cutPoints.add(el.offsetTop));
+    node.querySelectorAll('tr').forEach(tr => cutPoints.add(tr.offsetTop));
+    const sortedCutsPx = Array.from(cutPoints).sort((a,b)=>a-b).map(v=>v*domToCanvasScale);
+
+    const pageHeightCanvasPx = pageH / (pageW / canvas.width);
+    let cursor = 0, firstPage = true;
+    while(cursor < canvas.height - 1){
+      const limit = cursor + pageHeightCanvasPx;
+      let cut = null;
+      for(const cp of sortedCutsPx){ if(cp>cursor&&cp<=limit) cut=cp; if(cp>limit) break; }
+      if(!cut) cut = Math.min(limit, canvas.height);
+      const sliceH = Math.max(1, Math.round(cut - cursor));
+      const sc = document.createElement('canvas');
+      sc.width = canvas.width; sc.height = sliceH;
+      const ctx = sc.getContext('2d');
+      ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,sc.width,sc.height);
+      ctx.drawImage(canvas,0,cursor,canvas.width,sliceH,0,0,canvas.width,sliceH);
+      if(!firstPage) pdf.addPage();
+      pdf.addImage(sc.toDataURL('image/png'),'PNG',0,0,pageW,sliceH*(pageW/canvas.width));
+      firstPage=false; cursor=cut;
+    }
+
+    // Open the identical PDF blob in a new tab, then trigger browser print dialog
+    const blob = pdf.output('blob');
+    const url  = URL.createObjectURL(blob);
+    const win  = window.open(url,'_blank');
+    if(win){
+      win.addEventListener('load',()=>{
+        win.focus();
+        win.print();
+        setTimeout(()=>URL.revokeObjectURL(url), 120000);
+      });
+    } else {
+      // Popup blocked — fallback: save file and tell user
+      const info  = docInfo[currentDocType];
+      const fname = `${getV('doc-number')||info.prefix}-print.pdf`;
+      pdf.save(fname);
+      alert('ป็อปอัพถูกบล็อก — ไฟล์ถูกดาวน์โหลดแล้ว กรุณาเปิดไฟล์แล้วพิมพ์จากนั้น');
+    }
+  }catch(err){
+    console.error(err);
+    alert('ไม่สามารถสร้าง PDF สำหรับพิมพ์ได้ กรุณาลองใหม่');
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML=original;
   }
 }
 
