@@ -589,9 +589,14 @@ nav {
 
 @page { size: A4; margin: 0; }
 @media print {
+  html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
   body * { visibility: hidden; }
-  #doc-preview, #doc-preview * { visibility: visible; }
-  #doc-preview { position: absolute; top: 0; left: 0; width: 210mm; min-height: 297mm; padding: 15mm; margin: 0; }
+  #doc-preview, #doc-preview * { visibility: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #doc-preview {
+    position: absolute; top: 0; left: 0;
+    width: 210mm; max-width: none; min-height: 297mm;
+    padding: 15mm; margin: 0; box-sizing: border-box;
+  }
 }
 
 /* DOC PICKER MODAL */
