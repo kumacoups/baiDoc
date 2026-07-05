@@ -2412,11 +2412,11 @@ function renderItems() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="color:var(--text-muted);font-size:11px;text-align:center">${i+1}</td>
-      <td><input type="text" value="${it.desc}" placeholder="รายละเอียดสินค้า/บริการ" oninput="items[${i}].desc=this.value"></td>
+      <td><input type="text" value="${esc(it.desc)}" placeholder="รายละเอียดสินค้า/บริการ" oninput="items[${i}].desc=this.value"></td>
       <td><input type="number" value="${it.qty}" min="1" style="text-align:center" oninput="items[${i}].qty=+this.value||0;calcTotal();updRow(${i})"></td>
-      <td><input type="text" value="${it.unit}" placeholder="ชิ้น" oninput="items[${i}].unit=this.value"></td>
+      <td><input type="text" value="${esc(it.unit)}" placeholder="ชิ้น" oninput="items[${i}].unit=this.value"></td>
       <td><input type="number" value="${it.price}" min="0" placeholder="0.00" oninput="items[${i}].price=+this.value||0;calcTotal();updRow(${i})"></td>
-      <td><input id="rt${i}" type="text" value="${fmt(it.qty*it.price)}" readonly style="text-align:right;background:rgba(var(--theme-rgb),0.07);color:var(--theme-dark);font-weight:700;border-color:transparent;cursor:default"></td>
+      <td><input id="rt${i}" type="text" value="${esc(fmt(it.qty*it.price))}" readonly style="text-align:right;background:rgba(var(--theme-rgb),0.07);color:var(--theme-dark);font-weight:700;border-color:transparent;cursor:default"></td>
       <td><button class="del-btn" onclick="remItem(${i})" aria-label="ลบ"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
     `;
     tbody.appendChild(tr);
@@ -2427,6 +2427,7 @@ function addItem(){ items.push({desc:'',qty:1,unit:'ชิ้น',price:0}); ren
 function remItem(i){ if(items.length<=1) return; items.splice(i,1); renderItems(); calcTotal(); scheduleAutosave(); }
 
 /* FORMAT */
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmt(n){ return '฿'+(+n).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtN(n){ return (+n).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
@@ -2474,7 +2475,7 @@ function renderCompareItems(){
   const ourName = document.getElementById('v0-our')?.value || 'ของเรา';
   // prices[0] = ของเรา, prices[1..n] = คู่แข่ง
   const ourTh = `<th style="background:var(--theme);color:#fff;font-size:10.5px;white-space:nowrap">
-    <span style="display:inline-flex;align-items:center;gap:4px">★ ${ourName}</span></th>`;
+    <span style="display:inline-flex;align-items:center;gap:4px">★ ${esc(ourName)}</span></th>`;
   const rivalThs = Array.from({length:n},(_,j)=>`<th>คู่แข่งที่ ${j+1}</th>`).join('');
   document.getElementById('compare-thead').innerHTML =
     `<tr><th style="width:32px">#</th><th>รายการ</th>${ourTh}${rivalThs}<th style="width:36px"></th></tr>`;
@@ -2497,14 +2498,14 @@ function renderCompareItems(){
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="color:var(--text-muted);font-size:11px;text-align:center">${i+1}</td>
-      <td><input type="text" value="${it.desc}" placeholder="รายการที่ต้องการเปรียบเทียบ" oninput="compareItems[${i}].desc=this.value"></td>
+      <td><input type="text" value="${esc(it.desc)}" placeholder="รายการที่ต้องการเปรียบเทียบ" oninput="compareItems[${i}].desc=this.value"></td>
       ${ourCell}${rivalCells}
       <td><button class="del-btn" onclick="remCmp(${i})" aria-label="ลบ"><i class="ti ti-trash"></i></button></td>`;
     tbody.appendChild(tr);
   });
 }
 function addCompareItem(){ compareItems.push({desc:'',prices:[0,0,0,0,0]}); renderCompareItems(); scheduleAutosave(); }
-function remCmp(i){ if(compareItems.length<=1) return; compareItems.splice(i,1); renderCompareItems(); }
+function remCmp(i){ if(compareItems.length<=1) return; compareItems.splice(i,1); renderCompareItems(); scheduleAutosave(); }
 
 /* PREVIEW */
 function getV(id){ return document.getElementById(id)?.value||''; }
@@ -2543,7 +2544,9 @@ function scaleDocPreview() {
   const scaler = document.getElementById('preview-scaler');
   const preview = document.getElementById('doc-preview');
   if (!scaler || !preview) return;
-  const containerW = scaler.clientWidth || scaler.offsetWidth || 350;
+  // If element is not visible, clientWidth returns 0 — skip to avoid wrong scale
+  const containerW = scaler.clientWidth || scaler.offsetWidth;
+  if (!containerW) return;
   const docW = 794; // 210mm in px at 96dpi
   const scale = Math.min(1, containerW / docW);
   preview.style.transform = scale < 1 ? `scale(${scale})` : '';
@@ -3369,7 +3372,7 @@ function generateDocNumber(type) {
   const m = String(today.getMonth()+1).padStart(2,'0');
   const counterKey = `baidoc-counter-${prefix}-${y}${m}`;
   const next = (parseInt(localStorage.getItem(counterKey) || '0') + 1);
-  localStorage.setItem(counterKey, String(next));
+  try { localStorage.setItem(counterKey, String(next)); } catch(e) { showStorageFullWarning(); }
   return `${prefix}-${y}${m}-${String(next).padStart(3,'0')}`;
 }
 
@@ -3794,7 +3797,7 @@ showSampleDoc('quotation', null);
 /* ===== DUPLICATE DOCUMENT ===== */
 function duplicateDocument() {
   const info = docInfo[currentDocType];
-  const prefixWord = currentLang==='en' ? 'Copy of ' : 'สำเนา ';
+  const prefixWord = currentLang==='en' ? 'Copy of ' : currentLang==='zh' ? '复制 ' : 'สำเนา ';
   // Generate a new doc number
   const newNum = generateDocNumber(currentDocType);
   document.getElementById('doc-number').value = newNum;
@@ -3803,17 +3806,21 @@ function duplicateDocument() {
   // Clear due date to avoid confusion
   const ddEl = document.getElementById('doc-due-date');
   if (ddEl) ddEl.value = '';
+  // Update form title to reflect "Copy of ..."
+  const createWord = currentLang==='en' ? 'Create ' : currentLang==='zh' ? '创建' : 'สร้าง';
+  document.getElementById('form-title').textContent = prefixWord + info[currentLang];
   scheduleAutosave();
   showAlert(`คัดลอกเอกสารแล้ว — ได้รับเลขที่ใหม่ ${newNum}\nแก้ไขข้อมูลตามต้องการแล้วกดพรีวิว`, { title: 'คัดลอกสำเร็จ', icon: 'ti-copy', type: 'info' });
 }
 
 /* ===== AUTO-FORMAT PHONE & TAX ID ===== */
 function formatPhone(val) {
-  const d = val.replace(/\D/g, '');
-  if (d.length <= 3) return d;
-  if (d.length <= 6) return d.slice(0,2) + '-' + d.slice(2);
-  if (d.length <= 10) return d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5);
-  return d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5,9) + (d.length>9 ? '-'+d.slice(9) : '');
+  const d = val.replace(/\D/g, '').slice(0, 10);
+  if (d.length <= 2) return d;
+  if (d.length <= 5) return d.slice(0,2) + '-' + d.slice(2);
+  if (d.length <= 9) return d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5);
+  // 10 digits: 0X-XXXX-XXXX (mobile) or 0X-XXX-XXXX (landline handled uniformly)
+  return d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7);
 }
 function formatTaxId(val) {
   const d = val.replace(/\D/g, '').slice(0, 13);
