@@ -62,6 +62,8 @@ html[data-mode="dark"] .items-table th { background: #152033; color: var(--text-
 html[data-mode="dark"] .items-table tr:not(:last-child) td { border-bottom-color: #1e293b; }
 html[data-mode="dark"] .btn-outline { background: var(--white); }
 html[data-mode="dark"] .swatch-custom { background: var(--white); }
+html[data-mode="dark"] .confirm-box { background: var(--white); color: var(--text); }
+html[data-mode="dark"] .history-box { background: var(--white); }
 
 body {
   font-family: 'Sarabun', sans-serif;
@@ -739,7 +741,55 @@ nav {
 .picker-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
 .picker-en { font-size: 11px; color: var(--text-muted); }
 
-/* HISTORY MODAL */
+/* CUSTOM CONFIRM MODAL */
+#confirm-modal {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(3px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#confirm-modal.open { display: flex; }
+.confirm-box {
+  background: var(--white); border-radius: 18px;
+  width: 100%; max-width: 360px;
+  padding: 28px 24px 22px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+  animation: popIn 0.16s ease;
+  display: flex; flex-direction: column; gap: 0;
+}
+.confirm-icon-wrap {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 24px;
+}
+.confirm-icon-wrap.danger { background: rgba(220,38,38,0.1); color: #dc2626; }
+.confirm-icon-wrap.warning { background: rgba(245,158,11,0.12); color: #d97706; }
+.confirm-title {
+  font-size: 16px; font-weight: 700; text-align: center;
+  margin-bottom: 8px; color: var(--text);
+}
+.confirm-sub {
+  font-size: 13px; color: var(--text-muted); text-align: center;
+  line-height: 1.55; margin-bottom: 22px;
+}
+.confirm-btns {
+  display: flex; gap: 8px;
+}
+.confirm-btn-cancel {
+  flex: 1; background: var(--bg); border: 1.5px solid var(--border);
+  color: var(--text); border-radius: 10px; padding: 10px;
+  font-size: 14px; font-weight: 500; font-family: 'Sarabun', sans-serif;
+  cursor: pointer; transition: background 0.15s, border-color 0.15s;
+}
+.confirm-btn-cancel:hover { border-color: var(--text-muted); }
+.confirm-btn-ok {
+  flex: 1; border: none; border-radius: 10px; padding: 10px;
+  font-size: 14px; font-weight: 600; font-family: 'Sarabun', sans-serif;
+  cursor: pointer; transition: filter 0.15s;
+}
+.confirm-btn-ok.danger { background: #dc2626; color: #fff; }
+.confirm-btn-ok.warning { background: var(--theme); color: #fff; }
+.confirm-btn-ok:hover { filter: brightness(0.9); }
 #history-modal {
   display: none; position: fixed;
   inset: 0; z-index: 300;
@@ -845,7 +895,7 @@ nav {
   <div class="section" id="capabilities-section">
     <div class="section-label" data-i18n="cap.label">BaiDoc คืออะไร</div>
     <div class="section-title" data-i18n="cap.title">เว็บแอปสร้างเอกสารธุรกิจครบวงจร</div>
-    <div class="section-sub" data-i18n="cap.sub">ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว</div>
+    <div class="section-sub" data-i18n="cap.sub">ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว พร้อมจดจำลูกค้าและประวัติเอกสาร</div>
     <div class="cap-grid">
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-files" aria-hidden="true"></i></div>
@@ -855,7 +905,7 @@ nav {
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-calculator" aria-hidden="true"></i></div>
         <div><div class="cap-title" data-i18n="cap2.title">คำนวณยอดเงินให้อัตโนมัติ</div>
-        <div class="cap-body" data-i18n="cap2.body">ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที</div></div>
+        <div class="cap-body" data-i18n="cap2.body">ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิและจำนวนเงินเป็นตัวอักษรภาษาไทยให้ทันที</div></div>
       </div>
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-template" aria-hidden="true"></i></div>
@@ -887,6 +937,26 @@ nav {
         <div><div class="cap-title" data-i18n="cap8.title">ปลอดภัยและฟรีตลอดไป</div>
         <div class="cap-body" data-i18n="cap8.body">ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน</div></div>
       </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-currency-baht" aria-hidden="true"></i></div>
+        <div><div class="cap-title">จำนวนเงินเป็นตัวอักษรอัตโนมัติ</div>
+        <div class="cap-body">แสดงยอดเงินเป็นภาษาไทย เช่น "หนึ่งหมื่นสองพันห้าร้อยบาทถ้วน" ในเอกสารทุกใบโดยอัตโนมัติ</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-history" aria-hidden="true"></i></div>
+        <div><div class="cap-title">ประวัติเอกสาร</div>
+        <div class="cap-body">บันทึกเอกสารทุกใบที่เคยดาวน์โหลดหรือพิมพ์ไว้อัตโนมัติ เปิดดู แก้ไข หรือพิมพ์ซ้ำได้ทุกเมื่อ</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <div><div class="cap-title">ฐานข้อมูลลูกค้า</div>
+        <div class="cap-body">บันทึกข้อมูลลูกค้าประจำไว้ ครั้งถัดไปเลือกจาก dropdown ได้เลย ไม่ต้องพิมพ์ซ้ำทุกครั้ง</div></div>
+      </div>
+      <div class="cap-item">
+        <div class="feat-icon"><i class="ti ti-transform" aria-hidden="true"></i></div>
+        <div><div class="cap-title">แปลงเอกสารต่อกันได้</div>
+        <div class="cap-body">แปลงใบเสนอราคาเป็นใบแจ้งหนี้ หรือใบแจ้งหนี้เป็นใบเสร็จ ดึงข้อมูลเดิมมาใช้ต่อได้ทันที</div></div>
+      </div>
     </div>
 
     <div class="steps-wrap">
@@ -898,12 +968,12 @@ nav {
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-title" data-i18n="step2.title">กรอกข้อมูลและปรับแต่ง</div>
-        <div class="step-body" data-i18n="step2.body">ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ</div>
+        <div class="step-body" data-i18n="step2.body">ใส่ข้อมูลผู้ขาย เลือกลูกค้าจากรายการที่บันทึกไว้ หรือกรอกใหม่ — แล้วเลือกสีธีมและฟอนต์ที่ต้องการ</div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-title" data-i18n="step3.title">พรีวิวแล้วดาวน์โหลด</div>
-        <div class="step-body" data-i18n="step3.body">ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที</div>
+        <div class="step-body" data-i18n="step3.body">ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF — ระบบจะเก็บประวัติไว้ให้เปิดซ้ำหรือแปลงเป็นเอกสารอื่นได้ทุกเมื่อ</div>
       </div>
     </div>
   </div>
@@ -997,7 +1067,9 @@ nav {
     <div class="feat-grid">
       <div class="feat"><div class="feat-icon"><i class="ti ti-bolt" aria-hidden="true"></i></div><div><div class="feat-title" data-i18n="feat1.title">พร้อมใช้ทันที</div><div class="feat-body" data-i18n="feat1.body">ไม่ต้องติดตั้ง ไม่ต้องสมัคร เปิดแล้วใช้ได้เลย</div></div></div>
       <div class="feat"><div class="feat-icon"><i class="ti ti-file-type-pdf" aria-hidden="true"></i></div><div><div class="feat-title" data-i18n="feat2.title">ดาวน์โหลด PDF ฟรี</div><div class="feat-body" data-i18n="feat2.body">พิมพ์หรือบันทึก PDF คุณภาพสูงพร้อมส่งลูกค้า</div></div></div>
-      <div class="feat"><div class="feat-icon"><i class="ti ti-palette" aria-hidden="true"></i></div><div><div class="feat-title" data-i18n="feat3.title">ปรับสีและฟอนต์ได้</div><div class="feat-body" data-i18n="feat3.body">เลือกธีมสีและฟอนต์ที่ชอบ ให้เอกสารดูเป็นมืออาชีพ</div></div></div>
+      <div class="feat"><div class="feat-icon"><i class="ti ti-history" aria-hidden="true"></i></div><div><div class="feat-title">จำประวัติเอกสารได้</div><div class="feat-body">บันทึกทุกใบที่เคยพิมพ์ เปิดดูหรือพิมพ์ซ้ำได้ทุกเมื่อ</div></div></div>
+      <div class="feat"><div class="feat-icon"><i class="ti ti-users" aria-hidden="true"></i></div><div><div class="feat-title">จดจำข้อมูลลูกค้า</div><div class="feat-body">บันทึกลูกค้าประจำ เลือกจาก dropdown ได้เลย ไม่ต้องพิมพ์ซ้ำ</div></div></div>
+      <div class="feat"><div class="feat-icon"><i class="ti ti-transform" aria-hidden="true"></i></div><div><div class="feat-title">แปลงเอกสารต่อกัน</div><div class="feat-body">QT → INV → RC ดึงข้อมูลเดิมต่อเนื่องได้ทันที</div></div></div>
       <div class="feat"><div class="feat-icon"><i class="ti ti-shield-lock" aria-hidden="true"></i></div><div><div class="feat-title" data-i18n="feat4.title">ข้อมูลปลอดภัย</div><div class="feat-body" data-i18n="feat4.body">ทำงานในเบราว์เซอร์ ไม่ส่งข้อมูลไปเซิร์ฟเวอร์</div></div></div>
     </div>
   </div>
@@ -1496,6 +1568,21 @@ nav {
         <div class="picker-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div>
         <div class="picker-en">Job Completion Note</div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM CONFIRM MODAL -->
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-icon-wrap danger" id="confirm-icon-wrap">
+      <i class="ti ti-trash" id="confirm-icon" aria-hidden="true"></i>
+    </div>
+    <div class="confirm-title" id="confirm-title">ยืนยันการดำเนินการ</div>
+    <div class="confirm-sub" id="confirm-sub"></div>
+    <div class="confirm-btns">
+      <button class="confirm-btn-cancel" onclick="resolveConfirm(false)">ยกเลิก</button>
+      <button class="confirm-btn-ok danger" id="confirm-ok-btn" onclick="resolveConfirm(true)">ยืนยัน</button>
     </div>
   </div>
 </div>
@@ -3113,6 +3200,26 @@ function bahtText(amount) {
   return text;
 }
 
+/* ===== CUSTOM CONFIRM DIALOG ===== */
+let _confirmResolve = null;
+function showConfirm({ title, sub, okLabel='ยืนยัน', type='danger', icon='ti-trash' }) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-sub').textContent = sub || '';
+  document.getElementById('confirm-icon').className = `ti ${icon}`;
+  const wrap = document.getElementById('confirm-icon-wrap');
+  wrap.className = `confirm-icon-wrap ${type}`;
+  const okBtn = document.getElementById('confirm-ok-btn');
+  okBtn.textContent = okLabel;
+  okBtn.className = `confirm-btn-ok ${type}`;
+  document.getElementById('confirm-modal').classList.add('open');
+  return new Promise(resolve => { _confirmResolve = resolve; });
+}
+function resolveConfirm(result) {
+  document.getElementById('confirm-modal').classList.remove('open');
+  if (_confirmResolve) { _confirmResolve(result); _confirmResolve = null; }
+}
+document.getElementById('confirm-modal').addEventListener('click', function(e){ if(e.target===this) resolveConfirm(false); });
+
 /* ===== CUSTOMER DATABASE (ฐานข้อมูลลูกค้า) ===== */
 function getCustomers() {
   try { return JSON.parse(localStorage.getItem('baidoc-customers') || '[]'); } catch(e) { return []; }
@@ -3156,13 +3263,18 @@ function saveCustomer() {
   const toast = document.getElementById('save-customer-toast');
   if (toast) { toast.style.display = 'inline-flex'; setTimeout(() => { toast.style.display = 'none'; }, 2200); }
 }
-function deleteCustomer() {
+async function deleteCustomer() {
   const sel = document.getElementById('customer-select');
   if (!sel || sel.value === '') { alert('กรุณาเลือกลูกค้าที่ต้องการลบก่อน'); return; }
   const customers = getCustomers();
   const idx = +sel.value;
   if (!customers[idx]) return;
-  if (!confirm(`ลบลูกค้า "${customers[idx].name}" ออกจากรายการที่บันทึกไว้?`)) return;
+  const ok = await showConfirm({
+    title: 'ลบลูกค้าออกจากรายการ?',
+    sub: `"${customers[idx].name}" จะถูกลบออกจากรายการที่บันทึกไว้ถาวร`,
+    okLabel: 'ลบ', type: 'danger', icon: 'ti-user-minus'
+  });
+  if (!ok) return;
   customers.splice(idx, 1);
   localStorage.setItem('baidoc-customers', JSON.stringify(customers));
   populateCustomerSelect();
@@ -3258,8 +3370,13 @@ function renderHistoryList() {
       </div>`;
   }).join('');
 }
-function deleteHistoryEntry(id) {
-  if (!confirm('ลบเอกสารนี้ออกจากประวัติ?')) return;
+async function deleteHistoryEntry(id) {
+  const ok = await showConfirm({
+    title: 'ลบออกจากประวัติ?',
+    sub: 'เอกสารนี้จะถูกลบออกจากประวัติถาวร ไม่สามารถกู้คืนได้',
+    okLabel: 'ลบ', type: 'danger', icon: 'ti-trash'
+  });
+  if (!ok) return;
   let history = getHistory();
   history = history.filter(h => h.id !== id);
   localStorage.setItem('baidoc-history', JSON.stringify(history));
