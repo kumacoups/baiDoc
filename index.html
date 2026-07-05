@@ -777,6 +777,9 @@ nav {
     </button>
   </div>
 </nav>
+<div id="autosave-indicator" style="position:fixed;bottom:16px;right:16px;z-index:999;background:var(--theme);color:#fff;font-size:12px;padding:6px 14px;border-radius:100px;display:flex;align-items:center;gap:6px;opacity:0;transition:opacity 0.4s;pointer-events:none;font-family:'Sarabun',sans-serif">
+  <i class="ti ti-device-floppy"></i> บันทึกอัตโนมัติแล้ว
+</div>
 
 <!-- LANDING -->
 <div id="landing-page">
@@ -1177,6 +1180,14 @@ nav {
           <div class="form-row"><label data-i18n="f.taxid">เลขผู้เสียภาษี</label><div class="input-wrap"><i class="ti ti-id input-icon"></i><input type="text" id="seller-tax" placeholder="0-1234-56789-01-2"></div></div>
         </div>
       </div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <button type="button" onclick="saveSellerDefault()" class="btn-outline" style="font-size:12px;padding:6px 14px;display:flex;align-items:center;gap:5px">
+          <i class="ti ti-device-floppy" aria-hidden="true"></i> <span>บันทึกเป็นค่าเริ่มต้น</span>
+        </button>
+        <span id="save-seller-toast" style="font-size:12px;color:var(--theme);display:none;align-items:center;gap:4px">
+          <i class="ti ti-circle-check"></i> บันทึกแล้ว
+        </span>
+      </div>
     </div>
   </div>
 
@@ -1227,16 +1238,24 @@ nav {
           <div class="form-row" id="compare-vendors-row" style="display:none">
             <label data-i18n="f.vendorcount">จำนวนผู้เสนอราคา</label>
             <select id="vendor-count" onchange="updateVendors()">
-              <option value="2" data-i18n="opt.vendors2">2 บริษัท</option>
-              <option value="3" selected data-i18n="opt.vendors3">3 บริษัท</option>
-              <option value="4" data-i18n="opt.vendors4">4 บริษัท</option>
+              <option value="1">1 เจ้า</option>
+              <option value="2" selected>2 เจ้า</option>
+              <option value="3">3 เจ้า</option>
+              <option value="4">4 เจ้า</option>
             </select>
           </div>
           <div id="vendor-names-row" style="display:none">
-            <div class="form-row"><label data-i18n="f.vendor1">บริษัทที่ 1</label><input type="text" id="v1" placeholder="บริษัท A"></div>
-            <div class="form-row"><label data-i18n="f.vendor2">บริษัทที่ 2</label><input type="text" id="v2" placeholder="บริษัท B"></div>
-            <div class="form-row"><label data-i18n="f.vendor3">บริษัทที่ 3</label><input type="text" id="v3" placeholder="บริษัท C"></div>
-            <div class="form-row" id="v4-row" style="display:none"><label data-i18n="f.vendor4">บริษัทที่ 4</label><input type="text" id="v4" placeholder="บริษัท D"></div>
+            <div class="form-row">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="background:var(--theme);color:#fff;font-size:10px;padding:2px 8px;border-radius:100px;font-weight:700">ของเรา</span>
+                ชื่อบริษัทของเรา
+              </label>
+              <div class="input-wrap"><i class="ti ti-building input-icon"></i><input type="text" id="v0-our" placeholder="บริษัท ของเรา จำกัด"></div>
+            </div>
+            <div class="form-row"><label>คู่แข่งที่ 1</label><input type="text" id="v1" placeholder="บริษัท A"></div>
+            <div class="form-row"><label>คู่แข่งที่ 2</label><input type="text" id="v2" placeholder="บริษัท B"></div>
+            <div class="form-row" id="v3-row"><label>คู่แข่งที่ 3</label><input type="text" id="v3" placeholder="บริษัท C"></div>
+            <div class="form-row" id="v4-row" style="display:none"><label>คู่แข่งที่ 4</label><input type="text" id="v4" placeholder="บริษัท D"></div>
           </div>
           <div class="form-row"><label data-i18n="f.notes">หมายเหตุ</label><textarea id="doc-notes" rows="3" data-i18n-ph="ph.notes" placeholder="เงื่อนไขการชำระเงิน ระยะเวลาเสนอราคา ฯลฯ"></textarea></div>
         </div>
@@ -1985,19 +2004,21 @@ function selectDoc(type) {
   const prefixWord = currentLang==='en' ? 'Create ' : currentLang==='zh' ? '创建' : 'สร้าง';
   document.getElementById('form-title').textContent = prefixWord + info[currentLang];
   document.getElementById('doc-type-badge').textContent = info.en;
-  // Auto doc number
-  const today = new Date();
-  const y = today.getFullYear() + 543;
-  const m = String(today.getMonth()+1).padStart(2,'0');
-  document.getElementById('doc-number').value = `${info.prefix}-${y}${m}-001`;
-  document.getElementById('doc-date').value = today.toISOString().split('T')[0];
-  // Clear all input fields
-  ['seller-name','seller-address','seller-phone','seller-email','seller-tax',
-   'buyer-name','buyer-address','buyer-phone','buyer-tax',
+  // Auto doc number (smart increment)
+  document.getElementById('doc-number').value = generateDocNumber(type);
+  document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
+  // Clear buyer + doc fields; then load seller default
+  ['buyer-name','buyer-address','buyer-phone','buyer-tax',
    'doc-due-date','doc-notes'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.value = '';
   });
+  // Load saved seller info, then clear fields that should be blank
+  ['seller-name','seller-address','seller-phone','seller-email','seller-tax'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  loadSellerDefault();
   document.getElementById('discount-value').value = '0';
   document.getElementById('wht-rate').value = '0';
   document.getElementById('vat-rate').value = '7';
@@ -2042,8 +2063,8 @@ function renderItems() {
   });
 }
 function updRow(i){ const el=document.getElementById('rt'+i); if(el) el.value=fmt(items[i].qty*items[i].price); }
-function addItem(){ items.push({desc:'',qty:1,unit:'ชิ้น',price:0}); renderItems(); }
-function remItem(i){ if(items.length<=1) return; items.splice(i,1); renderItems(); calcTotal(); }
+function addItem(){ items.push({desc:'',qty:1,unit:'ชิ้น',price:0}); renderItems(); scheduleAutosave(); }
+function remItem(i){ if(items.length<=1) return; items.splice(i,1); renderItems(); calcTotal(); scheduleAutosave(); }
 
 /* FORMAT */
 function fmt(n){ return '฿'+(+n).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -2080,33 +2101,49 @@ function calcTotal(){
 }
 
 /* COMPARE */
+// n = จำนวนคู่แข่ง (ไม่รวมของเรา), total cols = n+1
 function getVC(){ return +document.getElementById('vendor-count').value; }
 function updateVendors(){
-  document.getElementById('v4-row').style.display = getVC()>=4 ? 'block' : 'none';
+  const n = getVC();
+  document.getElementById('v3-row').style.display = n>=3 ? 'block' : 'none';
+  document.getElementById('v4-row').style.display = n>=4 ? 'block' : 'none';
   renderCompareItems();
 }
 function renderCompareItems(){
-  const n=getVC();
+  const n = getVC(); // จำนวนคู่แข่ง
+  const ourName = document.getElementById('v0-our')?.value || 'ของเรา';
+  // prices[0] = ของเรา, prices[1..n] = คู่แข่ง
+  const ourTh = `<th style="background:var(--theme);color:#fff;font-size:10.5px;white-space:nowrap">
+    <span style="display:inline-flex;align-items:center;gap:4px">★ ${ourName}</span></th>`;
+  const rivalThs = Array.from({length:n},(_,j)=>`<th>คู่แข่งที่ ${j+1}</th>`).join('');
   document.getElementById('compare-thead').innerHTML =
-    '<tr><th style="width:32px">#</th><th>รายการ</th>'+
-    Array.from({length:n},(_,i)=>`<th>ราคาเจ้าที่ ${i+1}</th>`).join('')+
-    '<th style="width:36px"></th></tr>';
-  const tbody=document.getElementById('compare-body');
-  tbody.innerHTML='';
+    `<tr><th style="width:32px">#</th><th>รายการ</th>${ourTh}${rivalThs}<th style="width:36px"></th></tr>`;
+
+  const tbody = document.getElementById('compare-body');
+  tbody.innerHTML = '';
   compareItems.forEach((it,i)=>{
-    if(!it.prices) it.prices=[0,0,0,0];
-    const pc=Array.from({length:n},(_,j)=>
-      `<td><input type="number" value="${it.prices[j]||0}" min="0" oninput="compareItems[${i}].prices[${j}]=+this.value||0" style="text-align:right"></td>`
-    ).join('');
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td style="color:var(--text-muted);font-size:11px;text-align:center">${i+1}</td>
+    if(!it.prices) it.prices = Array(n+1).fill(0);
+    while(it.prices.length < n+1) it.prices.push(0);
+    // ช่อง "ของเรา" (index 0)
+    const ourCell = `<td style="background:rgba(var(--theme-rgb),0.07)">
+      <input type="number" value="${it.prices[0]||0}" min="0"
+        oninput="compareItems[${i}].prices[0]=+this.value||0"
+        style="text-align:right;background:transparent;font-weight:600;color:var(--theme-dark)"></td>`;
+    // ช่องคู่แข่ง (index 1..n)
+    const rivalCells = Array.from({length:n},(_,j)=>
+      `<td><input type="number" value="${it.prices[j+1]||0}" min="0"
+        oninput="compareItems[${i}].prices[${j+1}]=+this.value||0"
+        style="text-align:right"></td>`).join('');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">${i+1}</td>
       <td><input type="text" value="${it.desc}" placeholder="รายการที่ต้องการเปรียบเทียบ" oninput="compareItems[${i}].desc=this.value"></td>
-      ${pc}
-      <td><button class="del-btn" onclick="remCmp(${i})" aria-label="ลบ"><i class="ti ti-trash" aria-hidden="true"></i></button></td>`;
+      ${ourCell}${rivalCells}
+      <td><button class="del-btn" onclick="remCmp(${i})" aria-label="ลบ"><i class="ti ti-trash"></i></button></td>`;
     tbody.appendChild(tr);
   });
 }
-function addCompareItem(){ compareItems.push({desc:'',prices:[0,0,0,0]}); renderCompareItems(); }
+function addCompareItem(){ compareItems.push({desc:'',prices:[0,0,0,0,0]}); renderCompareItems(); scheduleAutosave(); }
 function remCmp(i){ if(compareItems.length<=1) return; compareItems.splice(i,1); renderCompareItems(); }
 
 /* PREVIEW */
@@ -2246,23 +2283,64 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
 }
 
 function buildCmpPreview(info){
-  const n=getVC();
-  const vNames=[getV('v1'),getV('v2'),getV('v3'),getV('v4')].slice(0,n);
-  const vL=vNames.map((v,i)=>v||`${t('pv.vendor')} ${i+1}`);
-  const hCols=vL.map(v=>`<th style="text-align:right">${v}</th>`).join('');
-  const rows=compareItems.map((it,i)=>{
-    const prices=Array.from({length:n},(_,j)=>+it.prices?.[j]||0);
-    const minP=Math.min(...prices.filter(p=>p>0));
-    const pCols=prices.map(p=>`<td style="text-align:right;${p>0&&p===minP?'color:var(--doc-theme-dark);font-weight:700':''}">฿${fmtN(p)}</td>`).join('');
-    return `<tr><td style="color:#9ca3af">${i+1}</td><td>${it.desc||'-'}</td>${pCols}</tr>`;
+  const n = getVC(); // จำนวนคู่แข่ง
+  const ourName = getV('v0-our') || 'ของเรา';
+  const rivalNames = [getV('v1'),getV('v2'),getV('v3'),getV('v4')].slice(0,n)
+    .map((v,i)=>v||`คู่แข่งที่ ${i+1}`);
+  // prices[0]=ของเรา, [1..n]=คู่แข่ง, total cols = n+1
+  const allNames = [ourName, ...rivalNames];
+
+  // Header: "ของเรา" column highlighted
+  const ourTh = `<th style="text-align:right;background:var(--doc-theme);color:#fff;border-radius:0">★ ${ourName}</th>`;
+  const rivalThs = rivalNames.map(v=>`<th style="text-align:right">${v}</th>`).join('');
+  const hCols = ourTh + rivalThs;
+
+  const rows = compareItems.map((it,i)=>{
+    const prices = Array.from({length:n+1},(_,j)=>+(it.prices?.[j])||0);
+    const validPrices = prices.filter(p=>p>0);
+    const minP = validPrices.length ? Math.min(...validPrices) : 0;
+    const ourP = prices[0];
+    const isOurBest = ourP>0 && ourP===minP;
+
+    const ourTd = `<td style="text-align:right;background:rgba(var(--doc-theme-rgb),0.08);font-weight:700;color:${isOurBest?'var(--doc-theme-dark)':'inherit'}">
+      ฿${fmtN(ourP)}${isOurBest?' ✓':''}</td>`;
+    const rivalTds = Array.from({length:n},(_,j)=>{
+      const p = prices[j+1];
+      const isMin = p>0 && p===minP && !isOurBest;
+      return `<td style="text-align:right;${isMin?'color:var(--doc-theme-dark);font-weight:700':''}">฿${fmtN(p)}</td>`;
+    }).join('');
+    return `<tr><td style="color:#9ca3af">${i+1}</td><td>${it.desc||'-'}</td>${ourTd}${rivalTds}</tr>`;
   }).join('');
-  const totals=Array.from({length:n},(_,j)=>compareItems.reduce((s,it)=>s+(+it.prices?.[j]||0),0));
-  const minT=Math.min(...totals.filter(v=>v>0));
-  const tCols=totals.map(v=>`<td style="text-align:right;font-weight:700;${v>0&&v===minT?'color:var(--doc-theme-dark)':''}">${v>0?'฿'+fmtN(v):'-'}</td>`).join('');
-  const winIdx=totals.indexOf(minT);
+
+  const totals = Array.from({length:n+1},(_,j)=>compareItems.reduce((s,it)=>s+(+(it.prices?.[j])||0),0));
+  const validTotals = totals.filter(v=>v>0);
+  const minT = validTotals.length ? Math.min(...validTotals) : 0;
+  const ourTotal = totals[0];
+  const isOurTotalBest = ourTotal>0 && ourTotal===minT;
+
+  const ourTotalTd = `<td style="text-align:right;font-weight:700;background:rgba(var(--doc-theme-rgb),0.08);color:${isOurTotalBest?'var(--doc-theme-dark)':'inherit'}">
+    ${ourTotal>0?'฿'+fmtN(ourTotal):'-'}${isOurTotalBest?' ✓':''}</td>`;
+  const rivalTotalTds = Array.from({length:n},(_,j)=>{
+    const v = totals[j+1];
+    const isMin = v>0 && v===minT && !isOurTotalBest;
+    return `<td style="text-align:right;font-weight:700;${isMin?'color:var(--doc-theme-dark)':''}"> ${v>0?'฿'+fmtN(v):'-'}</td>`;
+  }).join('');
+  const tCols = ourTotalTd + rivalTotalTds;
+
+  const winIdx = totals.indexOf(minT);
+  const winName = allNames[winIdx] || ourName;
+  const saving = isOurTotalBest ? null : (ourTotal>0 && minT>0 ? ourTotal-minT : null);
+  const savingNote = saving>0
+    ? `<div style="font-size:0.923em;color:#6b7280;margin-top:2px">ราคาของเราสูงกว่าต่ำสุด ฿${fmtN(saving)} (${((saving/ourTotal)*100).toFixed(1)}%)</div>`
+    : '';
+
+  const logoHtml = currentLogo
+    ? `<img src="${currentLogo}" style="max-height:52px;max-width:140px;width:auto;height:auto;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`
+    : '';
+
   return `
     <div class="doc-header">
-      <div><div class="doc-company-name">${getV('seller-name')||'-'}</div></div>
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div></div>
       <div class="doc-title-block">
         <div class="doc-title">${info[currentLang]}</div>
         <div style="font-size:0.846em;color:#9ca3af;text-transform:uppercase;letter-spacing:1px">${info.en}</div>
@@ -2274,12 +2352,20 @@ function buildCmpPreview(info){
     <table class="preview-table">
       <thead><tr><th style="width:28px">#</th><th>${t('th.item')}</th>${hCols}</tr></thead>
       <tbody>${rows}</tbody>
-      <tfoot><tr><td></td><td>${t('pv.grandall')}</td>${tCols}</tr></tfoot>
+      <tfoot><tr><td></td><td><b>รวมทั้งหมด</b></td>${tCols}</tr></tfoot>
     </table>
-    ${minT>0?`<div style="margin-top:14px;padding:10px 14px;background:var(--doc-theme-bg);border-radius:8px;display:flex;align-items:center;gap:10px">
-      <i class="ti ti-trophy" style="color:var(--doc-theme);font-size:20px" aria-hidden="true"></i>
-      <div><div style="font-weight:600;font-size:13px">${t('pv.lowest')}</div>
-      <div style="font-size:0.923em;color:#6b7280">${vL[winIdx]} ${t('pv.offered')} ฿${fmtN(minT)}</div></div></div>`:''}
+    <div style="margin-top:14px;padding:12px 16px;background:var(--doc-theme-bg);border-radius:10px;display:flex;align-items:flex-start;gap:12px">
+      <i class="ti ti-${isOurTotalBest?'trophy':'chart-bar'}" style="color:var(--doc-theme);font-size:22px;margin-top:2px" aria-hidden="true"></i>
+      <div>
+        <div style="font-weight:700;font-size:13px">${isOurTotalBest?'✓ ของเราแข่งขันได้ดีที่สุด':'สรุปผลการเปรียบเทียบ'}</div>
+        <div style="font-size:0.923em;color:#6b7280;margin-top:2px">
+          ${isOurTotalBest
+            ? `ราคารวมของเรา (฿${fmtN(ourTotal)}) ต่ำสุดในการเปรียบเทียบ`
+            : `${winName} เสนอราคาต่ำสุดที่ ฿${fmtN(minT)}`}
+        </div>
+        ${savingNote}
+      </div>
+    </div>
     ${getV('doc-notes')?`<div class="doc-notes" style="margin-top:12px"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:''}`;
 }
 
@@ -2483,18 +2569,19 @@ const sampleData = {
   }
 };
 
-/* Sample data for the vendor price-comparison document, which uses a different shape */
+/* Sample data for comparison: prices[0]=ours, prices[1..]=rivals */
 const sampleCompareData = {
   seller: 'บริษัท กรีนฟู้ด อินดัสทรี จำกัด',
+  ourName: 'บริษัท กรีนฟู้ด อินดัสทรี จำกัด',
   docNo: 'PC-2568-014', docDate: '27/06/2568',
-  vendors: ['ห้างหุ้นส่วนจำกัด วัตถุดิบไทย', 'บริษัท ฟาร์มเฟรช ซัพพลาย จำกัด', 'บริษัท ไทยแอกโกร โฮลเซล จำกัด'],
+  rivals: ['ห้างหุ้นส่วนจำกัด วัตถุดิบไทย', 'บริษัท ฟาร์มเฟรช ซัพพลาย จำกัด'],
   items: [
-    {desc:'แป้งสาลีอเนกประสงค์ ถุง 25 กก.', prices:[520,545,510]},
-    {desc:'น้ำตาลทรายขาว ถุง 25 กก.', prices:[640,625,650]},
-    {desc:'น้ำมันปาล์ม ถัง 18 ลิตร', prices:[980,995,970]},
-    {desc:'เกลือป่นบรรจุถุง 1 กก.', prices:[18,17,19]},
+    {desc:'แป้งสาลีอเนกประสงค์ ถุง 25 กก.', prices:[505,520,545]},
+    {desc:'น้ำตาลทรายขาว ถุง 25 กก.', prices:[620,640,625]},
+    {desc:'น้ำมันปาล์ม ถัง 18 ลิตร', prices:[960,980,995]},
+    {desc:'เกลือป่นบรรจุถุง 1 กก.', prices:[16,18,17]},
   ],
-  notes: 'เปรียบเทียบราคาผู้เสนอราคา 3 ราย เพื่อประกอบการตัดสินใจจัดซื้อประจำไตรมาส'
+  notes: 'เปรียบเทียบราคา 3 ราย (ของเรา + คู่แข่ง 2 เจ้า) เพื่อประกอบการเสนองานไตรมาส 3'
 };
 
 function fmtSample(n){ return n.toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -2602,47 +2689,91 @@ function showSampleDoc(type, btn) {
 
 function renderCompareSample() {
   const d = sampleCompareData;
-  const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#043222';
-  const vL = d.vendors;
-  const hCols = vL.map(v=>`<th style="background:${themeColor};color:white;padding:8px 10px;text-align:right;font-size:11px">${v}</th>`).join('');
+  const tc = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#043222';
+  const tcBg = getComputedStyle(document.documentElement).getPropertyValue('--theme-bg').trim() || '#e8f0eb';
+  const allNames = [d.ourName, ...d.rivals];
+  const n = d.rivals.length;
+
+  // Header cols
+  const ourTh = `<th style="background:${tc};color:#fff;padding:8px 10px;text-align:right;font-size:11px;white-space:nowrap">★ ${d.ourName}</th>`;
+  const rivalThs = d.rivals.map(v=>`<th style="background:#4a6d5a;color:#fff;padding:8px 10px;text-align:right;font-size:11px;overflow-wrap:break-word">${v}</th>`).join('');
+
+  // Rows
   const rows = d.items.map((it,i)=>{
-    const minP = Math.min(...it.prices);
-    const pCols = it.prices.map(p=>`<td style="text-align:right;padding:6px 10px;${p===minP?`color:${themeColor};font-weight:700`:''}">฿${fmtSample(p)}</td>`).join('');
-    return `<tr><td style="color:#9ca3af;padding:6px 10px">${i+1}</td><td style="padding:6px 10px">${it.desc}</td>${pCols}</tr>`;
+    const prices = it.prices; // [0]=ours [1..]=rivals
+    const valid = prices.filter(p=>p>0);
+    const minP = valid.length ? Math.min(...valid) : 0;
+    const ourP = prices[0];
+    const isOurBest = ourP>0 && ourP===minP;
+
+    const ourTd = `<td style="text-align:right;padding:6px 10px;background:rgba(4,50,34,0.07);font-weight:700;color:${isOurBest?tc:'inherit'}">
+      ฿${fmtSample(ourP)}${isOurBest?' ✓':''}</td>`;
+    const rivalTds = Array.from({length:n},(_,j)=>{
+      const p = prices[j+1]||0;
+      const isMin = p>0 && p===minP && !isOurBest;
+      return `<td style="text-align:right;padding:6px 10px;${isMin?`color:${tc};font-weight:700`:''}">฿${fmtSample(p)}</td>`;
+    }).join('');
+    return `<tr><td style="color:#9ca3af;padding:6px 10px">${i+1}</td>
+      <td style="padding:6px 10px">${it.desc}</td>${ourTd}${rivalTds}</tr>`;
   }).join('');
-  const totals = vL.map((_,j)=>d.items.reduce((s,it)=>s+it.prices[j],0));
-  const minT = Math.min(...totals);
-  const tCols = totals.map(v=>`<td style="text-align:right;padding:6px 10px;font-weight:700;${v===minT?`color:${themeColor}`:''}">฿${fmtSample(v)}</td>`).join('');
-  const winIdx = totals.indexOf(minT);
+
+  // Totals
+  const totals = Array.from({length:n+1},(_,j)=>d.items.reduce((s,it)=>s+(it.prices[j]||0),0));
+  const validT = totals.filter(v=>v>0);
+  const minT = validT.length ? Math.min(...validT) : 0;
+  const ourTotal = totals[0];
+  const isOurTotalBest = ourTotal>0 && ourTotal===minT;
+
+  const ourTotalTd = `<td style="text-align:right;padding:6px 10px;font-weight:700;background:rgba(4,50,34,0.07);color:${isOurTotalBest?tc:'inherit'}">
+    ฿${fmtSample(ourTotal)}${isOurTotalBest?' ✓':''}</td>`;
+  const rivalTotalTds = Array.from({length:n},(_,j)=>{
+    const v = totals[j+1]||0;
+    const isMin = v>0 && v===minT && !isOurTotalBest;
+    return `<td style="text-align:right;padding:6px 10px;font-weight:700;${isMin?`color:${tc}`:''}">฿${fmtSample(v)}</td>`;
+  }).join('');
+
+  const winName = allNames[totals.indexOf(minT)] || d.ourName;
+  const saving = !isOurTotalBest && ourTotal>0 && minT>0 ? ourTotal-minT : 0;
 
   document.getElementById('sample-preview-area').innerHTML = `
     <div style="max-width:100%;margin:0 auto">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
-        <div><div style="font-size:18px;font-weight:700;color:${themeColor}">${d.seller}</div></div>
+        <div><div style="font-size:16px;font-weight:700;color:${tc}">${d.seller}</div></div>
         <div style="text-align:right">
-          <div style="font-size:22px;font-weight:700">${docInfo.comparison?.th||'คู่เทียบใบเสนอราคา'}</div>
-          <div style="font-size:11px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${docInfo.comparison?.en||'Price Comparison'}</div>
-          <div style="font-size:12px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${themeColor}">${d.docNo}</b></div>
+          <div style="font-size:20px;font-weight:700">${docInfo.comparison?.th||'คู่เทียบใบเสนอราคา'}</div>
+          <div style="font-size:10px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">Price Comparison</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${tc}">${d.docNo}</b></div>
           <div style="font-size:12px;color:#6b7280">วันที่: ${d.docDate}</div>
         </div>
       </div>
-      <div style="height:3px;background:${themeColor};border-radius:2px;opacity:0.7;margin-bottom:16px"></div>
+      <div style="height:3px;background:${tc};border-radius:2px;opacity:0.7;margin-bottom:16px"></div>
       <table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-bottom:14px">
         <thead><tr>
-          <th style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px;width:8%;overflow-wrap:break-word">#</th>
-          <th style="background:${themeColor};color:white;padding:8px 10px;text-align:left;font-size:11px;overflow-wrap:break-word">รายการ</th>
-          ${hCols}
+          <th style="background:${tc};color:white;padding:8px 10px;text-align:left;font-size:11px;width:6%">#</th>
+          <th style="background:${tc};color:white;padding:8px 10px;text-align:left;font-size:11px">รายการ</th>
+          ${ourTh}${rivalThs}
         </tr></thead>
         <tbody>${rows}
-          <tr style="background:#e8f0eb"><td></td><td style="padding:6px 10px;font-weight:700">รวมทั้งหมด</td>${tCols}</tr>
+          <tr style="background:${tcBg}">
+            <td></td>
+            <td style="padding:6px 10px;font-weight:700">รวมทั้งหมด</td>
+            ${ourTotalTd}${rivalTotalTds}
+          </tr>
         </tbody>
       </table>
-      <div style="margin-top:14px;padding:10px 14px;background:#e8f0eb;border-radius:8px;display:flex;align-items:center;gap:10px">
-        <i class="ti ti-trophy" style="color:${themeColor};font-size:20px" aria-hidden="true"></i>
-        <div><div style="font-weight:600;font-size:13px">เสนอราคาต่ำสุด</div>
-        <div style="font-size:12px;color:#6b7280">${vL[winIdx]} เสนอราคาต่ำสุดที่ ฿${fmtSample(minT)}</div></div>
+      <div style="margin-top:14px;padding:12px 16px;background:${tcBg};border-radius:10px;display:flex;align-items:flex-start;gap:12px">
+        <i class="ti ti-${isOurTotalBest?'trophy':'chart-bar'}" style="color:${tc};font-size:22px;margin-top:1px"></i>
+        <div>
+          <div style="font-weight:700;font-size:13px">${isOurTotalBest?'✓ ของเราแข่งขันได้ดีที่สุด':'สรุปผลการเปรียบเทียบ'}</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:2px">
+            ${isOurTotalBest
+              ? `ราคารวมของเรา ฿${fmtSample(ourTotal)} ต่ำสุดในกลุ่ม`
+              : `${winName} เสนอราคาต่ำสุดที่ ฿${fmtSample(minT)}`}
+          </div>
+          ${saving>0?`<div style="font-size:11px;color:#9ca3af;margin-top:2px">ราคาของเราสูงกว่าต่ำสุด ฿${fmtSample(saving)} (${((saving/ourTotal)*100).toFixed(1)}%)</div>`:''}
+        </div>
       </div>
-      ${d.notes?`<div style="background:#f9fafb;border-radius:8px;padding:10px 12px;font-size:11px;color:#6b7280;margin-top:16px"><b>หมายเหตุ:</b> ${d.notes}</div>`:''}
+      ${d.notes?`<div style="background:#f9fafb;border-radius:8px;padding:10px 12px;font-size:11px;color:#6b7280;margin-top:14px"><b>หมายเหตุ:</b> ${d.notes}</div>`:''}
     </div>`;
 }
 
@@ -2654,14 +2785,16 @@ function useSampleAsTemplate() {
   if (type === 'comparison') {
     const d = sampleCompareData;
     document.getElementById('seller-name').value = d.seller;
-    document.getElementById('vendor-count').value = String(d.vendors.length);
+    const v0el = document.getElementById('v0-our');
+    if(v0el) v0el.value = d.ourName || d.seller;
+    document.getElementById('vendor-count').value = String(d.rivals.length);
     updateVendors();
     ['v1','v2','v3','v4'].forEach((id,i)=>{
       const el = document.getElementById(id);
-      if(el) el.value = d.vendors[i] || '';
+      if(el) el.value = d.rivals[i] || '';
     });
     document.getElementById('doc-notes').value = d.notes || '';
-    compareItems = d.items.map(it => ({ desc: it.desc, prices: [it.prices[0]||0, it.prices[1]||0, it.prices[2]||0, it.prices[3]||0] }));
+    compareItems = d.items.map(it => ({ desc: it.desc, prices: [...it.prices, 0, 0, 0, 0].slice(0,5) }));
     renderCompareItems();
   } else {
     const d = sampleData[type];
@@ -2685,12 +2818,192 @@ function useSampleAsTemplate() {
   }
 }
 
+/* ===== SELLER DEFAULT (บันทึกข้อมูลบริษัทเป็นค่าเริ่มต้น) ===== */
+function saveSellerDefault() {
+  const data = {
+    name:    document.getElementById('seller-name').value,
+    address: document.getElementById('seller-address').value,
+    phone:   document.getElementById('seller-phone').value,
+    email:   document.getElementById('seller-email').value,
+    tax:     document.getElementById('seller-tax').value,
+  };
+  localStorage.setItem('baidoc-seller', JSON.stringify(data));
+  const toast = document.getElementById('save-seller-toast');
+  toast.style.display = 'inline-flex';
+  setTimeout(() => { toast.style.display = 'none'; }, 2200);
+}
+
+function loadSellerDefault() {
+  try {
+    const data = JSON.parse(localStorage.getItem('baidoc-seller') || 'null');
+    if (!data) return;
+    if (data.name)    document.getElementById('seller-name').value    = data.name;
+    if (data.address) document.getElementById('seller-address').value = data.address;
+    if (data.phone)   document.getElementById('seller-phone').value   = data.phone;
+    if (data.email)   document.getElementById('seller-email').value   = data.email;
+    if (data.tax)     document.getElementById('seller-tax').value     = data.tax;
+  } catch(e) {}
+}
+
+/* ===== AUTOSAVE FORM ===== */
+let _autosaveTimer = null;
+function scheduleAutosave() {
+  clearTimeout(_autosaveTimer);
+  _autosaveTimer = setTimeout(autosaveForm, 800);
+}
+
+function autosaveForm() {
+  if (document.getElementById('form-page').style.display === 'none') return;
+  try {
+    const data = {
+      docType:       currentDocType,
+      sellerName:    document.getElementById('seller-name').value,
+      sellerAddress: document.getElementById('seller-address').value,
+      sellerPhone:   document.getElementById('seller-phone').value,
+      sellerEmail:   document.getElementById('seller-email').value,
+      sellerTax:     document.getElementById('seller-tax').value,
+      buyerName:     document.getElementById('buyer-name').value,
+      buyerAddress:  document.getElementById('buyer-address').value,
+      buyerPhone:    document.getElementById('buyer-phone').value,
+      buyerTax:      document.getElementById('buyer-tax').value,
+      docNumber:     document.getElementById('doc-number').value,
+      docDate:       document.getElementById('doc-date').value,
+      docDueDate:    document.getElementById('doc-due-date').value,
+      docNotes:      document.getElementById('doc-notes').value,
+      vatRate:       document.getElementById('vat-rate').value,
+      whtRate:       document.getElementById('wht-rate').value,
+      discountValue: document.getElementById('discount-value').value,
+      discountType:  document.getElementById('discount-type').value,
+      ourName:       document.getElementById('v0-our')?.value || '',
+      vendorCount:   document.getElementById('vendor-count')?.value || '2',
+      v1: document.getElementById('v1')?.value || '',
+      v2: document.getElementById('v2')?.value || '',
+      v3: document.getElementById('v3')?.value || '',
+      v4: document.getElementById('v4')?.value || '',
+      items,
+      compareItems,
+    };
+    localStorage.setItem('baidoc-autosave', JSON.stringify(data));
+    showAutosaveIndicator();
+  } catch(e) {}
+}
+
+function showAutosaveIndicator() {
+  let ind = document.getElementById('autosave-indicator');
+  if (!ind) return;
+  ind.style.opacity = '1';
+  clearTimeout(ind._fadeTimer);
+  ind._fadeTimer = setTimeout(() => { ind.style.opacity = '0'; }, 1800);
+}
+
+function restoreAutosave() {
+  try {
+    const raw = localStorage.getItem('baidoc-autosave');
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    if (!d || !d.docType) return false;
+
+    currentDocType = d.docType;
+    const info = docInfo[currentDocType];
+    const prefixWord = currentLang==='en' ? 'Create ' : currentLang==='zh' ? '创建' : 'สร้าง';
+    document.getElementById('form-title').textContent = prefixWord + info[currentLang];
+    document.getElementById('doc-type-badge').textContent = info.en;
+
+    document.getElementById('seller-name').value    = d.sellerName    || '';
+    document.getElementById('seller-address').value = d.sellerAddress || '';
+    document.getElementById('seller-phone').value   = d.sellerPhone   || '';
+    document.getElementById('seller-email').value   = d.sellerEmail   || '';
+    document.getElementById('seller-tax').value     = d.sellerTax     || '';
+    document.getElementById('buyer-name').value     = d.buyerName     || '';
+    document.getElementById('buyer-address').value  = d.buyerAddress  || '';
+    document.getElementById('buyer-phone').value    = d.buyerPhone    || '';
+    document.getElementById('buyer-tax').value      = d.buyerTax      || '';
+    document.getElementById('doc-number').value     = d.docNumber     || '';
+    document.getElementById('doc-date').value       = d.docDate       || '';
+    document.getElementById('doc-due-date').value   = d.docDueDate    || '';
+    document.getElementById('doc-notes').value      = d.docNotes      || '';
+    document.getElementById('vat-rate').value       = d.vatRate       || '7';
+    document.getElementById('wht-rate').value       = d.whtRate       || '0';
+    document.getElementById('discount-value').value = d.discountValue || '0';
+    document.getElementById('discount-type').value  = d.discountType  || 'thb';
+
+    const isCmp = currentDocType === 'comparison';
+    document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(currentDocType)) ? 'block' : 'none';
+    document.getElementById('items-section').style.display   = isCmp ? 'none' : 'block';
+    document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
+    document.getElementById('compare-vendors-row').style.display = isCmp ? 'block' : 'none';
+    document.getElementById('vendor-names-row').style.display    = isCmp ? 'block' : 'none';
+
+    if (isCmp) {
+      const v0el = document.getElementById('v0-our');
+      if(v0el && d.ourName) v0el.value = d.ourName;
+      const vcEl = document.getElementById('vendor-count');
+      if(vcEl && d.vendorCount) vcEl.value = d.vendorCount;
+      ['v1','v2','v3','v4'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el && d[id] !== undefined) el.value = d[id];
+      });
+      updateVendors();
+    }
+    if (d.items && Array.isArray(d.items))        items        = d.items;
+    if (d.compareItems && Array.isArray(d.compareItems)) compareItems = d.compareItems;
+    renderItems(); calcTotal();
+    if (isCmp) renderCompareItems();
+
+    document.querySelectorAll('#form-page .doc-card').forEach(c => c.classList.remove('selected'));
+    const card = document.getElementById('card-'+currentDocType);
+    if (card) card.classList.add('selected');
+
+    document.getElementById('landing-page').style.display = 'none';
+    document.getElementById('form-page').style.display = 'block';
+    window.scrollTo(0,0);
+    return true;
+  } catch(e) { return false; }
+}
+
+/* ===== AUTO DOC NUMBER (smart increment) ===== */
+function generateDocNumber(type) {
+  const info = docInfo[type];
+  const prefix = info.prefix;
+  const today = new Date();
+  const y = today.getFullYear() + 543;
+  const m = String(today.getMonth()+1).padStart(2,'0');
+  const counterKey = `baidoc-counter-${prefix}-${y}${m}`;
+  const next = (parseInt(localStorage.getItem(counterKey) || '0') + 1);
+  localStorage.setItem(counterKey, String(next));
+  return `${prefix}-${y}${m}-${String(next).padStart(3,'0')}`;
+}
+
+/* Hook autosave to all form inputs */
+function attachAutosaveListeners() {
+  const ids = ['seller-name','seller-address','seller-phone','seller-email','seller-tax',
+               'buyer-name','buyer-address','buyer-phone','buyer-tax',
+               'doc-number','doc-date','doc-due-date','doc-notes',
+               'vat-rate','wht-rate','discount-value','discount-type',
+               'v0-our','v1','v2','v3','v4','vendor-count'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', scheduleAutosave);
+    if (el) el.addEventListener('change', scheduleAutosave);
+  });
+  // Also hook item table changes via event delegation
+  document.getElementById('items-body').addEventListener('input', scheduleAutosave);
+  document.getElementById('compare-body')?.addEventListener('input', scheduleAutosave);
+}
+
 // Init
 setDarkMode(localStorage.getItem('baidoc-darkmode')==='1');
 applyLang(currentLang);
 renderItems(); calcTotal();
 document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
 showSampleDoc('quotation', null);
+
+// Restore autosave on load
+const _restored = restoreAutosave();
+// If no autosave, load seller default into landing/blank form
+if (!_restored) loadSellerDefault();
+
+attachAutosaveListeners();
 </script>
 </body>
 </html>
