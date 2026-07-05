@@ -19,8 +19,11 @@
   --text: #043222;
   --text-muted: #4a6d5a;
   --border: #d9c9b0;
+  --border-hover: #c8d5e0;
   --bg: #F6E9D9;
   --white: #fdf6ee;
+  --input-bg: #f8fafc;
+  --input-bg-hover: #f4f8fb;
   --radius: 10px;
   /* Document-only theme: controlled by the color swatches in the form.
      Only affects the document preview / generated PDF, never the site UI. */
@@ -37,22 +40,15 @@ html[data-mode="dark"] {
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --border: #334155;
+  --border-hover: #475569;
   --bg: #0f172a;
   --white: #1e293b;
+  --input-bg: #0f172a;
+  --input-bg-hover: #152033;
   --theme-bg: #15263a;
 }
 html[data-mode="dark"] body { background: var(--bg); }
-html[data-mode="dark"] .form-row input,
-html[data-mode="dark"] .form-row select,
-html[data-mode="dark"] .form-row textarea,
-html[data-mode="dark"] .items-table input { background:#0f172a; color:var(--text); border-color:#334155; }
-html[data-mode="dark"] .summary-box input,
-html[data-mode="dark"] .summary-box select { background:#0f172a; color:var(--text); border-color:#334155 !important; }
 html[data-mode="dark"] input[type="date"] { color-scheme: dark; }
-html[data-mode="dark"] .form-row input:hover, html[data-mode="dark"] .form-row select:hover, html[data-mode="dark"] .form-row textarea:hover { background:#152033; }
-html[data-mode="dark"] .form-row input:focus, html[data-mode="dark"] .form-row select:focus, html[data-mode="dark"] .form-row textarea:focus,
-html[data-mode="dark"] .items-table input:focus { background:#0f172a; }
-html[data-mode="dark"] .items-table th { background:#152033; }
 html[data-mode="dark"] .modal-box, html[data-mode="dark"] .picker-box { background: var(--white); color: var(--text); }
 html[data-mode="dark"] .picker-card { background: var(--white); }
 html[data-mode="dark"] .picker-card:hover { background: var(--theme-bg); }
@@ -325,7 +321,7 @@ nav {
   border: 2px dashed var(--border); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; color: var(--text-muted);
-  background: white; transition: border-color 0.15s;
+  background: var(--white); transition: border-color 0.15s;
   position: relative; overflow: hidden;
 }
 .swatch-custom input[type="color"] {
@@ -430,12 +426,12 @@ nav {
 .form-row select,
 .form-row textarea {
   width: 100%;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   padding: 10px 13px;
   font-size: 14px; font-family: 'Sarabun', sans-serif;
   color: var(--text);
-  background: #f8fafc;
+  background: var(--input-bg);
   outline: none;
   transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
   -webkit-appearance: none; appearance: none;
@@ -449,15 +445,15 @@ nav {
 .form-row input:hover,
 .form-row select:hover,
 .form-row textarea:hover {
-  border-color: #c8d5e0;
-  background: #f4f8fb;
+  border-color: var(--border-hover);
+  background: var(--input-bg-hover);
 }
 
 .form-row input:focus,
 .form-row select:focus,
 .form-row textarea:focus {
   border-color: var(--theme);
-  background: white;
+  background: var(--white);
   box-shadow: 0 0 0 3.5px rgba(var(--theme-rgb), 0.10);
 }
 
@@ -491,27 +487,27 @@ nav {
   font-size: 10.5px; font-weight: 700;
   color: var(--text-muted); text-transform: uppercase;
   letter-spacing: 0.6px;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--input-bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .items-table th:first-child { border-radius: 8px 0 0 0; }
 .items-table th:last-child { border-radius: 0 8px 0 0; }
 .items-table td { padding: 5px 6px; vertical-align: middle; }
-.items-table tr:not(:last-child) td { border-bottom: 1px solid #f1f5f9; }
+.items-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
 .items-table input {
   border: 1.5px solid transparent; border-radius: 8px;
   padding: 7px 9px; font-size: 13px;
   font-family: 'Sarabun', sans-serif; width: 100%;
-  outline: none; background: #f8fafc;
+  outline: none; background: var(--input-bg);
   color: var(--text);
   transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 .items-table input::placeholder { color: #b8c4ce; }
-.items-table input:hover { background: #f0f6fc; }
+.items-table input:hover { background: var(--input-bg-hover); }
 .items-table input:focus {
   border-color: var(--theme);
-  background: white;
+  background: var(--white);
   box-shadow: 0 0 0 3px rgba(var(--theme-rgb), 0.09);
 }
 .del-btn {
@@ -707,6 +703,11 @@ nav {
   from { opacity: 0; transform: scale(0.95) translateY(8px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.btn-loading .ti-loader-2 { display: inline-block; animation: spin 0.8s linear infinite; }
 .picker-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 6px;
@@ -764,6 +765,7 @@ nav {
 }
 .confirm-icon-wrap.danger { background: rgba(220,38,38,0.1); color: #dc2626; }
 .confirm-icon-wrap.warning { background: rgba(245,158,11,0.12); color: #d97706; }
+.confirm-icon-wrap.info { background: rgba(4,50,34,0.1); color: var(--theme); }
 .confirm-title {
   font-size: 16px; font-weight: 700; text-align: center;
   margin-bottom: 8px; color: var(--text);
@@ -789,6 +791,7 @@ nav {
 }
 .confirm-btn-ok.danger { background: #dc2626; color: #fff; }
 .confirm-btn-ok.warning { background: var(--theme); color: #fff; }
+.confirm-btn-ok.info { background: var(--theme); color: #fff; }
 .confirm-btn-ok:hover { filter: brightness(0.9); }
 #history-modal {
   display: none; position: fixed;
@@ -833,6 +836,39 @@ nav {
   border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 13px;
   background: var(--white); color: var(--text);
 }
+
+/* STAMP UPLOAD */
+.stamp-upload-area {
+  border: 2px dashed var(--border); border-radius: 12px;
+  padding: 14px; text-align: center; cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative; overflow: hidden;
+}
+.stamp-upload-area:hover { border-color: var(--theme); background: var(--theme-bg); }
+.stamp-upload-area input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.stamp-preview-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.stamp-preview-img { max-height: 70px; max-width: 140px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); }
+
+/* EDIT CUSTOMER MODAL */
+#edit-customer-modal {
+  display: none; position: fixed; inset: 0; z-index: 520;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(3px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#edit-customer-modal.open { display: flex; }
+.edit-customer-box {
+  background: var(--white); border-radius: 18px;
+  width: 100%; max-width: 420px; padding: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+  animation: popIn 0.16s ease;
+}
+.edit-customer-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var(--text); }
+
+/* KEYBOARD SHORTCUT BADGE */
+.kbd { display: inline-block; font-size: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--text-muted); font-family: monospace; margin-left: 4px; vertical-align: middle; }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1220,6 +1256,24 @@ nav {
         </div>
       </div>
 
+      <!-- STAMP / SIGNATURE UPLOAD -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">ตราประทับ / ลายเซ็น</div>
+        <div id="stamp-drop-area" class="stamp-upload-area">
+          <input type="file" id="stamp-file-input" accept="image/*" onchange="handleStampUpload(event)">
+          <div id="stamp-placeholder">
+            <i class="ti ti-writing-sign" style="font-size:26px;color:var(--text-muted);display:block;margin-bottom:6px"></i>
+            <div style="font-size:13px;color:var(--text-muted)">คลิกหรือลากรูปมาวาง</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">แนะนำรูปพื้นหลังโปร่งใส (PNG)</div>
+          </div>
+          <div id="stamp-preview-wrap" class="stamp-preview-wrap" style="display:none">
+            <img id="stamp-preview-img" class="stamp-preview-img" src="" alt="ตราประทับ">
+            <button type="button" class="logo-remove-btn" onclick="removeStamp(event)"><i class="ti ti-x"></i> ลบตรา</button>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px">รูปจะแสดงที่มุมลายเซ็นในเอกสาร</div>
+      </div>
+
       <!-- COLOR THEME -->
       <div style="margin-bottom:20px">
         <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px" data-i18n="theme.colorlabel">สีธีม</div>
@@ -1322,6 +1376,9 @@ nav {
         <select id="customer-select" onchange="selectCustomer(this.value)">
           <option value="" data-i18n="cust.pick">— เลือกลูกค้าที่บันทึกไว้ —</option>
         </select>
+        <button type="button" class="history-item-del" style="border:1.5px solid var(--border)" onclick="editCustomer()" aria-label="แก้ไขลูกค้านี้" title="แก้ไขข้อมูลลูกค้าที่เลือก">
+          <i class="ti ti-pencil" aria-hidden="true"></i>
+        </button>
         <button type="button" class="history-item-del" style="border:1.5px solid var(--border)" onclick="deleteCustomer()" aria-label="ลบลูกค้านี้" title="ลบลูกค้าที่เลือก">
           <i class="ti ti-trash" aria-hidden="true"></i>
         </button>
@@ -1420,6 +1477,11 @@ nav {
           <tbody id="items-body"></tbody>
         </table>
         <button class="add-item-btn" onclick="addItem()"><i class="ti ti-plus" aria-hidden="true"></i> <span data-i18n="btn.additem">เพิ่มรายการ</span></button>
+        <div style="margin-top:6px;text-align:right">
+          <button type="button" onclick="exportItemsCSV()" class="btn-outline" style="font-size:11px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px">
+            <i class="ti ti-table-export" aria-hidden="true"></i> Export CSV
+          </button>
+        </div>
         <div class="summary-box">
           <div class="summary-row"><span data-i18n="sum.subtotal">ยอดรวมก่อน VAT</span><span id="subtotal">฿0.00</span></div>
           <div class="summary-row" style="align-items:center;flex-wrap:wrap;gap:6px">
@@ -1456,7 +1518,14 @@ nav {
 
   <div class="form-actions">
     <button class="btn-outline" onclick="showLanding()" data-i18n="btn.cancel">ยกเลิก</button>
-    <button class="btn-primary" onclick="showPreview()"><i class="ti ti-eye" aria-hidden="true"></i> <span data-i18n="btn.preview">พรีวิวเอกสาร</span></button>
+    <button class="btn-outline" onclick="duplicateDocument()" title="คัดลอกเอกสารนี้เป็นเอกสารใหม่" style="display:inline-flex;align-items:center;gap:5px">
+      <i class="ti ti-copy" aria-hidden="true"></i> คัดลอก
+    </button>
+    <button class="btn-primary" onclick="showPreview()">
+      <i class="ti ti-eye" aria-hidden="true"></i>
+      <span data-i18n="btn.preview">พรีวิวเอกสาร</span>
+      <span class="kbd">Ctrl+P</span>
+    </button>
   </div>
 </div>
 
@@ -1583,6 +1652,37 @@ nav {
     <div class="confirm-btns">
       <button class="confirm-btn-cancel" onclick="resolveConfirm(false)">ยกเลิก</button>
       <button class="confirm-btn-ok danger" id="confirm-ok-btn" onclick="resolveConfirm(true)">ยืนยัน</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT CUSTOMER MODAL -->
+<div id="edit-customer-modal">
+  <div class="edit-customer-box">
+    <div class="edit-customer-title"><i class="ti ti-user-edit" style="margin-right:6px;color:var(--theme)"></i>แก้ไขข้อมูลลูกค้า</div>
+    <div class="form-row"><label>ชื่อบริษัท / ลูกค้า</label><input type="text" id="ec-name" placeholder="บริษัท XYZ จำกัด"></div>
+    <div class="form-row"><label>ที่อยู่</label><textarea id="ec-address" rows="2" placeholder="456 ถนนพระราม 4 กรุงเทพฯ 10500"></textarea></div>
+    <div class="form-2col">
+      <div class="form-row"><label>เบอร์โทร</label><input type="text" id="ec-phone" placeholder="02-xxx-xxxx"></div>
+      <div class="form-row"><label>เลขผู้เสียภาษี</label><input type="text" id="ec-tax" placeholder="0-1234-56789-01-2"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
+      <button class="confirm-btn-cancel" onclick="closeEditCustomer()" style="max-width:100px">ยกเลิก</button>
+      <button class="confirm-btn-ok info" onclick="saveEditCustomer()" style="max-width:120px">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ALERT MODAL -->
+<div id="alert-modal" style="display:none; position:fixed; inset:0; z-index:510; background:rgba(0,0,0,0.45); backdrop-filter:blur(3px); align-items:center; justify-content:center; padding:20px;">
+  <div class="confirm-box" style="max-width:340px;">
+    <div class="confirm-icon-wrap info" id="alert-icon-wrap">
+      <i class="ti ti-info-circle" id="alert-icon" aria-hidden="true"></i>
+    </div>
+    <div class="confirm-title" id="alert-title">แจ้งเตือน</div>
+    <div class="confirm-sub" id="alert-sub"></div>
+    <div class="confirm-btns" style="justify-content:center;">
+      <button class="confirm-btn-ok info" id="alert-ok-btn" onclick="closeAlert()" style="max-width:160px;">ตกลง</button>
     </div>
   </div>
 </div>
@@ -1890,7 +1990,8 @@ async function downloadPDF(){
   const btn = document.getElementById('download-btn');
   const original = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> ...';
+  btn.classList.add('btn-loading');
+  btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> <span>กำลังสร้าง PDF...</span>';
   try{
     const node = document.getElementById('doc-preview');
     // Temporarily remove CSS transform so html2canvas captures full resolution
@@ -1967,9 +2068,10 @@ async function downloadPDF(){
     pdf.save(fname);
   }catch(err){
     console.error(err);
-    alert('ไม่สามารถสร้างไฟล์ PDF ได้ กรุณาลองใหม่ หรือใช้ปุ่มพิมพ์ / PDF แทน');
+    showAlert('ไม่สามารถสร้างไฟล์ PDF ได้ กรุณาลองใหม่ หรือใช้ปุ่มพิมพ์ / PDF แทน', { title: 'เกิดข้อผิดพลาด', icon: 'ti-file-x', type: 'danger' });
   }finally{
     btn.disabled = false;
+    btn.classList.remove('btn-loading');
     btn.innerHTML = original;
   }
 }
@@ -1980,7 +2082,8 @@ async function printPDF(){
   const btn = document.getElementById('print-btn');
   const original = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> ...';
+  btn.classList.add('btn-loading');
+  btn.innerHTML = '<i class="ti ti-loader-2" aria-hidden="true"></i> <span>กำลังสร้าง PDF...</span>';
   try{
     const node = document.getElementById('doc-preview');
     // Remove transform so canvas captures full A4 resolution
@@ -2052,18 +2155,17 @@ async function printPDF(){
       const info  = docInfo[currentDocType];
       const fname = `${getV('doc-number')||info.prefix}-print.pdf`;
       pdf.save(fname);
-      alert('ป็อปอัพถูกบล็อก — ไฟล์ถูกดาวน์โหลดแล้ว กรุณาเปิดไฟล์แล้วพิมพ์จากนั้น');
+      showAlert('ป็อปอัพถูกบล็อก — ไฟล์ถูกดาวน์โหลดแล้ว กรุณาเปิดไฟล์แล้วพิมพ์จากนั้น', { title: 'ดาวน์โหลดแล้ว', icon: 'ti-download', type: 'warning' });
     }
   }catch(err){
     console.error(err);
-    alert('ไม่สามารถสร้าง PDF สำหรับพิมพ์ได้ กรุณาลองใหม่');
+    showAlert('ไม่สามารถสร้าง PDF สำหรับพิมพ์ได้ กรุณาลองใหม่', { title: 'เกิดข้อผิดพลาด', icon: 'ti-printer-off', type: 'danger' });
   }finally{
     btn.disabled=false;
+    btn.classList.remove('btn-loading');
     btn.innerHTML=original;
   }
 }
-
-/* DOC PICKER */
 function openDocPicker() {
   document.getElementById('doc-picker-modal').classList.add('open');
 }
@@ -2140,6 +2242,46 @@ function removeLogo(e){
   document.getElementById('logo-placeholder').style.display = 'block';
   document.getElementById('logo-preview-wrap').style.display = 'none';
 }
+
+/* ===== STAMP / SIGNATURE ===== */
+let currentStamp = null;
+function handleStampUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    currentStamp = ev.target.result;
+    document.getElementById('stamp-preview-img').src = currentStamp;
+    document.getElementById('stamp-placeholder').style.display = 'none';
+    document.getElementById('stamp-preview-wrap').style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+}
+function removeStamp(e){
+  e.stopPropagation();
+  currentStamp = null;
+  document.getElementById('stamp-file-input').value = '';
+  document.getElementById('stamp-preview-img').src = '';
+  document.getElementById('stamp-placeholder').style.display = 'block';
+  document.getElementById('stamp-preview-wrap').style.display = 'none';
+}
+
+// Drag-and-drop for stamp
+document.addEventListener('DOMContentLoaded', () => {
+  const stampArea = document.getElementById('stamp-drop-area');
+  if (stampArea) {
+    stampArea.addEventListener('dragover', e => { e.preventDefault(); stampArea.style.borderColor = 'var(--theme)'; });
+    stampArea.addEventListener('dragleave', () => { stampArea.style.borderColor = ''; });
+    stampArea.addEventListener('drop', e => {
+      e.preventDefault(); stampArea.style.borderColor = '';
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const fakeEv = { target: { files: [file] } };
+        handleStampUpload(fakeEv);
+      }
+    });
+  }
+});
 
 function changeFontSize(delta){
   currentFontSize = Math.max(10, Math.min(24, currentFontSize + delta));
@@ -2320,6 +2462,36 @@ function remCmp(i){ if(compareItems.length<=1) return; compareItems.splice(i,1);
 /* PREVIEW */
 function getV(id){ return document.getElementById(id)?.value||''; }
 
+/* ===== FORM VALIDATION ===== */
+function validateForm() {
+  const rules = [
+    { id: 'seller-name', label: 'ชื่อบริษัท / ผู้ขาย' },
+    { id: 'doc-number',  label: 'เลขที่เอกสาร' },
+    { id: 'doc-date',    label: 'วันที่เอกสาร' },
+  ];
+  const missing = rules.filter(r => !getV(r.id).trim());
+  if (missing.length === 0) return true;
+
+  const list = missing.map(r => `• ${r.label}`).join('\n');
+  showAlert(list, { title: 'กรุณากรอกข้อมูลให้ครบก่อนพรีวิว', icon: 'ti-clipboard-list', type: 'warning' });
+
+  // Highlight and focus the first missing field
+  const firstEl = document.getElementById(missing[0].id);
+  if (firstEl) {
+    firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    firstEl.focus();
+    firstEl.style.borderColor = '#f59e0b';
+    firstEl.style.boxShadow = '0 0 0 3.5px rgba(245,158,11,0.18)';
+    const reset = () => {
+      firstEl.style.borderColor = '';
+      firstEl.style.boxShadow = '';
+      firstEl.removeEventListener('input', reset);
+    };
+    firstEl.addEventListener('input', reset);
+  }
+  return false;
+}
+
 function scaleDocPreview() {
   const scaler = document.getElementById('preview-scaler');
   const preview = document.getElementById('doc-preview');
@@ -2335,6 +2507,7 @@ function scaleDocPreview() {
 }
 
 function showPreview(){
+  if (!validateForm()) return;
   const info=docInfo[currentDocType];
   const sub=items.reduce((s,it)=>s+(it.qty*it.price),0);
   const discVal = +getV('discount-value') || 0;
@@ -2447,6 +2620,7 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
       <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
         <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
         <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp ? `<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">` : ''}
       </div>
       <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
         <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
@@ -3058,7 +3232,11 @@ function autosaveForm() {
     };
     localStorage.setItem('baidoc-autosave', JSON.stringify(data));
     showAutosaveIndicator();
-  } catch(e) {}
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      showStorageFullWarning();
+    }
+  }
 }
 
 function showAutosaveIndicator() {
@@ -3220,6 +3398,31 @@ function resolveConfirm(result) {
 }
 document.getElementById('confirm-modal').addEventListener('click', function(e){ if(e.target===this) resolveConfirm(false); });
 
+/* ===== CUSTOM ALERT DIALOG (แทน browser alert) ===== */
+function showAlert(msg, { title='แจ้งเตือน', icon='ti-info-circle', type='info' } = {}) {
+  document.getElementById('alert-title').textContent = title;
+  document.getElementById('alert-sub').textContent = msg;
+  document.getElementById('alert-icon').className = `ti ${icon}`;
+  document.getElementById('alert-icon-wrap').className = `confirm-icon-wrap ${type}`;
+  document.getElementById('alert-ok-btn').className = `confirm-btn-ok ${type}`;
+  const modal = document.getElementById('alert-modal');
+  modal.style.display = 'flex';
+  modal.style.animation = '';
+  void modal.offsetWidth;
+}
+function closeAlert() {
+  document.getElementById('alert-modal').style.display = 'none';
+}
+document.getElementById('alert-modal').addEventListener('click', function(e){ if(e.target===this) closeAlert(); });
+
+let _storageWarnThrottle = 0;
+function showStorageFullWarning() {
+  const now = Date.now();
+  if (now - _storageWarnThrottle < 10000) return; // show at most once per 10s
+  _storageWarnThrottle = now;
+  showAlert('พื้นที่จัดเก็บในเบราว์เซอร์เต็มแล้ว\nไม่สามารถบันทึกข้อมูลได้ กรุณาลบประวัติเอกสารบางส่วนเพื่อเพิ่มพื้นที่', { title: 'พื้นที่จัดเก็บเต็ม', icon: 'ti-database-x', type: 'warning' });
+}
+
 /* ===== CUSTOMER DATABASE (ฐานข้อมูลลูกค้า) ===== */
 function getCustomers() {
   try { return JSON.parse(localStorage.getItem('baidoc-customers') || '[]'); } catch(e) { return []; }
@@ -3245,7 +3448,7 @@ function selectCustomer(idx) {
 }
 function saveCustomer() {
   const name = document.getElementById('buyer-name').value.trim();
-  if (!name) { alert('กรุณากรอกชื่อลูกค้าก่อนบันทึก'); return; }
+  if (!name) { showAlert('กรุณากรอกชื่อลูกค้าก่อนบันทึก', { title: 'ข้อมูลไม่ครบ', icon: 'ti-user-exclamation', type: 'warning' }); return; }
   const customers = getCustomers();
   const data = {
     name,
@@ -3255,7 +3458,13 @@ function saveCustomer() {
   };
   const existingIdx = customers.findIndex(c => c.name === name);
   if (existingIdx >= 0) customers[existingIdx] = data; else customers.push(data);
-  localStorage.setItem('baidoc-customers', JSON.stringify(customers));
+  try {
+    localStorage.setItem('baidoc-customers', JSON.stringify(customers));
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      showStorageFullWarning(); return;
+    }
+  }
   populateCustomerSelect();
   const sel = document.getElementById('customer-select');
   const newIdx = customers.findIndex(c => c.name === name);
@@ -3265,7 +3474,7 @@ function saveCustomer() {
 }
 async function deleteCustomer() {
   const sel = document.getElementById('customer-select');
-  if (!sel || sel.value === '') { alert('กรุณาเลือกลูกค้าที่ต้องการลบก่อน'); return; }
+  if (!sel || sel.value === '') { showAlert('กรุณาเลือกลูกค้าที่ต้องการลบก่อน', { title: 'ยังไม่ได้เลือกลูกค้า', icon: 'ti-user-question', type: 'info' }); return; }
   const customers = getCustomers();
   const idx = +sel.value;
   if (!customers[idx]) return;
@@ -3280,7 +3489,51 @@ async function deleteCustomer() {
   populateCustomerSelect();
 }
 
-/* ===== DOCUMENT HISTORY (ประวัติเอกสาร) ===== */
+let _editCustomerIdx = -1;
+function editCustomer() {
+  const sel = document.getElementById('customer-select');
+  if (!sel || sel.value === '') {
+    showAlert('กรุณาเลือกลูกค้าที่ต้องการแก้ไขก่อน', { title: 'ยังไม่ได้เลือกลูกค้า', icon: 'ti-user-question', type: 'info' });
+    return;
+  }
+  const customers = getCustomers();
+  _editCustomerIdx = +sel.value;
+  const c = customers[_editCustomerIdx];
+  if (!c) return;
+  document.getElementById('ec-name').value    = c.name    || '';
+  document.getElementById('ec-address').value = c.address || '';
+  document.getElementById('ec-phone').value   = c.phone   || '';
+  document.getElementById('ec-tax').value     = c.tax     || '';
+  document.getElementById('edit-customer-modal').classList.add('open');
+}
+function closeEditCustomer() {
+  document.getElementById('edit-customer-modal').classList.remove('open');
+  _editCustomerIdx = -1;
+}
+function saveEditCustomer() {
+  const name = document.getElementById('ec-name').value.trim();
+  if (!name) { showAlert('กรุณากรอกชื่อลูกค้า', { title: 'ข้อมูลไม่ครบ', icon: 'ti-user-exclamation', type: 'warning' }); return; }
+  const customers = getCustomers();
+  if (_editCustomerIdx < 0 || !customers[_editCustomerIdx]) return;
+  customers[_editCustomerIdx] = {
+    name,
+    address: document.getElementById('ec-address').value,
+    phone:   document.getElementById('ec-phone').value,
+    tax:     document.getElementById('ec-tax').value,
+  };
+  try {
+    localStorage.setItem('baidoc-customers', JSON.stringify(customers));
+  } catch(e) { showStorageFullWarning(); return; }
+  populateCustomerSelect();
+  document.getElementById('customer-select').value = String(_editCustomerIdx);
+  closeEditCustomer();
+  // Reflect in form if this customer is currently loaded
+  document.getElementById('buyer-name').value    = customers[_editCustomerIdx].name    || '';
+  document.getElementById('buyer-address').value = customers[_editCustomerIdx].address || '';
+  document.getElementById('buyer-phone').value   = customers[_editCustomerIdx].phone   || '';
+  document.getElementById('buyer-tax').value     = customers[_editCustomerIdx].tax     || '';
+}
+document.getElementById('edit-customer-modal').addEventListener('click', function(e){ if(e.target===this) closeEditCustomer(); });
 function getHistory() {
   try { return JSON.parse(localStorage.getItem('baidoc-history') || '[]'); } catch(e) { return []; }
 }
@@ -3329,7 +3582,15 @@ function saveToHistory() {
     if (existingIdx >= 0) history[existingIdx] = entry; else history.unshift(entry);
     while (history.length > 200) history.pop();
     localStorage.setItem('baidoc-history', JSON.stringify(history));
-  } catch(e) { /* non-fatal: history is best-effort */ }
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      // Try trimming history and retry once
+      try {
+        const h2 = getHistory().slice(0, 20);
+        localStorage.setItem('baidoc-history', JSON.stringify(h2));
+      } catch(e2) { showStorageFullWarning(); }
+    }
+  }
 }
 function openHistoryModal() {
   renderHistoryList();
@@ -3482,6 +3743,130 @@ applyLang(currentLang);
 renderItems(); calcTotal();
 document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
 showSampleDoc('quotation', null);
+
+/* ===== DUPLICATE DOCUMENT ===== */
+function duplicateDocument() {
+  const info = docInfo[currentDocType];
+  const prefixWord = currentLang==='en' ? 'Copy of ' : 'สำเนา ';
+  // Generate a new doc number
+  const newNum = generateDocNumber(currentDocType);
+  document.getElementById('doc-number').value = newNum;
+  // Set today's date
+  document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
+  // Clear due date to avoid confusion
+  const ddEl = document.getElementById('doc-due-date');
+  if (ddEl) ddEl.value = '';
+  scheduleAutosave();
+  showAlert(`คัดลอกเอกสารแล้ว — ได้รับเลขที่ใหม่ ${newNum}\nแก้ไขข้อมูลตามต้องการแล้วกดพรีวิว`, { title: 'คัดลอกสำเร็จ', icon: 'ti-copy', type: 'info' });
+}
+
+/* ===== EXPORT ITEMS CSV ===== */
+function exportItemsCSV() {
+  if (!items || items.length === 0) {
+    showAlert('ไม่มีรายการสินค้าที่จะ export', { title: 'ไม่มีข้อมูล', icon: 'ti-table-off', type: 'info' });
+    return;
+  }
+  const docNum = document.getElementById('doc-number').value || 'document';
+  const header = ['#', 'รายการ', 'จำนวน', 'หน่วย', 'ราคา/หน่วย', 'รวม'];
+  const rows = items.map((it, i) => [
+    i + 1,
+    `"${(it.desc || '').replace(/"/g, '""')}"`,
+    it.qty,
+    `"${(it.unit || '').replace(/"/g, '""')}"`,
+    it.price,
+    (it.qty * it.price).toFixed(2)
+  ]);
+  const csv = '\uFEFF' + [header, ...rows].map(r => r.join(',')).join('\n'); // BOM for Excel Thai
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${docNum}-items.csv`; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+
+/* ===== AUTO-FORMAT PHONE & TAX ID ===== */
+function formatPhone(val) {
+  const d = val.replace(/\D/g, '');
+  if (d.length <= 3) return d;
+  if (d.length <= 6) return d.slice(0,2) + '-' + d.slice(2);
+  if (d.length <= 10) return d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5);
+  return d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5,9) + (d.length>9 ? '-'+d.slice(9) : '');
+}
+function formatTaxId(val) {
+  const d = val.replace(/\D/g, '').slice(0, 13);
+  if (d.length <= 1) return d;
+  if (d.length <= 5) return d[0] + '-' + d.slice(1);
+  if (d.length <= 9) return d[0] + '-' + d.slice(1,5) + '-' + d.slice(5);
+  if (d.length <= 11) return d[0] + '-' + d.slice(1,5) + '-' + d.slice(5,9) + '-' + d.slice(9);
+  return d[0] + '-' + d.slice(1,5) + '-' + d.slice(5,9) + '-' + d.slice(9,11) + (d.length>11 ? '-'+d.slice(11) : '');
+}
+['seller-phone','buyer-phone'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', function() {
+    const pos = this.selectionStart;
+    const raw = this.value;
+    this.value = formatPhone(raw);
+    // Restore caret approximately
+    try { this.setSelectionRange(pos, pos); } catch(e){}
+  });
+});
+['seller-tax','buyer-tax'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', function() {
+    const pos = this.selectionStart;
+    this.value = formatTaxId(this.value);
+    try { this.setSelectionRange(pos, pos); } catch(e){}
+  });
+});
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+document.addEventListener('keydown', function(e) {
+  const formVisible = document.getElementById('form-page').style.display !== 'none';
+  const previewOpen = document.getElementById('preview-modal').classList.contains('open');
+  const anyModalOpen = document.getElementById('confirm-modal').classList.contains('open')
+    || document.getElementById('alert-modal').style.display === 'flex'
+    || document.getElementById('edit-customer-modal').classList.contains('open');
+
+  if (anyModalOpen) {
+    if (e.key === 'Escape') {
+      closeAlert();
+      closeEditCustomer();
+    }
+    return;
+  }
+
+  // Ctrl+P = preview / print
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+    e.preventDefault();
+    if (previewOpen) { printPDF(); }
+    else if (formVisible) { showPreview(); }
+    return;
+  }
+  // Ctrl+S = autosave / save seller default
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    if (formVisible) { autosaveForm(); saveSellerDefault(); }
+    return;
+  }
+  // Ctrl+D = duplicate
+  if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+    e.preventDefault();
+    if (formVisible) duplicateDocument();
+    return;
+  }
+  // Ctrl+E = export CSV
+  if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+    e.preventDefault();
+    if (formVisible) exportItemsCSV();
+    return;
+  }
+  // Escape = close preview
+  if (e.key === 'Escape' && previewOpen) {
+    closePreview();
+  }
+});
 
 // Restore autosave on load
 const _restored = restoreAutosave();
