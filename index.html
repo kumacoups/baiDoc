@@ -679,6 +679,273 @@ nav {
 .sig-box { border-top: 1px solid #e5e7eb; padding-top: 8px; font-size: 0.846em; color: #6b7280; text-align: center; }
 .sig-label { font-weight: 600; color: #111827; margin-bottom: 28px; }
 
+/* ===== RECEIPT SLIP STYLE (ฟีลใบเสร็จร้านสะดวกซื้อ) ===== */
+.slip-wrap { display: flex; justify-content: center; flex: 1; padding: 6px 0 0; }
+.slip-paper {
+  width: 300px; max-width: 100%;
+  background: #fffdf7; color: #1a1a1a;
+  padding: 22px 18px 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 10px 26px rgba(0,0,0,0.10);
+  position: relative;
+}
+.slip-paper::before, .slip-paper::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 9px;
+  background-image:
+    linear-gradient(135deg, #fffdf7 50%, transparent 50%),
+    linear-gradient(45deg, #fffdf7 50%, transparent 50%);
+  background-size: 12px 12px; background-repeat: repeat-x;
+}
+.slip-paper::before { top: -9px; background-position: 0 100%; }
+.slip-paper::after  { bottom: -9px; background-position: 0 0; transform: scaleY(-1); }
+.slip-shop { text-align: center; font-weight: 700; font-size: 1.25em; letter-spacing: 0.2px; }
+.slip-addr { text-align: center; font-size: 0.83em; color: #555; margin-top: 2px; }
+.slip-title { text-align: center; font-weight: 700; margin: 12px 0 8px; letter-spacing: 0.5px; font-size: 1.02em; }
+.slip-title small { display: block; font-weight: 500; font-size: 0.68em; letter-spacing: 2px; color: #777; margin-top: 2px; }
+.slip-dash { border-top: 1px dashed #9a9a9a; margin: 10px 0; }
+.slip-dash-light { border-top: 1px dashed #ccc; margin: 6px 0; }
+.slip-meta-row, .slip-row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.87em; margin: 2px 0; }
+.slip-meta-row span:first-child { color: #666; }
+.slip-items { margin-top: 2px; }
+.slip-item-name { font-size: 0.88em; font-weight: 600; margin-top: 7px; }
+.slip-item-row { font-size: 0.85em; color: #444; padding-left: 4px; font-variant-numeric: tabular-nums; }
+.slip-row.grand { font-weight: 700; font-size: 1.2em; margin-top: 5px; }
+.slip-bahttext { text-align: center; font-size: 0.78em; font-style: italic; color: #666; margin-top: 6px; }
+.slip-notes { font-size: 0.8em; color: #666; margin-top: 8px; }
+.slip-thanks { text-align: center; font-weight: 700; margin-top: 14px; letter-spacing: 0.3px; }
+.slip-thanks small { display: block; font-weight: 500; font-size: 0.7em; letter-spacing: 2px; color: #888; margin-top: 2px; }
+.slip-barcode-lines {
+  height: 30px; margin: 12px 6px 0;
+  background-image: repeating-linear-gradient(90deg, #222 0 2px, transparent 2px 3px, #222 3px 4px, transparent 4px 5px, #222 5px 8px, transparent 8px 9px);
+}
+.slip-barcode-num { text-align: center; font-size: 0.65em; letter-spacing: 3px; color: #444; margin-top: 4px; }
+.slip711-stripe { display: flex; height: 8px; margin: -22px -18px 16px; border-radius: 0; }
+.slip711-stripe span { flex: 1; }
+.slip711-stripe span:nth-child(1) { background: #0a8a3f; }
+.slip711-stripe span:nth-child(2) { background: #f47920; }
+.slip711-stripe span:nth-child(3) { background: #e8192c; }
+.slip711-header { text-align: center; margin-bottom: 2px; }
+.slip711-logo-text {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 2em; font-weight: 900; letter-spacing: -1px; line-height: 1;
+  gap: 1px; margin-bottom: 4px;
+}
+.slip711-logo-text .c7 { color: #e8192c; }
+.slip711-logo-text .dash { color: #f47920; font-weight: 400; font-size: 0.75em; }
+.slip711-logo-text .c11 { color: #0a8a3f; }
+.slip711-shop { font-size: 0.92em; font-weight: 700; color: #111; margin-top: 2px; }
+.slip711-tagline { font-size: 0.7em; color: #888; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 1px; }
+.slip711-section-hdr {
+  background: #f5f5f5; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+  font-size: 0.7em; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: #666; padding: 3px 6px; margin: 8px -18px 6px;
+}
+.slip711-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; margin: 5px 0; }
+.slip711-item-left { flex: 1; min-width: 0; }
+.slip711-item-name { font-size: 0.875em; font-weight: 600; color: #111; line-height: 1.3; }
+.slip711-item-sub { font-size: 0.78em; color: #888; margin-top: 1px; }
+.slip711-item-price { font-size: 0.9em; font-weight: 700; color: #111; white-space: nowrap; padding-top: 1px; }
+.slip711-code { font-size: 0.72em; font-weight: 400; color: #bbb; margin-right: 5px; font-family: monospace; }
+.slip711-total-box {
+  background: #111; color: #fff; margin: 10px -18px 0;
+  padding: 10px 18px 10px; display: flex; justify-content: space-between; align-items: center;
+}
+.slip711-total-label { font-size: 0.8em; font-weight: 600; letter-spacing: 1px; opacity: 0.85; }
+.slip711-total-amount { font-size: 1.5em; font-weight: 900; letter-spacing: -0.5px; }
+.slip711-payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 0 -18px; }
+.slip711-pay-cell { padding: 6px 18px; border-bottom: 1px solid #eee; }
+.slip711-pay-cell:nth-child(odd) { border-right: 1px solid #eee; }
+.slip711-pay-label { font-size: 0.68em; color: #999; letter-spacing: 0.5px; }
+.slip711-pay-value { font-size: 0.9em; font-weight: 700; color: #111; }
+.slip711-thanks {
+  text-align: center; padding: 10px 0 4px;
+  font-size: 0.75em; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: #555;
+}
+.slip711-barcode {
+  height: 36px; margin: 6px 6px 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #111 0 1.5px, transparent 1.5px 2.5px,
+    #111 2.5px 3px, transparent 3px 4.5px,
+    #111 4.5px 6px, transparent 6px 7.5px,
+    #111 7.5px 9px, transparent 9px 10px
+  );
+  border-radius: 1px;
+}
+.slip711-barcode-num { text-align: center; font-family: monospace; font-size: 0.62em; letter-spacing: 4px; color: #555; margin-top: 3px; margin-bottom: 2px; }
+@media print {
+  .slip-paper { box-shadow: none; }
+}
+
+/* ===== BOUTIQUE SLIP — สลิปย่อส่วนตัว (ไม่ใช่ 7-11) ===== */
+.slipb-wrap { display: flex; justify-content: center; flex: 1; padding: 8px 0 0; }
+.slipb-paper {
+  width: 320px; max-width: 100%;
+  background: #fdfaf5;
+  border: 1px solid #e8dfd4;
+  box-shadow: 0 2px 8px rgba(82,61,45,0.10), 0 12px 32px rgba(82,61,45,0.08);
+  position: relative;
+  overflow: visible;
+}
+/* Top accent bar */
+.slipb-topbar {
+  height: 5px;
+  background: linear-gradient(90deg, var(--doc-theme) 0%, #a0765a 60%, #d9b99a 100%);
+}
+.slipb-inner { padding: 20px 20px 18px; }
+/* Header */
+.slipb-brand {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.slipb-logo-wrap { flex-shrink: 0; }
+.slipb-name-block { flex: 1; min-width: 0; }
+.slipb-shopname {
+  font-weight: 700; font-size: 1.05em;
+  color: var(--doc-theme-dark); line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+.slipb-shopinfo { font-size: 0.78em; color: #8a7060; margin-top: 2px; line-height: 1.4; }
+/* Title strip */
+.slipb-title-strip {
+  background: var(--doc-theme);
+  color: #fdfaf5;
+  padding: 6px 20px;
+  margin: 0 -20px 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.slipb-title-text { font-weight: 700; font-size: 0.9em; letter-spacing: 0.3px; }
+.slipb-docno { font-size: 0.78em; opacity: 0.85; font-weight: 500; letter-spacing: 0.5px; }
+/* Meta row */
+.slipb-meta {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-size: 0.8em; color: #6b5a4e; margin-bottom: 12px;
+  border-bottom: 1px dashed #d9c8b8; padding-bottom: 10px;
+}
+.slipb-meta-item { display: flex; flex-direction: column; gap: 1px; }
+.slipb-meta-label { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.8px; color: #a08878; font-weight: 600; }
+.slipb-meta-value { font-weight: 600; color: #3a2a1e; }
+/* Items */
+.slipb-items { margin-bottom: 10px; }
+.slipb-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 5px 0; border-bottom: 1px solid #f0e8df;
+  gap: 8px;
+}
+.slipb-item:last-child { border-bottom: none; }
+.slipb-item-left { flex: 1; min-width: 0; }
+.slipb-item-name { font-size: 0.875em; font-weight: 600; color: #2e1e14; line-height: 1.3; }
+.slipb-item-sub { font-size: 0.76em; color: #9a7a68; margin-top: 2px; }
+.slipb-item-total { font-size: 0.9em; font-weight: 700; color: #2e1e14; white-space: nowrap; padding-top: 1px; }
+/* Totals */
+.slipb-totals { border-top: 1px solid #d9c8b8; padding-top: 8px; margin-top: 4px; }
+.slipb-total-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.82em; color: #7a6050; padding: 2px 0;
+}
+.slipb-total-row.grand {
+  border-top: 1.5px solid var(--doc-theme);
+  margin-top: 7px; padding-top: 8px;
+  font-size: 1.18em; font-weight: 800; color: var(--doc-theme-dark);
+}
+.slipb-total-row.grand span:last-child { letter-spacing: -0.5px; }
+.slipb-bahttext {
+  text-align: right; font-size: 0.73em;
+  font-style: italic; color: #9a8070; margin-top: 3px;
+}
+/* Notes */
+.slipb-notes {
+  margin-top: 10px; padding: 8px 10px;
+  background: #f5ede4; border-left: 3px solid var(--doc-theme);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.78em; color: #5a4030; line-height: 1.5;
+}
+/* Footer */
+.slipb-footer {
+  margin: 16px -20px 0;
+  border-top: 1px dashed #d9c8b8;
+  padding: 10px 20px 4px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.slipb-thanks { font-size: 0.78em; font-weight: 700; color: var(--doc-theme); letter-spacing: 0.5px; }
+.slipb-qrlike {
+  width: 32px; height: 32px;
+  display: grid; grid-template-columns: repeat(5,1fr); grid-template-rows: repeat(5,1fr);
+  gap: 1.5px;
+}
+.slipb-qrlike span {
+  border-radius: 1px;
+  background: var(--doc-theme);
+  opacity: 0;
+}
+.slipb-qrlike span.on { opacity: 1; }
+/* Bottom trim */
+.slipb-bottombar {
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--doc-theme) 0 6px, transparent 6px 10px);
+  opacity: 0.35;
+}
+
+/* ===== MONO SLIP — กระดาษความร้อน minimal ===== */
+.slipm-wrap { display: flex; justify-content: center; flex: 1; padding: 8px 0 0; }
+.slipm-paper {
+  width: 300px; max-width: 100%;
+  background: #fefefe;
+  font-family: 'Courier New', Courier, monospace;
+  color: #1a1a1a;
+  padding: 24px 18px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 8px 24px rgba(0,0,0,0.08);
+  position: relative;
+  /* torn-paper edges top & bottom */
+}
+.slipm-paper::before, .slipm-paper::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 8px;
+  background-image:
+    radial-gradient(circle at 50% 0%, #fefefe 5px, transparent 5px);
+  background-size: 14px 8px; background-repeat: repeat-x;
+}
+.slipm-paper::before { top: -8px; }
+.slipm-paper::after  { bottom: -8px; transform: scaleY(-1); }
+/* header */
+.slipm-logo { text-align: center; margin-bottom: 10px; }
+.slipm-shop { text-align: center; font-size: 1.1em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.slipm-info { text-align: center; font-size: 0.72em; color: #666; margin-top: 3px; line-height: 1.5; }
+/* dividers */
+.slipm-eq  { border: none; border-top: 1px solid #555; margin: 11px 0; }
+.slipm-dash{ border: none; border-top: 1px dashed #aaa; margin: 8px 0; }
+/* doc title */
+.slipm-doctype { text-align: center; font-size: 0.82em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin: 6px 0 4px; }
+.slipm-meta { font-size: 0.8em; }
+.slipm-meta-row { display: flex; justify-content: space-between; padding: 1.5px 0; }
+.slipm-meta-row span:first-child { color: #555; }
+/* items */
+.slipm-item-name { font-size: 0.85em; font-weight: 700; margin-top: 7px; }
+.slipm-item-sub  { font-size: 0.78em; color: #555; padding-left: 2px; display: flex; justify-content: space-between; }
+/* totals */
+.slipm-total-row { display: flex; justify-content: space-between; font-size: 0.82em; padding: 1.5px 0; color: #444; }
+.slipm-grand {
+  display: flex; justify-content: space-between;
+  font-size: 1.1em; font-weight: 900; margin-top: 6px; padding-top: 6px;
+  border-top: 2px solid #1a1a1a;
+  letter-spacing: -0.3px;
+}
+.slipm-bahttext { text-align: center; font-size: 0.72em; color: #888; font-style: italic; margin-top: 4px; }
+/* notes */
+.slipm-notes { font-size: 0.76em; color: #555; margin-top: 6px; }
+/* footer */
+.slipm-thanks { text-align: center; font-size: 0.78em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+.slipm-barcode {
+  height: 28px; margin: 10px 0 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #1a1a1a 0 1px, transparent 1px 2px,
+    #1a1a1a 2px 3.5px, transparent 3.5px 5px,
+    #1a1a1a 5px 7px, transparent 7px 8.5px,
+    #1a1a1a 8.5px 10px, transparent 10px 11px
+  );
+}
+.slipm-barnum { text-align: center; font-size: 0.62em; letter-spacing: 3px; color: #555; margin-top: 3px; }
+
 @page { size: A4; margin: 12mm 10mm; }
 /* Print is handled via PDF blob (printPDF) — @media print kept as last-resort fallback */
 @media print {
@@ -987,8 +1254,8 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
     <div class="cap-grid">
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-files" aria-hidden="true"></i></div>
-        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 15 ประเภท</div>
-        <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี สัญญาว่าจ้าง หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน และคู่เทียบใบเสนอราคา</div></div>
+        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 21 ประเภท</div>
+        <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา</div></div>
       </div>
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-calculator" aria-hidden="true"></i></div>
@@ -1051,7 +1318,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-title" data-i18n="step1.title">เลือกประเภทเอกสาร</div>
-        <div class="step-body" data-i18n="step1.body">เลือกจาก 15 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
+        <div class="step-body" data-i18n="step1.body">เลือกจาก 21 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -1069,7 +1336,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
   <div class="section" id="doc-types-section">
     <div class="section-label" data-i18n="doctypes.label">เอกสารที่รองรับ</div>
     <div class="section-title" data-i18n="doctypes.title">เลือกประเภทเอกสาร</div>
-    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 15 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
+    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 21 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
     <div class="doc-grid">
       <div class="doc-card" onclick="selectDoc('quotation')">
         <i class="ti ti-file-description doc-icon" aria-hidden="true"></i>
@@ -1084,7 +1351,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <div class="doc-card" onclick="selectDoc('receipt')">
         <i class="ti ti-receipt doc-icon" aria-hidden="true"></i>
         <div class="doc-name" data-i18n="doc.receipt.name">ใบเสร็จรับเงิน</div>
-        <div class="doc-desc">Receipt</div>
+        <div class="doc-desc">Receipt · รับเงินจากลูกค้า</div>
       </div>
       <div class="doc-card" onclick="selectDoc('delivery')">
         <i class="ti ti-truck-delivery doc-icon" aria-hidden="true"></i>
@@ -1146,6 +1413,36 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <div class="doc-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div>
         <div class="doc-desc">Job Completion Note</div>
       </div>
+      <div class="doc-card" onclick="selectDoc('receiptvoucher')">
+        <i class="ti ti-cash doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.receiptvoucher.name">ใบสำคัญรับเงิน</div>
+        <div class="doc-desc">Receipt Voucher · เอกสารภายใน</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('paymentvoucher')">
+        <i class="ti ti-cash-banknote doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.paymentvoucher.name">ใบสำคัญจ่าย</div>
+        <div class="doc-desc">Payment Voucher</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('taxinvoiceabbr')">
+        <i class="ti ti-receipt-2 doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.taxinvoiceabbr.name">ใบกำกับภาษีอย่างย่อ</div>
+        <div class="doc-desc">Abbreviated Tax Invoice</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('leaseagreement')">
+        <i class="ti ti-key doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.leaseagreement.name">สัญญาเช่า</div>
+        <div class="doc-desc">Lease Agreement</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('purchreq')">
+        <i class="ti ti-clipboard-text doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.purchreq.name">ใบขอซื้อ</div>
+        <div class="doc-desc">Purchase Requisition</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('acceptancenote')">
+        <i class="ti ti-checklist doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.acceptancenote.name">ใบตรวจรับพัสดุ/งาน</div>
+        <div class="doc-desc">Acceptance Note</div>
+      </div>
     </div>
   </div>
 
@@ -1184,6 +1481,12 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <button class="sample-tab" onclick="showSampleDoc('whtcert',this)">หนังสือรับรองหักภาษี ณ ที่จ่าย</button>
       <button class="sample-tab" onclick="showSampleDoc('workorder',this)">ใบสั่งงาน</button>
       <button class="sample-tab" onclick="showSampleDoc('jobcompletion',this)">ใบส่งมอบงาน</button>
+      <button class="sample-tab" onclick="showSampleDoc('receiptvoucher',this)">ใบสำคัญรับเงิน</button>
+      <button class="sample-tab" onclick="showSampleDoc('paymentvoucher',this)">ใบสำคัญจ่าย</button>
+      <button class="sample-tab" onclick="showSampleDoc('taxinvoiceabbr',this)">ใบกำกับภาษีอย่างย่อ</button>
+      <button class="sample-tab" onclick="showSampleDoc('leaseagreement',this)">สัญญาเช่า</button>
+      <button class="sample-tab" onclick="showSampleDoc('purchreq',this)">ใบขอซื้อ</button>
+      <button class="sample-tab" onclick="showSampleDoc('acceptancenote',this)">ใบตรวจรับพัสดุ/งาน</button>
     </div>
 
     <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07)">
@@ -1230,7 +1533,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         </div>
         <div class="doc-card" id="card-receipt" onclick="selectDoc('receipt')">
           <i class="ti ti-receipt doc-icon" aria-hidden="true"></i>
-          <div class="doc-name" data-i18n="doc.receipt.name">ใบเสร็จรับเงิน</div><div class="doc-desc">Receipt</div>
+          <div class="doc-name" data-i18n="doc.receipt.name">ใบเสร็จรับเงิน</div><div class="doc-desc">Receipt · รับเงินจากลูกค้า</div>
         </div>
         <div class="doc-card" id="card-delivery" onclick="selectDoc('delivery')">
           <i class="ti ti-truck-delivery doc-icon" aria-hidden="true"></i>
@@ -1279,6 +1582,30 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <div class="doc-card" id="card-jobcompletion" onclick="selectDoc('jobcompletion')">
           <i class="ti ti-clipboard-check doc-icon" aria-hidden="true"></i>
           <div class="doc-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div><div class="doc-desc">Job Completion Note</div>
+        </div>
+        <div class="doc-card" id="card-receiptvoucher" onclick="selectDoc('receiptvoucher')">
+          <i class="ti ti-cash doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.receiptvoucher.name">ใบสำคัญรับเงิน</div><div class="doc-desc">Receipt Voucher · เอกสารภายใน</div>
+        </div>
+        <div class="doc-card" id="card-paymentvoucher" onclick="selectDoc('paymentvoucher')">
+          <i class="ti ti-cash-banknote doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.paymentvoucher.name">ใบสำคัญจ่าย</div><div class="doc-desc">Payment Voucher</div>
+        </div>
+        <div class="doc-card" id="card-taxinvoiceabbr" onclick="selectDoc('taxinvoiceabbr')">
+          <i class="ti ti-receipt-2 doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.taxinvoiceabbr.name">ใบกำกับภาษีอย่างย่อ</div><div class="doc-desc">Abbreviated Tax Invoice</div>
+        </div>
+        <div class="doc-card" id="card-leaseagreement" onclick="selectDoc('leaseagreement')">
+          <i class="ti ti-key doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.leaseagreement.name">สัญญาเช่า</div><div class="doc-desc">Lease Agreement</div>
+        </div>
+        <div class="doc-card" id="card-purchreq" onclick="selectDoc('purchreq')">
+          <i class="ti ti-clipboard-text doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.purchreq.name">ใบขอซื้อ</div><div class="doc-desc">Purchase Requisition</div>
+        </div>
+        <div class="doc-card" id="card-acceptancenote" onclick="selectDoc('acceptancenote')">
+          <i class="ti ti-checklist doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.acceptancenote.name">ใบตรวจรับพัสดุ/งาน</div><div class="doc-desc">Acceptance Note</div>
         </div>
       </div>
     </div>
@@ -1471,6 +1798,16 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
           </div>
           <div class="form-2col">
             <div class="form-row" id="due-date-row" style="display:none"><label data-i18n="f.duedate">วันครบกำหนด</label><div class="input-wrap"><i class="ti ti-calendar-due input-icon"></i><input type="date" id="doc-due-date"></div></div>
+            <div class="form-row" id="receipt-slip-row" style="display:none">
+              <label><i class="ti ti-receipt" style="margin-right:4px;color:var(--theme)"></i>รูปแบบใบเสร็จ</label>
+              <select id="receipt-slip-variant" onchange="scheduleAutosave()">
+                <option value="off">แบบทางการ (ปกติ)</option>
+                <option value="cash">สลิปเงินสด (ฟีลใบเสร็จร้านค้าทั่วไป)</option>
+                <option value="conv">สลิปสะดวกซื้อ (ฟีล 7-11)</option>
+                <option value="boutique">สลิปบูติก (Boutique — warm brown)</option>
+                <option value="mono">สลิป Minimal Mono (กระดาษความร้อน)</option>
+              </select>
+            </div>
             <div class="form-row"><label data-i18n="f.vat">VAT (%)</label>
               <select id="vat-rate" onchange="calcTotal()">
                 <option value="0" data-i18n="opt.novat">ไม่มี VAT</option>
@@ -1684,6 +2021,36 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <div class="picker-name" data-i18n="doc.jobcompletion.name">ใบส่งมอบงาน</div>
         <div class="picker-en">Job Completion Note</div>
       </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('receiptvoucher')">
+        <i class="ti ti-cash picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.receiptvoucher.name">ใบสำคัญรับเงิน</div>
+        <div class="picker-en">Receipt Voucher</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('paymentvoucher')">
+        <i class="ti ti-cash-banknote picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.paymentvoucher.name">ใบสำคัญจ่าย</div>
+        <div class="picker-en">Payment Voucher</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('taxinvoiceabbr')">
+        <i class="ti ti-receipt-2 picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.taxinvoiceabbr.name">ใบกำกับภาษีอย่างย่อ</div>
+        <div class="picker-en">Abbreviated Tax Invoice</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('leaseagreement')">
+        <i class="ti ti-key picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.leaseagreement.name">สัญญาเช่า</div>
+        <div class="picker-en">Lease Agreement</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('purchreq')">
+        <i class="ti ti-clipboard-text picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.purchreq.name">ใบขอซื้อ</div>
+        <div class="picker-en">Purchase Requisition</div>
+      </div>
+      <div class="picker-card" onclick="closeDocPicker();selectDoc('acceptancenote')">
+        <i class="ti ti-checklist picker-icon"></i>
+        <div class="picker-name" data-i18n="doc.acceptancenote.name">ใบตรวจรับพัสดุ/งาน</div>
+        <div class="picker-en">Acceptance Note</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1771,7 +2138,13 @@ const docInfo = {
   serviceagreement:{ th:'สัญญาว่าจ้าง',              en:'Service Agreement',    zh:'服务协议',     prefix:'SA'  },
   whtcert:         { th:'หนังสือรับรองหักภาษี ณ ที่จ่าย', en:'WHT Certificate', zh:'预扣税证明书', prefix:'WHT' },
   workorder:       { th:'ใบสั่งงาน',                 en:'Work Order',           zh:'工作单',       prefix:'WO'  },
-  jobcompletion:   { th:'ใบส่งมอบงาน',               en:'Job Completion Note',  zh:'工作完成单',   prefix:'JC'  }
+  jobcompletion:   { th:'ใบส่งมอบงาน',               en:'Job Completion Note',  zh:'工作完成单',   prefix:'JC'  },
+  receiptvoucher:  { th:'ใบสำคัญรับเงิน',             en:'Receipt Voucher',      zh:'收款凭证',     prefix:'RV'  },
+  paymentvoucher:  { th:'ใบสำคัญจ่าย',                en:'Payment Voucher',      zh:'付款凭证',     prefix:'PV'  },
+  taxinvoiceabbr:  { th:'ใบกำกับภาษีอย่างย่อ',        en:'Abbreviated Tax Invoice', zh:'简易税务发票', prefix:'ABR' },
+  leaseagreement:  { th:'สัญญาเช่า',                  en:'Lease Agreement',      zh:'租赁协议',     prefix:'LS'  },
+  purchreq:        { th:'ใบขอซื้อ',                   en:'Purchase Requisition', zh:'请购单',       prefix:'PR'  },
+  acceptancenote:  { th:'ใบตรวจรับพัสดุ/งาน',         en:'Acceptance Note',      zh:'验收单',       prefix:'ACN' }
 };
 
 /* ===== I18N DICTIONARY ===== */
@@ -1781,11 +2154,11 @@ const I18N = {
     'hero.badge':'ฟรี 100% ไม่ต้องสมัครสมาชิก','hero.title1':'สร้างเอกสารธุรกิจ','hero.title2':'ออนไลน์ฟรี',
     'hero.desc':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้ และอื่นๆ ดาวน์โหลด PDF ได้ทันที',
     'hero.start':'เริ่มสร้างเอกสาร','hero.sample':'ดูตัวอย่าง',
-    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 15 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
+    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 21 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
     'cap.label':'BaiDoc คืออะไร','cap.title':'เว็บแอปสร้างเอกสารธุรกิจครบวงจร',
     'cap.sub':'ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว',
-    'cap1.title':'สร้างเอกสารได้ 15 ประเภท',
-    'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี สัญญาว่าจ้าง หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน และคู่เทียบใบเสนอราคา',
+    'cap1.title':'สร้างเอกสารได้ 21 ประเภท',
+    'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา',
     'cap2.title':'คำนวณยอดเงินให้อัตโนมัติ',
     'cap2.body':'ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที',
     'cap3.title':'ดูตัวอย่างและใช้เป็นเทมเพลตได้',
@@ -1797,7 +2170,7 @@ const I18N = {
     'cap6.title':'ใช้งานได้ 3 ภาษา','cap6.body':'สลับหน้าเว็บระหว่างภาษาไทย อังกฤษ และจีนได้ทุกเมื่อ',
     'cap7.title':'โหมดมืด/สว่าง','cap7.body':'สลับธีมมืดหรือสว่างได้ตามความสะดวกในการใช้งาน',
     'cap8.title':'ปลอดภัยและฟรีตลอดไป','cap8.body':'ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน',
-    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 15 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
+    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 21 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
     'step2.title':'กรอกข้อมูลและปรับแต่ง','step2.body':'ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ',
     'step3.title':'พรีวิวแล้วดาวน์โหลด','step3.body':'ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที',
     'features.label':'ทำไมต้องใช้ BaiDoc','features.title':'ง่าย เร็ว ฟรี',
@@ -1825,6 +2198,8 @@ const I18N = {
     'doc.comparison.name':'คู่เทียบราคา','doc.billing.name':'ใบวางบิล','doc.creditnote.name':'ใบลดหนี้','doc.po.name':'ใบสั่งซื้อ','doc.deposit.name':'ใบมัดจำ',
     'doc.taxinvoice.name':'ใบกำกับภาษี','doc.debitnote.name':'ใบเพิ่มหนี้','doc.serviceagreement.name':'สัญญาว่าจ้าง',
     'doc.whtcert.name':'หนังสือรับรองหักภาษี ณ ที่จ่าย','doc.workorder.name':'ใบสั่งงาน','doc.jobcompletion.name':'ใบส่งมอบงาน',
+    'doc.receiptvoucher.name':'ใบสำคัญรับเงิน','doc.paymentvoucher.name':'ใบสำคัญจ่าย','doc.taxinvoiceabbr.name':'ใบกำกับภาษีอย่างย่อ',
+    'doc.leaseagreement.name':'สัญญาเช่า','doc.purchreq.name':'ใบขอซื้อ','doc.acceptancenote.name':'ใบตรวจรับพัสดุ/งาน',
     'sig.quotation0':'ผู้เสนอราคา','sig.quotation1':'ผู้อนุมัติ','sig.invoice0':'ผู้ออกใบแจ้งหนี้','sig.invoice1':'ผู้รับเอกสาร',
     'sig.receipt0':'ผู้รับเงิน','sig.receipt1':'ผู้จ่ายเงิน','sig.delivery0':'ผู้ส่งของ','sig.delivery1':'ผู้รับของ',
     'sig.billing0':'ผู้วางบิล','sig.billing1':'ผู้รับวางบิล','sig.creditnote0':'ผู้ออกใบลดหนี้','sig.creditnote1':'ผู้รับเอกสาร',
@@ -1835,6 +2210,12 @@ const I18N = {
     'sig.whtcert0':'ผู้หักภาษี ณ ที่จ่าย','sig.whtcert1':'ผู้ถูกหักภาษี',
     'sig.workorder0':'ผู้สั่งงาน','sig.workorder1':'ผู้รับงาน',
     'sig.jobcompletion0':'ผู้ส่งมอบงาน','sig.jobcompletion1':'ผู้ตรวจรับงาน',
+    'sig.receiptvoucher0':'ผู้รับเงิน','sig.receiptvoucher1':'ผู้จ่ายเงิน',
+    'sig.paymentvoucher0':'ผู้จ่ายเงิน','sig.paymentvoucher1':'ผู้รับเงิน',
+    'sig.taxinvoiceabbr0':'ผู้ออกใบกำกับภาษี','sig.taxinvoiceabbr1':'ผู้รับเอกสาร',
+    'sig.leaseagreement0':'ผู้ให้เช่า','sig.leaseagreement1':'ผู้เช่า',
+    'sig.purchreq0':'ผู้ขอซื้อ','sig.purchreq1':'ผู้อนุมัติ',
+    'sig.acceptancenote0':'ผู้ส่งมอบ','sig.acceptancenote1':'ผู้ตรวจรับ',
     'sig.default0':'ผู้ออกเอกสาร','sig.default1':'ผู้รับเอกสาร'
   },
   en: {
@@ -1842,11 +2223,11 @@ const I18N = {
     'hero.badge':'100% Free, No Sign-up Required','hero.title1':'Create Business Documents','hero.title2':'Online for Free',
     'hero.desc':'Quotations, invoices, receipts, delivery orders, billing notes, credit notes and more. Download as PDF instantly.',
     'hero.start':'Start Creating','hero.sample':'View Sample',
-    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'15 document types covering every business need',
+    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'21 document types covering every business need',
     'cap.label':'What is BaiDoc','cap.title':'A Complete Business Document Toolkit',
     'cap.sub':'From filling in details to a ready-to-send PDF — every step happens right here on this page.',
-    'cap1.title':'Create 15 Document Types',
-    'cap1.body':'Quotations, invoices, receipts, delivery orders, billing notes, credit/debit notes, purchase orders, deposit receipts, tax invoices, service agreements, WHT certificates, work orders, job completion notes, and price comparisons.',
+    'cap1.title':'Create 21 Document Types',
+    'cap1.body':'Quotations, invoices, receipts, delivery orders, billing notes, credit/debit notes, purchase orders, deposit receipts, tax invoices (full/abbreviated), service/lease agreements, WHT certificates, work orders, job completion notes, receipt/payment vouchers, purchase requisitions, acceptance notes, and price comparisons.',
     'cap2.title':'Automatic Calculations',
     'cap2.body':'Add your items and the app instantly calculates VAT, discounts, and withholding tax (WHT), plus the final total.',
     'cap3.title':'Live Samples You Can Reuse as Templates',
@@ -1886,6 +2267,8 @@ const I18N = {
     'doc.comparison.name':'Price Comparison','doc.billing.name':'Billing Note','doc.creditnote.name':'Credit Note','doc.po.name':'Purchase Order','doc.deposit.name':'Deposit Receipt',
     'doc.taxinvoice.name':'Tax Invoice','doc.debitnote.name':'Debit Note','doc.serviceagreement.name':'Service Agreement',
     'doc.whtcert.name':'WHT Certificate','doc.workorder.name':'Work Order','doc.jobcompletion.name':'Job Completion Note',
+    'doc.receiptvoucher.name':'Receipt Voucher','doc.paymentvoucher.name':'Payment Voucher','doc.taxinvoiceabbr.name':'Abbreviated Tax Invoice',
+    'doc.leaseagreement.name':'Lease Agreement','doc.purchreq.name':'Purchase Requisition','doc.acceptancenote.name':'Acceptance Note',
     'sig.quotation0':'Quoted By','sig.quotation1':'Approved By','sig.invoice0':'Issued By','sig.invoice1':'Received By',
     'sig.receipt0':'Received By','sig.receipt1':'Paid By','sig.delivery0':'Delivered By','sig.delivery1':'Received By',
     'sig.billing0':'Billed By','sig.billing1':'Received By','sig.creditnote0':'Issued By','sig.creditnote1':'Received By',
@@ -1896,6 +2279,12 @@ const I18N = {
     'sig.whtcert0':'Withholding Agent','sig.whtcert1':'Payee',
     'sig.workorder0':'Ordered By','sig.workorder1':'Received By',
     'sig.jobcompletion0':'Delivered By','sig.jobcompletion1':'Accepted By',
+    'sig.receiptvoucher0':'Received By','sig.receiptvoucher1':'Paid By',
+    'sig.paymentvoucher0':'Paid By','sig.paymentvoucher1':'Received By',
+    'sig.taxinvoiceabbr0':'Issued By','sig.taxinvoiceabbr1':'Received By',
+    'sig.leaseagreement0':'Lessor','sig.leaseagreement1':'Lessee',
+    'sig.purchreq0':'Requested By','sig.purchreq1':'Approved By',
+    'sig.acceptancenote0':'Delivered By','sig.acceptancenote1':'Inspected By',
     'sig.default0':'Issued By','sig.default1':'Received By'
   },
   zh: {
@@ -1903,11 +2292,11 @@ const I18N = {
     'hero.badge':'100% 免费，无需注册','hero.title1':'创建商业文件','hero.title2':'在线免费制作',
     'hero.desc':'报价单、发票、收据、送货单、对账单、贷项通知单等。即时下载PDF。',
     'hero.start':'开始创建','hero.sample':'查看示例',
-    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持15种类型，满足所有业务需求',
+    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持21种类型，满足所有业务需求',
     'cap.label':'BaiDoc 是什么','cap.title':'一站式商业文件制作工具',
     'cap.sub':'从填写资料到生成可直接发送的PDF文件，所有步骤都在同一个页面完成',
-    'cap1.title':'可制作15种文件类型',
-    'cap1.body':'报价单、发票、收据、送货单、对账单、贷项/借项通知单、采购订单、押金收据、税务发票、服务协议、预扣税证明书、工作单、工作完成单，以及价格比较单',
+    'cap1.title':'可制作21种文件类型',
+    'cap1.body':'报价单、发票、收据、送货单、对账单、贷项/借项通知单、采购订单、押金收据、税务发票(完整/简易)、服务/租赁协议、预扣税证明书、工作单、工作完成单、收/付款凭证、请购单、验收单，以及价格比较单',
     'cap2.title':'自动计算金额',
     'cap2.body':'输入商品/服务项目后，系统会自动计算增值税(VAT)、折扣与预扣税(WHT)，并即时显示总金额',
     'cap3.title':'预览示例并可作为模板使用',
@@ -1919,7 +2308,7 @@ const I18N = {
     'cap6.title':'支持3种语言','cap6.body':'随时在泰语、英语和中文之间切换整个网站',
     'cap7.title':'明暗模式切换','cap7.body':'可根据需要切换明亮或深色主题',
     'cap8.title':'安全、私密且永久免费','cap8.body':'所有操作均在浏览器中完成，不会将数据发送到服务器，无需注册，也无需付费',
-    'step1.title':'选择文件类型','step1.body':'从15种商业文件类型中选择，或先查看示例再决定',
+    'step1.title':'选择文件类型','step1.body':'从21种商业文件类型中选择，或先查看示例再决定',
     'step2.title':'填写资料并自定义','step2.body':'输入卖方、买方与商品信息，并选择喜欢的主题色与字体',
     'step3.title':'预览后下载','step3.body':'核对内容无误后，打印或保存为PDF文件发送',
     'features.label':'为什么选择 BaiDoc','features.title':'简单、快速、免费',
@@ -1947,6 +2336,8 @@ const I18N = {
     'doc.comparison.name':'价格比较','doc.billing.name':'对账单','doc.creditnote.name':'贷项通知单','doc.po.name':'采购订单','doc.deposit.name':'押金收据',
     'doc.taxinvoice.name':'税务发票','doc.debitnote.name':'借项通知单','doc.serviceagreement.name':'服务协议',
     'doc.whtcert.name':'预扣税证明书','doc.workorder.name':'工作单','doc.jobcompletion.name':'工作完成单',
+    'doc.receiptvoucher.name':'收款凭证','doc.paymentvoucher.name':'付款凭证','doc.taxinvoiceabbr.name':'简易税务发票',
+    'doc.leaseagreement.name':'租赁协议','doc.purchreq.name':'请购单','doc.acceptancenote.name':'验收单',
     'sig.quotation0':'报价人','sig.quotation1':'审批人','sig.invoice0':'开票人','sig.invoice1':'收件人',
     'sig.receipt0':'收款人','sig.receipt1':'付款人','sig.delivery0':'送货人','sig.delivery1':'收货人',
     'sig.billing0':'对账人','sig.billing1':'收件人','sig.creditnote0':'开单人','sig.creditnote1':'收件人',
@@ -1957,6 +2348,12 @@ const I18N = {
     'sig.whtcert0':'扣缴义务人','sig.whtcert1':'被扣缴人',
     'sig.workorder0':'下单人','sig.workorder1':'接单人',
     'sig.jobcompletion0':'交付人','sig.jobcompletion1':'验收人',
+    'sig.receiptvoucher0':'收款人','sig.receiptvoucher1':'付款人',
+    'sig.paymentvoucher0':'付款人','sig.paymentvoucher1':'收款人',
+    'sig.taxinvoiceabbr0':'开票人','sig.taxinvoiceabbr1':'收件人',
+    'sig.leaseagreement0':'出租方','sig.leaseagreement1':'承租方',
+    'sig.purchreq0':'请购人','sig.purchreq1':'审批人',
+    'sig.acceptancenote0':'交付人','sig.acceptancenote1':'验收人',
     'sig.default0':'开单方','sig.default1':'收件方'
   }
 };
@@ -2381,6 +2778,10 @@ function selectDoc(type) {
   document.getElementById('vat-rate').value = '7';
   // Show/hide fields
   document.getElementById('due-date-row').style.display = (type==='invoice'||type==='billing'||type==='taxinvoice') ? 'block' : 'none';
+  const slipRow = document.getElementById('receipt-slip-row');
+  if (slipRow) slipRow.style.display = (type==='receipt') ? 'block' : 'none';
+  const slipSel = document.getElementById('receipt-slip-variant');
+  if (slipSel && type!=='receipt') slipSel.value = 'off';
   const isCmp = type === 'comparison';
   document.getElementById('items-section').style.display = isCmp ? 'none' : 'block';
   document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
@@ -2569,9 +2970,18 @@ function showPreview(){
   const whtRate = +getV('wht-rate');
   const whtAmt = base*whtRate/100;
   const grand=base+vat-whtAmt;
+  const slipVariant = currentDocType==='receipt' ? (document.getElementById('receipt-slip-variant')?.value || 'off') : 'off';
   const html = currentDocType==='comparison'
     ? buildCmpPreview(info)
-    : buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate);
+    : slipVariant==='cash'
+      ? buildSlipPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+      : slipVariant==='conv'
+        ? buildSlip711Preview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+        : slipVariant==='boutique'
+          ? buildSlipBoutiquePreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+          : slipVariant==='mono'
+            ? buildSlipMonoPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+            : buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate);
   const preview = document.getElementById('doc-preview');
   preview.innerHTML = html;
   preview.style.fontFamily = currentFont;
@@ -2600,7 +3010,13 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     serviceagreement:[t('sig.serviceagreement0'),t('sig.serviceagreement1')],
     whtcert:         [t('sig.whtcert0'),t('sig.whtcert1')],
     workorder:       [t('sig.workorder0'),t('sig.workorder1')],
-    jobcompletion:   [t('sig.jobcompletion0'),t('sig.jobcompletion1')]
+    jobcompletion:   [t('sig.jobcompletion0'),t('sig.jobcompletion1')],
+    receiptvoucher:  [t('sig.receiptvoucher0'),t('sig.receiptvoucher1')],
+    paymentvoucher:  [t('sig.paymentvoucher0'),t('sig.paymentvoucher1')],
+    taxinvoiceabbr:  [t('sig.taxinvoiceabbr0'),t('sig.taxinvoiceabbr1')],
+    leaseagreement:  [t('sig.leaseagreement0'),t('sig.leaseagreement1')],
+    purchreq:        [t('sig.purchreq0'),t('sig.purchreq1')],
+    acceptancenote:  [t('sig.acceptancenote0'),t('sig.acceptancenote1')]
   };
   const sigs=sigMap[currentDocType]||[t('sig.default0'),t('sig.default1')];
   const itemsHtml=items.map((it,i)=>`
@@ -2677,6 +3093,253 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
         <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
       </div>
     </div>`;
+}
+
+function buildSlipPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo
+    ? `<div style="text-align:center;margin-bottom:8px"><img src="${currentLogo}" style="max-height:48px;max-width:140px;width:auto;height:auto;object-fit:contain;display:inline-block" alt="logo"></div>`
+    : '';
+  const itemsHtml = items.map(it => `
+    <div class="slip-item-name">${it.desc||'-'}</div>
+    <div class="slip-item-row"><span>${it.qty} x ${fmtN(it.price)}</span><span>${fmtN(it.qty*it.price)}</span></div>`).join('');
+  const subRow   = sub!==grand ? `<div class="slip-row"><span>${t('pv.subtotal')}</span><span>${fmtN(sub)}</span></div>` : '';
+  const discRow  = discAmt>0 ? `<div class="slip-row"><span>${t('pv.discount')}</span><span>-${fmtN(discAmt)}</span></div>` : '';
+  const vatRow   = vr>0 ? `<div class="slip-row"><span>VAT ${vr}%</span><span>${fmtN(vat)}</span></div>` : '';
+  const whtRow   = whtAmt>0 ? `<div class="slip-row"><span>${t('pv.wht')} ${whtRate}%</span><span>-${fmtN(whtAmt)}</span></div>` : '';
+  const buyerRow = getV('buyer-name') ? `<div class="slip-meta-row"><span>ลูกค้า</span><span>${getV('buyer-name')}</span></div>` : '';
+  const notesHtml = getV('doc-notes') ? `<div class="slip-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+
+  return `
+  <div class="slip-wrap">
+    <div class="slip-paper">
+      ${logoHtml}
+      <div class="slip-shop">${getV('seller-name')||'-'}</div>
+      ${getV('seller-address') ? `<div class="slip-addr">${getV('seller-address').replace(/\n/g,'<br>')}</div>` : ''}
+      ${getV('seller-phone') ? `<div class="slip-addr">โทร: ${getV('seller-phone')}</div>` : ''}
+      ${getV('seller-tax') ? `<div class="slip-addr">เลขผู้เสียภาษี: ${getV('seller-tax')}</div>` : ''}
+      <div class="slip-title">${info[currentLang]}<small>${info.en.toUpperCase()}</small></div>
+      <div class="slip-dash"></div>
+      <div class="slip-meta-row"><span>${t('pv.docno')}</span><span>${getV('doc-number')||'-'}</span></div>
+      <div class="slip-meta-row"><span>${t('pv.date')}</span><span>${getV('doc-date')||'-'}</span></div>
+      ${buyerRow}
+      <div class="slip-dash"></div>
+      <div class="slip-items">${itemsHtml}</div>
+      <div class="slip-dash"></div>
+      ${subRow}${discRow}${vatRow}${whtRow}
+      <div class="slip-dash-light"></div>
+      <div class="slip-row grand"><span>${t('pv.grand')}</span><span>฿${fmtN(grand)}</span></div>
+      ${grand>0 ? `<div class="slip-bahttext">(${bahtText(grand)})</div>` : ''}
+      ${notesHtml}
+      <div class="slip-dash"></div>
+      <div class="slip-thanks">ขอบคุณที่ใช้บริการ<small>THANK YOU</small></div>
+      <div class="slip-barcode-lines"></div>
+      <div class="slip-barcode-num">${getV('doc-number')||''}</div>
+    </div>
+  </div>`;
+}
+
+function buildSlip711Preview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const now = new Date();
+  const timeStr = now.toTimeString().slice(0,5);
+  const logoHtml = currentLogo
+    ? `<div style="text-align:center;margin-bottom:8px"><img src="${currentLogo}" style="max-height:48px;max-width:140px;object-fit:contain;display:inline-block" alt="logo"></div>`
+    : '';
+  const itemsHtml = items.map((it,i) => {
+    const code = String(8850000000000 + (i+1)*7 + Math.round(it.price)).slice(0,13);
+    return `<div class="slip711-item">
+      <div class="slip711-item-left">
+        <div class="slip711-item-name"><span class="slip711-code">${code}</span>${it.desc||'-'}</div>
+        <div class="slip711-item-sub">${it.qty} ${it.unit||'ชิ้น'} × ฿${fmtN(it.price)}</div>
+      </div>
+      <div class="slip711-item-price">฿${fmtN(it.qty*it.price)}</div>
+    </div>`;
+  }).join('');
+
+  const summaryRows = [];
+  if(sub!==grand) summaryRows.push(`<div class="slip-row"><span>มูลค่ารวม</span><span>${fmtN(sub)}</span></div>`);
+  if(discAmt>0)   summaryRows.push(`<div class="slip-row"><span>ส่วนลด</span><span style="color:#e8192c">-${fmtN(discAmt)}</span></div>`);
+  if(vr>0)        summaryRows.push(`<div class="slip-row"><span>VAT ${vr}%</span><span>${fmtN(vat)}</span></div>`);
+  if(whtAmt>0)    summaryRows.push(`<div class="slip-row"><span>หัก ณ ที่จ่าย ${whtRate}%</span><span>-${fmtN(whtAmt)}</span></div>`);
+  const notesHtml = getV('doc-notes') ? `<div class="slip-notes" style="margin:8px 0 0">${getV('doc-notes')}</div>` : '';
+
+  return `
+  <div class="slip-wrap">
+    <div class="slip-paper" style="font-family:'Courier New',Courier,monospace">
+      <div class="slip711-stripe"><span></span><span></span><span></span></div>
+      <div class="slip711-header">
+        ${logoHtml}
+        <div class="slip711-shop" style="font-size:1.15em">${getV('seller-name')||'ร้านค้า'}</div>
+        ${getV('seller-address') ? `<div style="font-size:0.75em;color:#777;margin-top:2px">${getV('seller-address').replace(/\n/g,' ')}</div>` : ''}
+        ${getV('seller-phone') ? `<div style="font-size:0.75em;color:#777">โทร ${getV('seller-phone')}</div>` : ''}
+        ${getV('seller-tax') ? `<div style="font-size:0.72em;color:#aaa;margin-top:2px">เลขที่ผู้เสียภาษี: ${getV('seller-tax')}</div>` : ''}
+        <div class="slip711-tagline">Receipt · ใบเสร็จรับเงิน</div>
+      </div>
+
+      <div class="slip711-section-hdr">ข้อมูลการทำรายการ</div>
+      <div class="slip-meta-row"><span>เลขที่</span><span style="font-weight:700">${getV('doc-number')||'-'}</span></div>
+      <div class="slip-meta-row"><span>วันที่</span><span>${getV('doc-date')||'-'} ${timeStr}</span></div>
+      ${getV('buyer-name') ? `<div class="slip-meta-row"><span>ลูกค้า</span><span>${getV('buyer-name')}</span></div>` : ''}
+
+      <div class="slip711-section-hdr">รายการสินค้า</div>
+      ${itemsHtml}
+
+      ${summaryRows.length ? `<div class="slip711-section-hdr">สรุปยอด</div>${summaryRows.join('')}` : ''}
+      ${notesHtml}
+
+      <div class="slip711-total-box">
+        <span class="slip711-total-label">ยอดรวมสุทธิ</span>
+        <span class="slip711-total-amount">฿${fmtN(grand)}</span>
+      </div>
+      ${grand>0 ? `<div style="text-align:right;font-size:0.72em;color:#888;padding:4px 0 0">(${bahtText(grand)})</div>` : ''}
+
+      <div class="slip711-section-hdr">การชำระเงิน</div>
+      <div class="slip711-payment-grid">
+        <div class="slip711-pay-cell"><div class="slip711-pay-label">รับเงิน</div><div class="slip711-pay-value">฿${fmtN(grand)}</div></div>
+        <div class="slip711-pay-cell"><div class="slip711-pay-label">เงินทอน</div><div class="slip711-pay-value">฿0.00</div></div>
+      </div>
+
+      <div class="slip711-thanks">— ขอบคุณที่ใช้บริการ · Thank You —</div>
+      <div class="slip711-barcode"></div>
+      <div class="slip711-barcode-num">${(getV('doc-number')||'').padEnd(16,'0').slice(0,16)}</div>
+    </div>
+  </div>`;
+}
+
+function buildSlipMonoPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo
+    ? `<div class="slipm-logo"><img src="${currentLogo}" style="max-height:44px;max-width:120px;object-fit:contain;display:inline-block;filter:grayscale(1)" alt="logo"></div>`
+    : '';
+  const itemsHtml = items.map(it => `
+    <div class="slipm-item-name">${it.desc||'-'}</div>
+    <div class="slipm-item-sub">
+      <span>${it.qty} ${it.unit||'ชิ้น'} x ${fmtN(it.price)}</span>
+      <span>${fmtN(it.qty*it.price)}</span>
+    </div>`).join('');
+  const subRow  = sub!==grand ? `<div class="slipm-total-row"><span>${t('pv.subtotal')}</span><span>${fmtN(sub)}</span></div>` : '';
+  const discRow = discAmt>0   ? `<div class="slipm-total-row"><span>${t('pv.discount')}</span><span>-${fmtN(discAmt)}</span></div>` : '';
+  const vatRow  = vr>0        ? `<div class="slipm-total-row"><span>VAT ${vr}%</span><span>${fmtN(vat)}</span></div>` : '';
+  const whtRow  = whtAmt>0    ? `<div class="slipm-total-row"><span>${t('pv.wht')} ${whtRate}%</span><span>-${fmtN(whtAmt)}</span></div>` : '';
+  const notesHtml = getV('doc-notes') ? `<div class="slipm-notes">* ${getV('doc-notes')}</div>` : '';
+  const buyerRow = getV('buyer-name') ? `<div class="slipm-meta-row"><span>ลูกค้า</span><span>${getV('buyer-name')}</span></div>` : '';
+
+  return `
+  <div class="slipm-wrap">
+    <div class="slipm-paper">
+      ${logoHtml}
+      <div class="slipm-shop">${getV('seller-name')||'ร้านค้า'}</div>
+      <div class="slipm-info">
+        ${getV('seller-address') ? getV('seller-address').replace(/\n/g,' · ') : ''}
+        ${getV('seller-phone') ? '<br>โทร ' + getV('seller-phone') : ''}
+        ${getV('seller-tax') ? '<br>เลขผู้เสียภาษี ' + getV('seller-tax') : ''}
+      </div>
+      <hr class="slipm-eq">
+      <div class="slipm-doctype">${info[currentLang]} · ${info.en}</div>
+      <hr class="slipm-dash">
+      <div class="slipm-meta">
+        <div class="slipm-meta-row"><span>เลขที่</span><span>${getV('doc-number')||'-'}</span></div>
+        <div class="slipm-meta-row"><span>วันที่</span><span>${getV('doc-date')||'-'}</span></div>
+        ${buyerRow}
+      </div>
+      <hr class="slipm-eq">
+      ${itemsHtml}
+      <hr class="slipm-eq">
+      ${subRow}${discRow}${vatRow}${whtRow}
+      <div class="slipm-grand"><span>${t('pv.grand')}</span><span>฿${fmtN(grand)}</span></div>
+      ${grand>0 ? `<div class="slipm-bahttext">(${bahtText(grand)})</div>` : ''}
+      ${notesHtml}
+      <hr class="slipm-dash">
+      <div class="slipm-thanks">Thank You</div>
+      <div class="slipm-barcode"></div>
+      <div class="slipm-barnum">${(getV('doc-number')||'').padEnd(16,'0').slice(0,16)}</div>
+    </div>
+  </div>`;
+}
+
+function buildSlipBoutiquePreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  // Logo
+  const logoHtml = currentLogo
+    ? `<img src="${currentLogo}" style="max-height:40px;max-width:100px;width:auto;height:auto;object-fit:contain;display:block" alt="logo">`
+    : `<div style="width:36px;height:36px;border-radius:8px;background:var(--doc-theme);display:flex;align-items:center;justify-content:center;color:#fdfaf5;font-weight:900;font-size:1.1em">${(getV('seller-name')||'?')[0].toUpperCase()}</div>`;
+
+  // Items
+  const itemsHtml = items.map(it => `
+    <div class="slipb-item">
+      <div class="slipb-item-left">
+        <div class="slipb-item-name">${it.desc||'-'}</div>
+        <div class="slipb-item-sub">${it.qty} ${it.unit||'ชิ้น'} × ฿${fmtN(it.price)}</div>
+      </div>
+      <div class="slipb-item-total">฿${fmtN(it.qty*it.price)}</div>
+    </div>`).join('');
+
+  // Totals
+  const subRow   = sub!==grand ? `<div class="slipb-total-row"><span>${t('pv.subtotal')}</span><span>฿${fmtN(sub)}</span></div>` : '';
+  const discRow  = discAmt>0   ? `<div class="slipb-total-row"><span>${t('pv.discount')}</span><span style="color:#c0392b">-฿${fmtN(discAmt)}</span></div>` : '';
+  const vatRow   = vr>0        ? `<div class="slipb-total-row"><span>VAT ${vr}%</span><span>฿${fmtN(vat)}</span></div>` : '';
+  const whtRow   = whtAmt>0    ? `<div class="slipb-total-row"><span>${t('pv.wht')} ${whtRate}%</span><span style="color:#c0392b">-฿${fmtN(whtAmt)}</span></div>` : '';
+
+  // Notes
+  const notesHtml = getV('doc-notes')
+    ? `<div class="slipb-notes"><b>หมายเหตุ:</b> ${getV('doc-notes')}</div>` : '';
+
+  // Buyer row
+  const buyerRow = getV('buyer-name')
+    ? `<div class="slipb-meta-item"><span class="slipb-meta-label">ลูกค้า</span><span class="slipb-meta-value">${getV('buyer-name')}</span></div>` : '';
+
+  // Decorative QR-like pattern (fixed pattern, purely decorative)
+  const qrPat = [0,1,0,1,0, 1,0,1,0,1, 0,1,1,1,0, 1,0,1,0,0, 0,1,0,0,1];
+  const qrHtml = qrPat.map(b=>`<span class="${b?'on':''}"></span>`).join('');
+
+  return `
+  <div class="slipb-wrap">
+    <div class="slipb-paper">
+      <div class="slipb-topbar"></div>
+      <div class="slipb-inner">
+        <div class="slipb-brand">
+          <div class="slipb-logo-wrap">${logoHtml}</div>
+          <div class="slipb-name-block">
+            <div class="slipb-shopname">${getV('seller-name')||'-'}</div>
+            <div class="slipb-shopinfo">
+              ${getV('seller-phone')||''}${getV('seller-phone')&&getV('seller-email')?' · ':''}${getV('seller-email')||''}
+              ${getV('seller-address') ? '<br>' + getV('seller-address').replace(/\n/g,' ') : ''}
+              ${getV('seller-tax') ? '<br>เลขผู้เสียภาษี ' + getV('seller-tax') : ''}
+            </div>
+          </div>
+        </div>
+
+        <div class="slipb-title-strip">
+          <span class="slipb-title-text">${info[currentLang]}</span>
+          <span class="slipb-docno"># ${getV('doc-number')||'-'}</span>
+        </div>
+
+        <div class="slipb-meta">
+          <div class="slipb-meta-item">
+            <span class="slipb-meta-label">วันที่</span>
+            <span class="slipb-meta-value">${getV('doc-date')||'-'}</span>
+          </div>
+          ${buyerRow}
+        </div>
+
+        <div class="slipb-items">${itemsHtml}</div>
+
+        <div class="slipb-totals">
+          ${subRow}${discRow}${vatRow}${whtRow}
+          <div class="slipb-total-row grand">
+            <span>${t('pv.grand')}</span>
+            <span>฿${fmtN(grand)}</span>
+          </div>
+          ${grand>0 ? `<div class="slipb-bahttext">(${bahtText(grand)})</div>` : ''}
+        </div>
+
+        ${notesHtml}
+
+        <div class="slipb-footer">
+          <div class="slipb-thanks">ขอบคุณที่ใช้บริการ</div>
+          <div class="slipb-qrlike">${qrHtml}</div>
+        </div>
+      </div>
+      <div class="slipb-bottombar"></div>
+    </div>
+  </div>`;
 }
 
 function buildCmpPreview(info){
@@ -2963,6 +3626,85 @@ const sampleData = {
     vat: 7, wht: 3, disc: 0,
     notes: 'งานทั้งหมดส่งมอบตรงตามแบบและระยะเวลาที่กำหนดในสัญญา รอการตรวจรับและอนุมัติเบิกจ่ายงวดสุดท้าย',
     sigs: ['ผู้ส่งมอบงาน','ผู้ตรวจรับงาน']
+  },
+  receiptvoucher: {
+    seller: 'บริษัท กรีนวิว การ์เด้น จำกัด', sellerAddr: '9 ถนนบางนา-ตราด แขวงบางนา เขตบางนา กรุงเทพฯ 10260',
+    sellerPhone: '02-399-4411', sellerEmail: 'account@greenviewgarden.co.th', sellerTax: '0-1055-77889-90-1',
+    buyer: 'คุณสมชาย วัฒนกิจ', buyerAddr: '25 ถนนลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '',
+    docNo: 'RV-2568-019', docDate: '27/06/2568',
+    items: [
+      {desc:'รับชำระค่ามัดจำงานจัดสวนตามสัญญาเลขที่ SA-2568-004', qty:1, unit:'งวด', price:20000},
+      {desc:'รับชำระค่าอุปกรณ์และต้นไม้ล่วงหน้า', qty:1, unit:'งวด', price:8500},
+    ],
+    vat: 0, wht: 0, disc: 0,
+    notes: 'ออกใบสำคัญรับเงินฉบับนี้เพื่อยืนยันการรับชำระเงินตามรายการข้างต้น ผู้จ่ายเงินโปรดเก็บไว้เป็นหลักฐาน',
+    sigs: ['ผู้รับเงิน','ผู้จ่ายเงิน']
+  },
+  paymentvoucher: {
+    seller: 'บริษัท สมาร์ท โลจิสติกส์ จำกัด', sellerAddr: '48 ถนนบางขุนเทียน แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150',
+    sellerPhone: '02-415-6677', sellerEmail: 'finance@smartlogistics.co.th', sellerTax: '0-1055-22114-45-6',
+    buyer: 'ห้างหุ้นส่วนจำกัด รุ่งเรือง ขนส่ง', buyerAddr: '120 ถนนสุขสวัสดิ์ แขวงราษฎร์บูรณะ เขตราษฎร์บูรณะ กรุงเทพฯ 10140', buyerTax: '0-1055-66442-23-8',
+    docNo: 'PV-2568-032', docDate: '27/06/2568',
+    items: [
+      {desc:'จ่ายค่าเช่ารถบรรทุกประจำเดือนมิถุนายน 2568', qty:1, unit:'เดือน', price:45000},
+      {desc:'จ่ายค่าน้ำมันเชื้อเพลิงเพิ่มเติม', qty:1, unit:'รายการ', price:6200},
+    ],
+    vat: 7, wht: 1, disc: 0,
+    notes: 'จ่ายเงินโดยการโอนเข้าบัญชีธนาคาร กรุณาแนบสำเนาใบเสร็จ/ใบกำกับภาษีของผู้รับเงินประกอบการจ่ายเงินทุกครั้ง',
+    sigs: ['ผู้จ่ายเงิน','ผู้รับเงิน']
+  },
+  taxinvoiceabbr: {
+    seller: 'ร้านมินิมาร์ท สุขใจ', sellerAddr: '5/12 ถนนรามคำแหง แขวงหัวหมาก เขตบางกะปิ กรุงเทพฯ 10240',
+    sellerPhone: '081-234-5678', sellerEmail: '', sellerTax: '3-1099-00456-78-9',
+    buyer: '', buyerAddr: '', buyerTax: '',
+    docNo: 'ABR-2568-1044', docDate: '27/06/2568',
+    items: [
+      {desc:'สินค้าอุปโภคบริโภคคละรายการ', qty:1, unit:'ครั้ง', price:685},
+      {desc:'เครื่องดื่มและขนม', qty:1, unit:'ครั้ง', price:240},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ใบกำกับภาษีอย่างย่อ ใช้สำหรับการขายปลีกหน้าร้าน ไม่ต้องระบุชื่อ-ที่อยู่ผู้ซื้อ ไม่สามารถใช้เป็นหลักฐานขอคืนภาษีซื้อแบบเต็มรูปได้',
+    sigs: ['ผู้ออกใบกำกับภาษี','ผู้ซื้อสินค้า']
+  },
+  leaseagreement: {
+    seller: 'บริษัท ทรัพย์อนันต์ พร็อพเพอร์ตี้ จำกัด', sellerAddr: '88 ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310',
+    sellerPhone: '02-717-8899', sellerEmail: 'lease@suparnont.co.th', sellerTax: '0-1055-55221-34-7',
+    buyer: 'บริษัท บลูมมิ่ง คอฟฟี่ จำกัด', buyerAddr: '88 ถนนพระราม 9 (พื้นที่เช่าเลขที่ 1A) แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310', buyerTax: '0-1055-99001-12-3',
+    docNo: 'LS-2568-011', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าเช่าพื้นที่ร้านค้าชั้น 1 ขนาด 45 ตร.ม. ระยะเวลา 12 เดือน', qty:1, unit:'สัญญา', price:432000},
+      {desc:'ค่าเช่าที่จอดรถส่วนกลาง 2 คัน', qty:12, unit:'เดือน', price:1500},
+    ],
+    vat: 7, wht: 5, disc: 0,
+    notes: 'สัญญาเช่ามีผลตั้งแต่วันที่ 1 ก.ค. 2568 ถึงวันที่ 30 มิ.ย. 2569 ชำระค่าเช่าล่วงหน้าทุกวันที่ 1 ของเดือน พร้อมเงินประกันการเช่า 2 เดือน',
+    sigs: ['ผู้ให้เช่า','ผู้เช่า']
+  },
+  purchreq: {
+    seller: 'แผนกจัดซื้อ บริษัท ไทยอินดัสเทรียล จำกัด', sellerAddr: '199 นิคมอุตสาหกรรมบางปู ถนนสุขุมวิท จังหวัดสมุทรปราการ 10280',
+    sellerPhone: '02-709-3344', sellerEmail: 'purchasing@thaiindustrial.co.th', sellerTax: '0-1055-44556-67-8',
+    buyer: 'ฝ่ายผลิต (แผนกซ่อมบำรุง)', buyerAddr: 'อาคารโรงงาน 2 ชั้น 1', buyerTax: '',
+    docNo: 'PR-2568-077', docDate: '27/06/2568',
+    items: [
+      {desc:'มอเตอร์ไฟฟ้า 3 เฟส 5 แรงม้า', qty:2, unit:'ตัว', price:8900},
+      {desc:'สายพานลำเลียงขนาด 500 มม.', qty:10, unit:'เมตร', price:650},
+      {desc:'ตลับลูกปืนอุตสาหกรรม เบอร์ 6205', qty:20, unit:'ตัว', price:180},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ขอให้แผนกจัดซื้อดำเนินการจัดหาตามรายการข้างต้นเพื่อใช้ในการซ่อมบำรุงสายการผลิตที่ 2 โดยเร่งด่วน รออนุมัติจากหัวหน้าแผนกก่อนออก PO',
+    sigs: ['ผู้ขอซื้อ','ผู้อนุมัติ']
+  },
+  acceptancenote: {
+    seller: 'บริษัท เมทัลเวิร์ค เอ็นจิเนียริ่ง จำกัด', sellerAddr: '35 ถนนเทพารักษ์ ตำบลเทพารักษ์ อำเภอเมือง จังหวัดสมุทรปราการ 10270',
+    sellerPhone: '02-384-5566', sellerEmail: 'delivery@metalworkeng.co.th', sellerTax: '0-1055-11778-89-0',
+    buyer: 'บริษัท ไฮไรส์ คอนสตรัคชั่น จำกัด', buyerAddr: '210 ถนนพระราม 3 เขตยานนาวา กรุงเทพฯ 10120', buyerTax: '0-1055-22889-90-1',
+    docNo: 'ACN-2568-023', docDate: '27/06/2568',
+    items: [
+      {desc:'โครงเหล็กรับน้ำหนักหลังคาโกดัง (ชุดที่ 3)', qty:1, unit:'ชุด', price:285000},
+      {desc:'งานติดตั้งและเชื่อมประกอบหน้างาน', qty:1, unit:'งาน', price:45000},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'ตรวจรับพัสดุ/งานตามรายการข้างต้นแล้ว สภาพสมบูรณ์ตรงตามข้อกำหนด พร้อมอนุมัติให้เบิกจ่ายตามเงื่อนไขสัญญา',
+    sigs: ['ผู้ส่งมอบ','ผู้ตรวจรับ']
   }
 };
 
@@ -3271,6 +4013,7 @@ function autosaveForm() {
       whtRate:       document.getElementById('wht-rate').value,
       discountValue: document.getElementById('discount-value').value,
       discountType:  document.getElementById('discount-type').value,
+      receiptSlipVariant: document.getElementById('receipt-slip-variant')?.value || 'off',
       ourName:       document.getElementById('v0-our')?.value || '',
       vendorCount:   document.getElementById('vendor-count')?.value || '2',
       v1: document.getElementById('v1')?.value || '',
@@ -3330,6 +4073,10 @@ function restoreAutosave() {
 
     const isCmp = currentDocType === 'comparison';
     document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(currentDocType)) ? 'block' : 'none';
+    const slipRowRA = document.getElementById('receipt-slip-row');
+    if (slipRowRA) slipRowRA.style.display = (currentDocType==='receipt') ? 'block' : 'none';
+    const slipCbRA = document.getElementById('receipt-slip-variant');
+    if (slipCbRA) slipCbRA.value = d.receiptSlipVariant || (d.receiptSlipStyle ? 'cash' : 'off');
     document.getElementById('items-section').style.display   = isCmp ? 'none' : 'block';
     document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
     document.getElementById('compare-vendors-row').style.display = isCmp ? 'block' : 'none';
@@ -3609,6 +4356,7 @@ function saveToHistory() {
       docNumber: getV('doc-number'), docDate: getV('doc-date'), docDueDate: getV('doc-due-date'),
       docNotes: getV('doc-notes'), vatRate: getV('vat-rate'), whtRate: getV('wht-rate'),
       discountValue: getV('discount-value'), discountType: getV('discount-type'),
+      receiptSlipVariant: document.getElementById('receipt-slip-variant')?.value || 'off',
       ourName: document.getElementById('v0-our')?.value || '',
       vendorCount: document.getElementById('vendor-count')?.value || '2',
       v1: document.getElementById('v1')?.value || '', v2: document.getElementById('v2')?.value || '',
@@ -3654,7 +4402,9 @@ document.getElementById('history-modal').addEventListener('click', function(e){ 
 const historyIconMap = { quotation:'ti-file-description', invoice:'ti-file-invoice', receipt:'ti-receipt', delivery:'ti-truck-delivery',
   comparison:'ti-table', billing:'ti-file-dollar', creditnote:'ti-file-minus', po:'ti-shopping-cart', deposit:'ti-coin',
   taxinvoice:'ti-receipt-tax', debitnote:'ti-file-plus', serviceagreement:'ti-file-text', whtcert:'ti-certificate',
-  workorder:'ti-clipboard-list', jobcompletion:'ti-clipboard-check' };
+  workorder:'ti-clipboard-list', jobcompletion:'ti-clipboard-check',
+  receiptvoucher:'ti-cash', paymentvoucher:'ti-cash-banknote', taxinvoiceabbr:'ti-receipt-2',
+  leaseagreement:'ti-key', purchreq:'ti-clipboard-text', acceptancenote:'ti-checklist' };
 
 function renderHistoryList() {
   const list = document.getElementById('history-list');
@@ -3724,6 +4474,10 @@ function loadHistoryEntry(id) {
 
   const isCmp = currentDocType === 'comparison';
   document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(currentDocType)) ? 'block' : 'none';
+  const slipRowSD = document.getElementById('receipt-slip-row');
+  if (slipRowSD) slipRowSD.style.display = (currentDocType==='receipt') ? 'block' : 'none';
+  const slipCbSD = document.getElementById('receipt-slip-variant');
+  if (slipCbSD) slipCbSD.value = d.receiptSlipVariant || (d.receiptSlipStyle ? 'cash' : 'off');
   document.getElementById('items-section').style.display   = isCmp ? 'none' : 'block';
   document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
   document.getElementById('compare-vendors-row').style.display = isCmp ? 'block' : 'none';
@@ -3776,6 +4530,10 @@ function convertDocTo(newType) {
   document.getElementById('doc-number').value = generateDocNumber(newType);
   document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
   document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(newType)) ? 'block' : 'none';
+  const slipRowCV = document.getElementById('receipt-slip-row');
+  if (slipRowCV) slipRowCV.style.display = (newType==='receipt') ? 'block' : 'none';
+  const slipCbCV = document.getElementById('receipt-slip-variant');
+  if (slipCbCV && newType!=='receipt') slipCbCV.value = 'off';
   document.querySelectorAll('#form-page .doc-card').forEach(c => c.classList.remove('selected'));
   const card = document.getElementById('card-'+newType);
   if (card) card.classList.add('selected');
