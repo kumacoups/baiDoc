@@ -1254,7 +1254,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
     <div class="cap-grid">
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-files" aria-hidden="true"></i></div>
-        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 21 ประเภท</div>
+        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 25 ประเภท</div>
         <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา</div></div>
       </div>
       <div class="cap-item">
@@ -1318,7 +1318,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-title" data-i18n="step1.title">เลือกประเภทเอกสาร</div>
-        <div class="step-body" data-i18n="step1.body">เลือกจาก 21 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
+        <div class="step-body" data-i18n="step1.body">เลือกจาก 25 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -1336,7 +1336,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
   <div class="section" id="doc-types-section">
     <div class="section-label" data-i18n="doctypes.label">เอกสารที่รองรับ</div>
     <div class="section-title" data-i18n="doctypes.title">เลือกประเภทเอกสาร</div>
-    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 21 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
+    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 25 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
     <div class="doc-grid">
       <div class="doc-card" onclick="selectDoc('quotation')">
         <i class="ti ti-file-description doc-icon" aria-hidden="true"></i>
@@ -1442,6 +1442,26 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <i class="ti ti-checklist doc-icon" aria-hidden="true"></i>
         <div class="doc-name" data-i18n="doc.acceptancenote.name">ใบตรวจรับพัสดุ/งาน</div>
         <div class="doc-desc">Acceptance Note</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('statement')">
+        <i class="ti ti-table-options doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.statement.name">ใบแจ้งยอดชำระ</div>
+        <div class="doc-desc">Statement</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('expenseclaim')">
+        <i class="ti ti-report-money doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.expenseclaim.name">ใบเบิกค่าใช้จ่าย</div>
+        <div class="doc-desc">Expense Claim</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('warranty')">
+        <i class="ti ti-shield-check doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.warranty.name">ใบรับประกันสินค้า</div>
+        <div class="doc-desc">Warranty Card</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('poa')">
+        <i class="ti ti-writing doc-icon" aria-hidden="true"></i>
+        <div class="doc-name" data-i18n="doc.poa.name">หนังสือมอบอำนาจ</div>
+        <div class="doc-desc">Power of Attorney</div>
       </div>
     </div>
   </div>
@@ -1606,6 +1626,22 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <div class="doc-card" id="card-acceptancenote" onclick="selectDoc('acceptancenote')">
           <i class="ti ti-checklist doc-icon" aria-hidden="true"></i>
           <div class="doc-name" data-i18n="doc.acceptancenote.name">ใบตรวจรับพัสดุ/งาน</div><div class="doc-desc">Acceptance Note</div>
+        </div>
+        <div class="doc-card" id="card-statement" onclick="selectDoc('statement')">
+          <i class="ti ti-table-options doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.statement.name">ใบแจ้งยอดชำระ</div><div class="doc-desc">Statement</div>
+        </div>
+        <div class="doc-card" id="card-expenseclaim" onclick="selectDoc('expenseclaim')">
+          <i class="ti ti-report-money doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.expenseclaim.name">ใบเบิกค่าใช้จ่าย</div><div class="doc-desc">Expense Claim</div>
+        </div>
+        <div class="doc-card" id="card-warranty" onclick="selectDoc('warranty')">
+          <i class="ti ti-shield-check doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.warranty.name">ใบรับประกันสินค้า</div><div class="doc-desc">Warranty Card</div>
+        </div>
+        <div class="doc-card" id="card-poa" onclick="selectDoc('poa')">
+          <i class="ti ti-writing doc-icon" aria-hidden="true"></i>
+          <div class="doc-name" data-i18n="doc.poa.name">หนังสือมอบอำนาจ</div><div class="doc-desc">Power of Attorney</div>
         </div>
       </div>
     </div>
@@ -2144,7 +2180,11 @@ const docInfo = {
   taxinvoiceabbr:  { th:'ใบกำกับภาษีอย่างย่อ',        en:'Abbreviated Tax Invoice', zh:'简易税务发票', prefix:'ABR' },
   leaseagreement:  { th:'สัญญาเช่า',                  en:'Lease Agreement',      zh:'租赁协议',     prefix:'LS'  },
   purchreq:        { th:'ใบขอซื้อ',                   en:'Purchase Requisition', zh:'请购单',       prefix:'PR'  },
-  acceptancenote:  { th:'ใบตรวจรับพัสดุ/งาน',         en:'Acceptance Note',      zh:'验收单',       prefix:'ACN' }
+  acceptancenote:  { th:'ใบตรวจรับพัสดุ/งาน',         en:'Acceptance Note',      zh:'验收单',       prefix:'ACN' },
+  statement:       { th:'ใบแจ้งยอดชำระ',               en:'Statement',            zh:'对账明细',     prefix:'ST'  },
+  expenseclaim:    { th:'ใบเบิกค่าใช้จ่าย',            en:'Expense Claim',        zh:'费用报销单',   prefix:'EC'  },
+  warranty:        { th:'ใบรับประกันสินค้า',            en:'Warranty Card',        zh:'保修卡',       prefix:'WR'  },
+  poa:             { th:'หนังสือมอบอำนาจ',              en:'Power of Attorney',    zh:'授权书',       prefix:'POA' }
 };
 
 /* ===== I18N DICTIONARY ===== */
@@ -2154,10 +2194,10 @@ const I18N = {
     'hero.badge':'ฟรี 100% ไม่ต้องสมัครสมาชิก','hero.title1':'สร้างเอกสารธุรกิจ','hero.title2':'ออนไลน์ฟรี',
     'hero.desc':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้ และอื่นๆ ดาวน์โหลด PDF ได้ทันที',
     'hero.start':'เริ่มสร้างเอกสาร','hero.sample':'ดูตัวอย่าง',
-    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 21 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
+    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 25 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
     'cap.label':'BaiDoc คืออะไร','cap.title':'เว็บแอปสร้างเอกสารธุรกิจครบวงจร',
     'cap.sub':'ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว',
-    'cap1.title':'สร้างเอกสารได้ 21 ประเภท',
+    'cap1.title':'สร้างเอกสารได้ 25 ประเภท',
     'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา',
     'cap2.title':'คำนวณยอดเงินให้อัตโนมัติ',
     'cap2.body':'ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที',
@@ -2170,7 +2210,7 @@ const I18N = {
     'cap6.title':'ใช้งานได้ 3 ภาษา','cap6.body':'สลับหน้าเว็บระหว่างภาษาไทย อังกฤษ และจีนได้ทุกเมื่อ',
     'cap7.title':'โหมดมืด/สว่าง','cap7.body':'สลับธีมมืดหรือสว่างได้ตามความสะดวกในการใช้งาน',
     'cap8.title':'ปลอดภัยและฟรีตลอดไป','cap8.body':'ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน',
-    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 21 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
+    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 25 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
     'step2.title':'กรอกข้อมูลและปรับแต่ง','step2.body':'ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ',
     'step3.title':'พรีวิวแล้วดาวน์โหลด','step3.body':'ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที',
     'features.label':'ทำไมต้องใช้ BaiDoc','features.title':'ง่าย เร็ว ฟรี',
@@ -2200,6 +2240,7 @@ const I18N = {
     'doc.whtcert.name':'หนังสือรับรองหักภาษี ณ ที่จ่าย','doc.workorder.name':'ใบสั่งงาน','doc.jobcompletion.name':'ใบส่งมอบงาน',
     'doc.receiptvoucher.name':'ใบสำคัญรับเงิน','doc.paymentvoucher.name':'ใบสำคัญจ่าย','doc.taxinvoiceabbr.name':'ใบกำกับภาษีอย่างย่อ',
     'doc.leaseagreement.name':'สัญญาเช่า','doc.purchreq.name':'ใบขอซื้อ','doc.acceptancenote.name':'ใบตรวจรับพัสดุ/งาน',
+    'doc.statement.name':'ใบแจ้งยอดชำระ','doc.expenseclaim.name':'ใบเบิกค่าใช้จ่าย','doc.warranty.name':'ใบรับประกันสินค้า','doc.poa.name':'หนังสือมอบอำนาจ',
     'sig.quotation0':'ผู้เสนอราคา','sig.quotation1':'ผู้อนุมัติ','sig.invoice0':'ผู้ออกใบแจ้งหนี้','sig.invoice1':'ผู้รับเอกสาร',
     'sig.receipt0':'ผู้รับเงิน','sig.receipt1':'ผู้จ่ายเงิน','sig.delivery0':'ผู้ส่งของ','sig.delivery1':'ผู้รับของ',
     'sig.billing0':'ผู้วางบิล','sig.billing1':'ผู้รับวางบิล','sig.creditnote0':'ผู้ออกใบลดหนี้','sig.creditnote1':'ผู้รับเอกสาร',
@@ -2216,6 +2257,10 @@ const I18N = {
     'sig.leaseagreement0':'ผู้ให้เช่า','sig.leaseagreement1':'ผู้เช่า',
     'sig.purchreq0':'ผู้ขอซื้อ','sig.purchreq1':'ผู้อนุมัติ',
     'sig.acceptancenote0':'ผู้ส่งมอบ','sig.acceptancenote1':'ผู้ตรวจรับ',
+    'sig.statement0':'ผู้ออกใบแจ้งยอด','sig.statement1':'ผู้รับเอกสาร',
+    'sig.expenseclaim0':'ผู้เบิก','sig.expenseclaim1':'ผู้อนุมัติ',
+    'sig.warranty0':'ผู้ขาย/ผู้ให้บริการ','sig.warranty1':'ผู้ซื้อ/ผู้รับประกัน',
+    'sig.poa0':'ผู้มอบอำนาจ','sig.poa1':'ผู้รับมอบอำนาจ',
     'sig.default0':'ผู้ออกเอกสาร','sig.default1':'ผู้รับเอกสาร'
   },
   en: {
@@ -2223,10 +2268,10 @@ const I18N = {
     'hero.badge':'100% Free, No Sign-up Required','hero.title1':'Create Business Documents','hero.title2':'Online for Free',
     'hero.desc':'Quotations, invoices, receipts, delivery orders, billing notes, credit notes and more. Download as PDF instantly.',
     'hero.start':'Start Creating','hero.sample':'View Sample',
-    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'21 document types covering every business need',
+    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'25 document types covering every business need',
     'cap.label':'What is BaiDoc','cap.title':'A Complete Business Document Toolkit',
     'cap.sub':'From filling in details to a ready-to-send PDF — every step happens right here on this page.',
-    'cap1.title':'Create 21 Document Types',
+    'cap1.title':'Create 25 Document Types',
     'cap1.body':'Quotations, invoices, receipts, delivery orders, billing notes, credit/debit notes, purchase orders, deposit receipts, tax invoices (full/abbreviated), service/lease agreements, WHT certificates, work orders, job completion notes, receipt/payment vouchers, purchase requisitions, acceptance notes, and price comparisons.',
     'cap2.title':'Automatic Calculations',
     'cap2.body':'Add your items and the app instantly calculates VAT, discounts, and withholding tax (WHT), plus the final total.',
@@ -2269,6 +2314,7 @@ const I18N = {
     'doc.whtcert.name':'WHT Certificate','doc.workorder.name':'Work Order','doc.jobcompletion.name':'Job Completion Note',
     'doc.receiptvoucher.name':'Receipt Voucher','doc.paymentvoucher.name':'Payment Voucher','doc.taxinvoiceabbr.name':'Abbreviated Tax Invoice',
     'doc.leaseagreement.name':'Lease Agreement','doc.purchreq.name':'Purchase Requisition','doc.acceptancenote.name':'Acceptance Note',
+    'doc.statement.name':'Statement','doc.expenseclaim.name':'Expense Claim','doc.warranty.name':'Warranty Card','doc.poa.name':'Power of Attorney',
     'sig.quotation0':'Quoted By','sig.quotation1':'Approved By','sig.invoice0':'Issued By','sig.invoice1':'Received By',
     'sig.receipt0':'Received By','sig.receipt1':'Paid By','sig.delivery0':'Delivered By','sig.delivery1':'Received By',
     'sig.billing0':'Billed By','sig.billing1':'Received By','sig.creditnote0':'Issued By','sig.creditnote1':'Received By',
@@ -2285,6 +2331,10 @@ const I18N = {
     'sig.leaseagreement0':'Lessor','sig.leaseagreement1':'Lessee',
     'sig.purchreq0':'Requested By','sig.purchreq1':'Approved By',
     'sig.acceptancenote0':'Delivered By','sig.acceptancenote1':'Inspected By',
+    'sig.statement0':'Issued By','sig.statement1':'Received By',
+    'sig.expenseclaim0':'Claimed By','sig.expenseclaim1':'Approved By',
+    'sig.warranty0':'Seller / Service Provider','sig.warranty1':'Buyer / Recipient',
+    'sig.poa0':'Authorizer','sig.poa1':'Authorized Person',
     'sig.default0':'Issued By','sig.default1':'Received By'
   },
   zh: {
@@ -2292,10 +2342,10 @@ const I18N = {
     'hero.badge':'100% 免费，无需注册','hero.title1':'创建商业文件','hero.title2':'在线免费制作',
     'hero.desc':'报价单、发票、收据、送货单、对账单、贷项通知单等。即时下载PDF。',
     'hero.start':'开始创建','hero.sample':'查看示例',
-    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持21种类型，满足所有业务需求',
+    'doctypes.label':'支持的文件','doctypes.title':'选择文件类型','doctypes.sub':'支持25种类型，满足所有业务需求',
     'cap.label':'BaiDoc 是什么','cap.title':'一站式商业文件制作工具',
     'cap.sub':'从填写资料到生成可直接发送的PDF文件，所有步骤都在同一个页面完成',
-    'cap1.title':'可制作21种文件类型',
+    'cap1.title':'可制作25种文件类型',
     'cap1.body':'报价单、发票、收据、送货单、对账单、贷项/借项通知单、采购订单、押金收据、税务发票(完整/简易)、服务/租赁协议、预扣税证明书、工作单、工作完成单、收/付款凭证、请购单、验收单，以及价格比较单',
     'cap2.title':'自动计算金额',
     'cap2.body':'输入商品/服务项目后，系统会自动计算增值税(VAT)、折扣与预扣税(WHT)，并即时显示总金额',
@@ -2308,7 +2358,7 @@ const I18N = {
     'cap6.title':'支持3种语言','cap6.body':'随时在泰语、英语和中文之间切换整个网站',
     'cap7.title':'明暗模式切换','cap7.body':'可根据需要切换明亮或深色主题',
     'cap8.title':'安全、私密且永久免费','cap8.body':'所有操作均在浏览器中完成，不会将数据发送到服务器，无需注册，也无需付费',
-    'step1.title':'选择文件类型','step1.body':'从21种商业文件类型中选择，或先查看示例再决定',
+    'step1.title':'选择文件类型','step1.body':'从25种商业文件类型中选择，或先查看示例再决定',
     'step2.title':'填写资料并自定义','step2.body':'输入卖方、买方与商品信息，并选择喜欢的主题色与字体',
     'step3.title':'预览后下载','step3.body':'核对内容无误后，打印或保存为PDF文件发送',
     'features.label':'为什么选择 BaiDoc','features.title':'简单、快速、免费',
@@ -2338,6 +2388,7 @@ const I18N = {
     'doc.whtcert.name':'预扣税证明书','doc.workorder.name':'工作单','doc.jobcompletion.name':'工作完成单',
     'doc.receiptvoucher.name':'收款凭证','doc.paymentvoucher.name':'付款凭证','doc.taxinvoiceabbr.name':'简易税务发票',
     'doc.leaseagreement.name':'租赁协议','doc.purchreq.name':'请购单','doc.acceptancenote.name':'验收单',
+    'doc.statement.name':'对账明细','doc.expenseclaim.name':'费用报销单','doc.warranty.name':'保修卡','doc.poa.name':'授权书',
     'sig.quotation0':'报价人','sig.quotation1':'审批人','sig.invoice0':'开票人','sig.invoice1':'收件人',
     'sig.receipt0':'收款人','sig.receipt1':'付款人','sig.delivery0':'送货人','sig.delivery1':'收货人',
     'sig.billing0':'对账人','sig.billing1':'收件人','sig.creditnote0':'开单人','sig.creditnote1':'收件人',
@@ -2354,6 +2405,10 @@ const I18N = {
     'sig.leaseagreement0':'出租方','sig.leaseagreement1':'承租方',
     'sig.purchreq0':'请购人','sig.purchreq1':'审批人',
     'sig.acceptancenote0':'交付人','sig.acceptancenote1':'验收人',
+    'sig.statement0':'开单方','sig.statement1':'收件方',
+    'sig.expenseclaim0':'报销人','sig.expenseclaim1':'审批人',
+    'sig.warranty0':'销售方','sig.warranty1':'购买方',
+    'sig.poa0':'授权人','sig.poa1':'被授权人',
     'sig.default0':'开单方','sig.default1':'收件方'
   }
 };
