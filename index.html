@@ -2,6 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<title>BaiDoc — สร้างเอกสารธุรกิจครบวงจร</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='1' width='19' height='24' rx='3' fill='%23523D2D'/%3E%3Crect x='4' y='6' width='11' height='2' rx='1' fill='white' opacity='0.9'/%3E%3Crect x='4' y='11' width='11' height='2' rx='1' fill='white' opacity='0.7'/%3E%3Crect x='4' y='16' width='7' height='2' rx='1' fill='white' opacity='0.5'/%3E%3Ccircle cx='24' cy='24' r='7' fill='%23523D2D'/%3E%3Cpath d='M20.5 24l2.5 2.5 4.5-4.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
@@ -673,6 +675,11 @@ nav {
 .preview-total-box { min-width: 240px; padding-top: 8px; border-top: 1px solid #e5e7eb; }
 .preview-total-row { display: flex; justify-content: space-between; font-size: 0.923em; padding: 2px 0; color: #6b7280; }
 .preview-total-row.grand { border-top: 1.5px solid var(--doc-theme); margin-top: 6px; padding-top: 7px; font-size: 1.154em; font-weight: 700; color: var(--doc-theme-dark); }
+.item-note-input:focus { background: var(--input-bg) !important; border-color: var(--border) !important; }
+.layout-btn { background: none; border: 2px solid var(--border); border-radius: 8px; padding: 8px; cursor: pointer; transition: all 0.15s; text-align: center; color: var(--text); }
+.layout-btn:hover { border-color: var(--theme); }
+.layout-btn.selected { border-color: var(--theme); background: var(--theme-bg); }
+.item-note-input::placeholder { color: #c4c9d4; font-style: italic; }
 .doc-notes { border-top: 1px solid #e5e7eb; padding: 10px 0; font-size: 0.846em; color: #6b7280; margin-bottom: 16px; }
 .doc-notes b { color: var(--doc-theme-dark); }
 .doc-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: auto; padding-top: 28px; }
@@ -1196,8 +1203,25 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
 
 <!-- NAV -->
 <nav>
-  <div class="logo" onclick="showLanding()">
-    <i class="ti ti-file-invoice" aria-hidden="true"></i> BaiDoc
+  <div class="logo" onclick="showLanding()" aria-label="BaiDoc">
+    <svg width="118" height="32" viewBox="0 0 118 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Document icon stack -->
+      <!-- Back doc (shadow) -->
+      <rect x="4" y="5" width="17" height="22" rx="3" fill="var(--theme)" opacity="0.18"/>
+      <!-- Middle doc -->
+      <rect x="6" y="3" width="17" height="22" rx="3" fill="var(--theme)" opacity="0.35"/>
+      <!-- Front doc -->
+      <rect x="8" y="1" width="17" height="22" rx="3" fill="var(--theme)"/>
+      <!-- Lines on doc -->
+      <rect x="12" y="7" width="9" height="1.5" rx="0.75" fill="white" opacity="0.85"/>
+      <rect x="12" y="11" width="9" height="1.5" rx="0.75" fill="white" opacity="0.65"/>
+      <rect x="12" y="15" width="6" height="1.5" rx="0.75" fill="white" opacity="0.5"/>
+      <!-- Checkmark badge -->
+      <circle cx="21" cy="20" r="5" fill="var(--theme-bg)" stroke="var(--theme)" stroke-width="1.5"/>
+      <path d="M18.5 20l1.8 1.8 3-3" stroke="var(--theme)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- BaiDoc text -->
+      <text x="32" y="21" font-family="'Sarabun', sans-serif" font-size="17" font-weight="700" letter-spacing="-0.5" fill="var(--theme)">BaiDoc</text>
+    </svg>
   </div>
     <div class="nav-right">
       <div class="lang-dropdown" id="lang-dropdown">
@@ -1254,8 +1278,8 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
     <div class="cap-grid">
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-files" aria-hidden="true"></i></div>
-        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 25 ประเภท</div>
-        <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา</div></div>
+        <div><div class="cap-title" data-i18n="cap1.title">สร้างเอกสารได้ 30 ประเภท</div>
+        <div class="cap-body" data-i18n="cap1.body">ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน ใบแจ้งหนี้งวด ใบคืนสินค้า ใบเบิกวัสดุ ใบรายงานค่าใช้จ่าย ใบนำส่งเอกสาร ใบแจ้งยอดชำระ ใบเบิกค่าใช้จ่าย ใบรับประกันสินค้า หนังสือมอบอำนาจ และคู่เทียบใบเสนอราคา</div></div>
       </div>
       <div class="cap-item">
         <div class="feat-icon"><i class="ti ti-calculator" aria-hidden="true"></i></div>
@@ -1318,7 +1342,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-title" data-i18n="step1.title">เลือกประเภทเอกสาร</div>
-        <div class="step-body" data-i18n="step1.body">เลือกจาก 25 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
+        <div class="step-body" data-i18n="step1.body">เลือกจาก 30 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -1336,7 +1360,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
   <div class="section" id="doc-types-section">
     <div class="section-label" data-i18n="doctypes.label">เอกสารที่รองรับ</div>
     <div class="section-title" data-i18n="doctypes.title">เลือกประเภทเอกสาร</div>
-    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 25 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
+    <div class="section-sub" data-i18n="doctypes.sub">รองรับ 30 ประเภท ครบทุกความต้องการสำหรับธุรกิจ</div>
     <div class="doc-grid">
       <div class="doc-card" onclick="selectDoc('quotation')">
         <i class="ti ti-file-description doc-icon" aria-hidden="true"></i>
@@ -1463,6 +1487,31 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
         <div class="doc-name" data-i18n="doc.poa.name">หนังสือมอบอำนาจ</div>
         <div class="doc-desc">Power of Attorney</div>
       </div>
+      <div class="doc-card" onclick="selectDoc('progressinv')">
+        <i class="ti ti-file-invoice doc-icon" aria-hidden="true"></i>
+        <div class="doc-name">ใบแจ้งหนี้งวด</div>
+        <div class="doc-desc">Progress Invoice</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('goodsreturn')">
+        <i class="ti ti-arrow-back-up doc-icon" aria-hidden="true"></i>
+        <div class="doc-name">ใบคืนสินค้า</div>
+        <div class="doc-desc">Goods Return</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('materialreq')">
+        <i class="ti ti-package doc-icon" aria-hidden="true"></i>
+        <div class="doc-name">ใบเบิกวัสดุ</div>
+        <div class="doc-desc">Material Requisition</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('expensereport')">
+        <i class="ti ti-report-money doc-icon" aria-hidden="true"></i>
+        <div class="doc-name">ใบรายงานค่าใช้จ่าย</div>
+        <div class="doc-desc">Expense Report</div>
+      </div>
+      <div class="doc-card" onclick="selectDoc('transmittal')">
+        <i class="ti ti-send doc-icon" aria-hidden="true"></i>
+        <div class="doc-name">ใบนำส่งเอกสาร</div>
+        <div class="doc-desc">Document Transmittal</div>
+      </div>
     </div>
   </div>
 
@@ -1507,6 +1556,15 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
       <button class="sample-tab" onclick="showSampleDoc('leaseagreement',this)">สัญญาเช่า</button>
       <button class="sample-tab" onclick="showSampleDoc('purchreq',this)">ใบขอซื้อ</button>
       <button class="sample-tab" onclick="showSampleDoc('acceptancenote',this)">ใบตรวจรับพัสดุ/งาน</button>
+      <button class="sample-tab" onclick="showSampleDoc('statement',this)">ใบแจ้งยอดชำระ</button>
+      <button class="sample-tab" onclick="showSampleDoc('expenseclaim',this)">ใบเบิกค่าใช้จ่าย</button>
+      <button class="sample-tab" onclick="showSampleDoc('warranty',this)">ใบรับประกันสินค้า</button>
+      <button class="sample-tab" onclick="showSampleDoc('poa',this)">หนังสือมอบอำนาจ</button>
+      <button class="sample-tab" onclick="showSampleDoc('progressinv',this)">ใบแจ้งหนี้งวด</button>
+      <button class="sample-tab" onclick="showSampleDoc('goodsreturn',this)">ใบคืนสินค้า</button>
+      <button class="sample-tab" onclick="showSampleDoc('materialreq',this)">ใบเบิกวัสดุ</button>
+      <button class="sample-tab" onclick="showSampleDoc('expensereport',this)">ใบรายงานค่าใช้จ่าย</button>
+      <button class="sample-tab" onclick="showSampleDoc('transmittal',this)">ใบนำส่งเอกสาร</button>
     </div>
 
     <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07)">
@@ -1643,6 +1701,26 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
           <i class="ti ti-writing doc-icon" aria-hidden="true"></i>
           <div class="doc-name" data-i18n="doc.poa.name">หนังสือมอบอำนาจ</div><div class="doc-desc">Power of Attorney</div>
         </div>
+        <div class="doc-card" id="card-progressinv" onclick="selectDoc('progressinv')">
+          <i class="ti ti-file-invoice doc-icon" aria-hidden="true"></i>
+          <div class="doc-name">ใบแจ้งหนี้งวด</div><div class="doc-desc">Progress Invoice</div>
+        </div>
+        <div class="doc-card" id="card-goodsreturn" onclick="selectDoc('goodsreturn')">
+          <i class="ti ti-arrow-back-up doc-icon" aria-hidden="true"></i>
+          <div class="doc-name">ใบคืนสินค้า</div><div class="doc-desc">Goods Return</div>
+        </div>
+        <div class="doc-card" id="card-materialreq" onclick="selectDoc('materialreq')">
+          <i class="ti ti-package doc-icon" aria-hidden="true"></i>
+          <div class="doc-name">ใบเบิกวัสดุ</div><div class="doc-desc">Material Requisition</div>
+        </div>
+        <div class="doc-card" id="card-expensereport" onclick="selectDoc('expensereport')">
+          <i class="ti ti-report-money doc-icon" aria-hidden="true"></i>
+          <div class="doc-name">ใบรายงานค่าใช้จ่าย</div><div class="doc-desc">Expense Report</div>
+        </div>
+        <div class="doc-card" id="card-transmittal" onclick="selectDoc('transmittal')">
+          <i class="ti ti-send doc-icon" aria-hidden="true"></i>
+          <div class="doc-name">ใบนำส่งเอกสาร</div><div class="doc-desc">Document Transmittal</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1751,6 +1829,83 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
     </div>
   </div>
 
+  <!-- SECTION: เลย์เอาท์เอกสาร -->
+  <div class="accordion">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <span><i class="ti ti-layout-grid" style="margin-right:8px;color:var(--theme)" aria-hidden="true"></i>เลย์เอาท์เอกสาร</span>
+      <i class="ti ti-chevron-down" aria-hidden="true"></i>
+    </div>
+    <div class="acc-body">
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">สไตล์เอกสาร</div>
+      <div id="layout-picker" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+        <button type="button" class="layout-btn selected" onclick="setDocLayout('classic',this)" title="Classic">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:3px">
+            <div style="height:8px;background:var(--theme);border-radius:2px;opacity:0.9"></div>
+            <div style="height:2px;background:#e5e7eb;border-radius:1px"></div>
+            <div style="height:2px;background:#e5e7eb;border-radius:1px;width:70%"></div>
+            <div style="flex:1;background:#e5e7eb;border-radius:2px;margin-top:2px"></div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Classic</div>
+        </button>
+        <button type="button" class="layout-btn" onclick="setDocLayout('modern',this)" title="Modern">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:3px">
+            <div style="height:4px;background:var(--theme);border-radius:0 0 2px 2px;margin:-6px -6px 4px;width:calc(100% + 12px)"></div>
+            <div style="height:6px;background:var(--theme);border-radius:2px;opacity:0.3;width:40%"></div>
+            <div style="height:2px;background:#e5e7eb;border-radius:1px"></div>
+            <div style="flex:1;background:#e5e7eb;border-radius:2px;margin-top:2px"></div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Modern</div>
+        </button>
+        <button type="button" class="layout-btn" onclick="setDocLayout('minimal',this)" title="Minimal">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:3px">
+            <div style="height:6px;border-radius:2px;width:50%;background:#374151"></div>
+            <div style="height:1px;background:#374151;margin:2px 0;opacity:0.3"></div>
+            <div style="height:2px;background:#e5e7eb;border-radius:1px;width:80%"></div>
+            <div style="flex:1;background:#e5e7eb;border-radius:2px;margin-top:2px"></div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Minimal</div>
+        </button>
+        <button type="button" class="layout-btn" onclick="setDocLayout('bold',this)" title="Bold">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:var(--theme);padding:6px;flex-shrink:0">
+              <div style="height:5px;background:rgba(255,255,255,0.9);border-radius:2px;width:60%"></div>
+            </div>
+            <div style="padding:4px 6px;display:flex;flex-direction:column;gap:2px;flex:1">
+              <div style="height:2px;background:#e5e7eb;border-radius:1px"></div>
+              <div style="flex:1;background:#e5e7eb;border-radius:2px;margin-top:2px"></div>
+            </div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Bold</div>
+        </button>
+        <button type="button" class="layout-btn" onclick="setDocLayout('elegant',this)" title="Elegant">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:3px;border:1px solid #e5e7eb">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="height:6px;background:#374151;border-radius:2px;width:35%"></div>
+              <div style="height:6px;background:var(--theme);border-radius:2px;width:25%"></div>
+            </div>
+            <div style="height:1px;background:var(--theme);margin:2px 0"></div>
+            <div style="flex:1;background:#e5e7eb;border-radius:2px;margin-top:2px"></div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Elegant</div>
+        </button>
+        <button type="button" class="layout-btn" onclick="setDocLayout('compact',this)" title="Compact">
+          <div style="width:100%;aspect-ratio:3/4;background:#f9fafb;border-radius:4px;padding:5px;display:flex;flex-direction:column;gap:2px">
+            <div style="display:flex;gap:4px">
+              <div style="width:16px;height:16px;background:var(--theme);border-radius:2px;opacity:0.3;flex-shrink:0"></div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+                <div style="height:3px;background:#374151;border-radius:1px;width:60%"></div>
+                <div style="height:2px;background:#e5e7eb;border-radius:1px;width:80%"></div>
+              </div>
+            </div>
+            <div style="height:1px;background:#e5e7eb;margin:1px 0"></div>
+            <div style="flex:1;background:#e5e7eb;border-radius:2px"></div>
+          </div>
+          <div style="font-size:11px;margin-top:4px;font-weight:600">Compact</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- SECTION: ข้อมูลผู้ออกเอกสาร -->
   <div class="accordion">
     <div class="acc-head open" onclick="toggleAcc(this)">
@@ -1781,7 +1936,7 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
   </div>
 
   <!-- SECTION: ข้อมูลลูกค้า -->
-  <div class="accordion">
+  <div class="accordion" id="buyer-section">
     <div class="acc-head open" onclick="toggleAcc(this)">
       <span><i class="ti ti-user" style="margin-right:8px;color:var(--theme)" aria-hidden="true"></i><span data-i18n="acc.buyer">ข้อมูลลูกค้า / ผู้รับ</span></span>
       <i class="ti ti-chevron-down" aria-hidden="true"></i>
@@ -1831,9 +1986,22 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
           <div class="form-2col">
             <div class="form-row"><label data-i18n="f.docnumber">เลขที่เอกสาร</label><div class="input-wrap"><i class="ti ti-hash input-icon"></i><input type="text" id="doc-number" placeholder="QT-2025-001"></div></div>
             <div class="form-row"><label data-i18n="f.docdate">วันที่</label><div class="input-wrap"><i class="ti ti-calendar input-icon"></i><input type="date" id="doc-date"></div></div>
+            <div class="form-row"><label>เลขที่อ้างอิง <span style="color:#9ca3af;font-size:0.85em">(ถ้ามี)</span></label><div class="input-wrap"><i class="ti ti-link input-icon"></i><input type="text" id="doc-ref-no" placeholder="เช่น PO-2568-001 / ชื่อโปรเจกต์" oninput="scheduleAutosave()"></div></div>
           </div>
           <div class="form-2col">
             <div class="form-row" id="due-date-row" style="display:none"><label data-i18n="f.duedate">วันครบกำหนด</label><div class="input-wrap"><i class="ti ti-calendar-due input-icon"></i><input type="date" id="doc-due-date"></div></div>
+            <div class="form-row" id="ref-doc-row" style="display:none"><label>เลขที่ใบกำกับภาษีเดิม <span style="color:var(--theme);font-size:0.85em">(อ้างอิง)</span></label><div class="input-wrap"><i class="ti ti-file-invoice input-icon"></i><input type="text" id="ref-doc-number" placeholder="TXI-2568-001" oninput="scheduleAutosave()"></div></div>
+            <div class="form-row" id="ref-doc-date-row" style="display:none"><label>วันที่ใบกำกับภาษีเดิม</label><div class="input-wrap"><i class="ti ti-calendar input-icon"></i><input type="date" id="ref-doc-date" oninput="scheduleAutosave()"></div></div>
+            <div class="form-row" id="payment-method-row" style="display:none">
+              <label><i class="ti ti-cash input-icon" style="color:var(--theme)"></i> วิธีชำระเงิน</label>
+              <select id="payment-method" onchange="scheduleAutosave()">
+                <option value="เงินสด">เงินสด (Cash)</option>
+                <option value="โอนเงิน">โอนเงิน (Bank Transfer)</option>
+                <option value="เช็ค">เช็ค (Cheque)</option>
+                <option value="บัตรเครดิต">บัตรเครดิต (Credit Card)</option>
+                <option value="พร้อมเพย์">พร้อมเพย์ (PromptPay)</option>
+              </select>
+            </div>
             <div class="form-row" id="receipt-slip-row" style="display:none">
               <label><i class="ti ti-receipt" style="margin-right:4px;color:var(--theme)"></i>รูปแบบใบเสร็จ</label>
               <select id="receipt-slip-variant" onchange="scheduleAutosave()">
@@ -1874,6 +2042,28 @@ html[data-mode="dark"] .edit-customer-box { background: var(--white); color: var
             <div class="form-row"><label>คู่แข่งที่ 2</label><input type="text" id="v2" placeholder="บริษัท B"></div>
             <div class="form-row" id="v3-row"><label>คู่แข่งที่ 3</label><input type="text" id="v3" placeholder="บริษัท C"></div>
             <div class="form-row" id="v4-row" style="display:none"><label>คู่แข่งที่ 4</label><input type="text" id="v4" placeholder="บริษัท D"></div>
+          </div>
+          <div class="form-row" id="wht-income-type-row" style="display:none">
+            <label>ประเภทเงินได้ <span style="color:var(--theme);font-size:0.85em">(ตามมาตรา 40)</span></label>
+            <select id="wht-income-type" onchange="scheduleAutosave()">
+              <option value="40(1)">40(1) เงินเดือน ค่าจ้าง</option>
+              <option value="40(2)">40(2) ค่าจ้างทำของ ค่าบริการ</option>
+              <option value="40(3)">40(3) ค่าลิขสิทธิ์ สิทธิบัตร</option>
+              <option value="40(4)">40(4)ก ดอกเบี้ย</option>
+              <option value="40(4)ข">40(4)ข เงินปันผล</option>
+              <option value="40(5)">40(5) ค่าเช่า</option>
+              <option value="40(6)">40(6) วิชาชีพอิสระ</option>
+              <option value="40(7)">40(7) รับเหมา</option>
+              <option value="40(8)">40(8) อื่นๆ</option>
+            </select>
+          </div>
+          <div class="form-row" id="wht-pay-type-row" style="display:none">
+            <label>วิธีนำส่งภาษี</label>
+            <select id="wht-pay-type" onchange="scheduleAutosave()">
+              <option value="1">หัก ณ ที่จ่าย</option>
+              <option value="2">ออกให้ครั้งเดียว</option>
+              <option value="3">ออกให้ตลอดไป</option>
+            </select>
           </div>
           <div class="form-row"><label data-i18n="f.notes">หมายเหตุ</label><textarea id="doc-notes" rows="3" data-i18n-ph="ph.notes" placeholder="เงื่อนไขการชำระเงิน ระยะเวลาเสนอราคา ฯลฯ"></textarea></div>
         </div>
@@ -2157,6 +2347,7 @@ let currentFont = "'Sarabun', sans-serif";
 let currentFontSize = 13;
 document.documentElement.style.setProperty('--font-doc', currentFont);
 let currentLogo = null; // base64 data URL
+let currentLayout = 'classic'; // doc layout style
 let currentLang = localStorage.getItem('baidoc-lang') || 'th';
 
 const docInfo = {
@@ -2184,7 +2375,12 @@ const docInfo = {
   statement:       { th:'ใบแจ้งยอดชำระ',               en:'Statement',            zh:'对账明细',     prefix:'ST'  },
   expenseclaim:    { th:'ใบเบิกค่าใช้จ่าย',            en:'Expense Claim',        zh:'费用报销单',   prefix:'EC'  },
   warranty:        { th:'ใบรับประกันสินค้า',            en:'Warranty Card',        zh:'保修卡',       prefix:'WR'  },
-  poa:             { th:'หนังสือมอบอำนาจ',              en:'Power of Attorney',    zh:'授权书',       prefix:'POA' }
+  poa:             { th:'หนังสือมอบอำนาจ',              en:'Power of Attorney',    zh:'授权书',       prefix:'POA' },
+  progressinv:    { th:'ใบแจ้งหนี้งวด',           en:'Progress Invoice',       zh:'分期发票',     prefix:'PIN' },
+  goodsreturn:    { th:'ใบคืนสินค้า',              en:'Goods Return',           zh:'退货单',       prefix:'GR'  },
+  materialreq:    { th:'ใบเบิกวัสดุ',              en:'Material Requisition',   zh:'物料申请单',   prefix:'MR'  },
+  expensereport:  { th:'ใบรายงานค่าใช้จ่าย',       en:'Expense Report',         zh:'费用报告',     prefix:'ER'  },
+  transmittal:    { th:'ใบนำส่งเอกสาร',            en:'Document Transmittal',   zh:'文件传递单',   prefix:'DT'  }
 };
 
 /* ===== I18N DICTIONARY ===== */
@@ -2194,11 +2390,11 @@ const I18N = {
     'hero.badge':'ฟรี 100% ไม่ต้องสมัครสมาชิก','hero.title1':'สร้างเอกสารธุรกิจ','hero.title2':'ออนไลน์ฟรี',
     'hero.desc':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้ และอื่นๆ ดาวน์โหลด PDF ได้ทันที',
     'hero.start':'เริ่มสร้างเอกสาร','hero.sample':'ดูตัวอย่าง',
-    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 25 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
+    'doctypes.label':'เอกสารที่รองรับ','doctypes.title':'เลือกประเภทเอกสาร','doctypes.sub':'รองรับ 30 ประเภท ครบทุกความต้องการสำหรับธุรกิจ',
     'cap.label':'BaiDoc คืออะไร','cap.title':'เว็บแอปสร้างเอกสารธุรกิจครบวงจร',
     'cap.sub':'ตั้งแต่กรอกข้อมูลจนถึงไฟล์ PDF พร้อมส่งลูกค้า ทำได้ทุกขั้นตอนในหน้าเว็บเดียว',
-    'cap1.title':'สร้างเอกสารได้ 25 ประเภท',
-    'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน และคู่เทียบใบเสนอราคา',
+    'cap1.title':'สร้างเอกสารได้ 30 ประเภท',
+    'cap1.body':'ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จ ใบส่งของ ใบวางบิล ใบลดหนี้/เพิ่มหนี้ ใบสั่งซื้อ ใบมัดจำ ใบกำกับภาษี(เต็มรูป/อย่างย่อ) สัญญาว่าจ้าง/สัญญาเช่า หนังสือรับรองหักภาษี ใบสั่งงาน ใบส่งมอบงาน ใบสำคัญรับเงิน/จ่าย ใบขอซื้อ ใบตรวจรับพัสดุ/งาน ใบแจ้งหนี้งวด ใบคืนสินค้า ใบเบิกวัสดุ ใบรายงานค่าใช้จ่าย ใบนำส่งเอกสาร ใบแจ้งยอดชำระ ใบเบิกค่าใช้จ่าย ใบรับประกันสินค้า หนังสือมอบอำนาจ และคู่เทียบใบเสนอราคา',
     'cap2.title':'คำนวณยอดเงินให้อัตโนมัติ',
     'cap2.body':'ใส่รายการสินค้า/บริการแล้วระบบคิด VAT ส่วนลด และหักภาษี ณ ที่จ่าย (WHT) พร้อมยอดสุทธิให้ทันที',
     'cap3.title':'ดูตัวอย่างและใช้เป็นเทมเพลตได้',
@@ -2210,7 +2406,7 @@ const I18N = {
     'cap6.title':'ใช้งานได้ 3 ภาษา','cap6.body':'สลับหน้าเว็บระหว่างภาษาไทย อังกฤษ และจีนได้ทุกเมื่อ',
     'cap7.title':'โหมดมืด/สว่าง','cap7.body':'สลับธีมมืดหรือสว่างได้ตามความสะดวกในการใช้งาน',
     'cap8.title':'ปลอดภัยและฟรีตลอดไป','cap8.body':'ทำงานทั้งหมดในเบราว์เซอร์ ไม่ส่งข้อมูลขึ้นเซิร์ฟเวอร์ ไม่ต้องสมัครสมาชิกหรือเสียเงิน',
-    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 25 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
+    'step1.title':'เลือกประเภทเอกสาร','step1.body':'เลือกจาก 30 ประเภทเอกสารธุรกิจ หรือกดดูตัวอย่างก่อนตัดสินใจ',
     'step2.title':'กรอกข้อมูลและปรับแต่ง','step2.body':'ใส่ข้อมูลผู้ขาย ผู้ซื้อ รายการสินค้า แล้วเลือกสีธีมและฟอนต์ที่ต้องการ',
     'step3.title':'พรีวิวแล้วดาวน์โหลด','step3.body':'ตรวจสอบความถูกต้อง แล้วพิมพ์หรือบันทึกเป็น PDF ส่งลูกค้าได้ทันที',
     'features.label':'ทำไมต้องใช้ BaiDoc','features.title':'ง่าย เร็ว ฟรี',
@@ -2240,7 +2436,7 @@ const I18N = {
     'doc.whtcert.name':'หนังสือรับรองหักภาษี ณ ที่จ่าย','doc.workorder.name':'ใบสั่งงาน','doc.jobcompletion.name':'ใบส่งมอบงาน',
     'doc.receiptvoucher.name':'ใบสำคัญรับเงิน','doc.paymentvoucher.name':'ใบสำคัญจ่าย','doc.taxinvoiceabbr.name':'ใบกำกับภาษีอย่างย่อ',
     'doc.leaseagreement.name':'สัญญาเช่า','doc.purchreq.name':'ใบขอซื้อ','doc.acceptancenote.name':'ใบตรวจรับพัสดุ/งาน',
-    'doc.statement.name':'ใบแจ้งยอดชำระ','doc.expenseclaim.name':'ใบเบิกค่าใช้จ่าย','doc.warranty.name':'ใบรับประกันสินค้า','doc.poa.name':'หนังสือมอบอำนาจ',
+    'doc.statement.name':'ใบแจ้งยอดชำระ','doc.expenseclaim.name':'ใบเบิกค่าใช้จ่าย','doc.warranty.name':'ใบรับประกันสินค้า','doc.poa.name':'หนังสือมอบอำนาจ','doc.progressinv.name':'ใบแจ้งหนี้งวด','doc.goodsreturn.name':'ใบคืนสินค้า','doc.materialreq.name':'ใบเบิกวัสดุ','doc.expensereport.name':'ใบรายงานค่าใช้จ่าย','doc.transmittal.name':'ใบนำส่งเอกสาร',
     'sig.quotation0':'ผู้เสนอราคา','sig.quotation1':'ผู้อนุมัติ','sig.invoice0':'ผู้ออกใบแจ้งหนี้','sig.invoice1':'ผู้รับเอกสาร',
     'sig.receipt0':'ผู้รับเงิน','sig.receipt1':'ผู้จ่ายเงิน','sig.delivery0':'ผู้ส่งของ','sig.delivery1':'ผู้รับของ',
     'sig.billing0':'ผู้วางบิล','sig.billing1':'ผู้รับวางบิล','sig.creditnote0':'ผู้ออกใบลดหนี้','sig.creditnote1':'ผู้รับเอกสาร',
@@ -2260,7 +2456,7 @@ const I18N = {
     'sig.statement0':'ผู้ออกใบแจ้งยอด','sig.statement1':'ผู้รับเอกสาร',
     'sig.expenseclaim0':'ผู้เบิก','sig.expenseclaim1':'ผู้อนุมัติ',
     'sig.warranty0':'ผู้ขาย/ผู้ให้บริการ','sig.warranty1':'ผู้ซื้อ/ผู้รับประกัน',
-    'sig.poa0':'ผู้มอบอำนาจ','sig.poa1':'ผู้รับมอบอำนาจ',
+    'sig.poa0':'ผู้มอบอำนาจ','sig.poa1':'ผู้รับมอบอำนาจ','sig.progressinv0':'ผู้ออกเอกสาร','sig.progressinv1':'ผู้อนุมัติ','sig.goodsreturn0':'ผู้คืนสินค้า','sig.goodsreturn1':'ผู้รับคืน','sig.materialreq0':'ผู้เบิก','sig.materialreq1':'ผู้อนุมัติ','sig.expensereport0':'ผู้รายงาน','sig.expensereport1':'ผู้อนุมัติ','sig.transmittal0':'ผู้ส่งเอกสาร','sig.transmittal1':'ผู้รับเอกสาร',
     'sig.default0':'ผู้ออกเอกสาร','sig.default1':'ผู้รับเอกสาร'
   },
   en: {
@@ -2268,7 +2464,7 @@ const I18N = {
     'hero.badge':'100% Free, No Sign-up Required','hero.title1':'Create Business Documents','hero.title2':'Online for Free',
     'hero.desc':'Quotations, invoices, receipts, delivery orders, billing notes, credit notes and more. Download as PDF instantly.',
     'hero.start':'Start Creating','hero.sample':'View Sample',
-    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'25 document types covering every business need',
+    'doctypes.label':'Supported Documents','doctypes.title':'Choose Document Type','doctypes.sub':'30 document types covering every business need',
     'cap.label':'What is BaiDoc','cap.title':'A Complete Business Document Toolkit',
     'cap.sub':'From filling in details to a ready-to-send PDF — every step happens right here on this page.',
     'cap1.title':'Create 25 Document Types',
@@ -2314,7 +2510,7 @@ const I18N = {
     'doc.whtcert.name':'WHT Certificate','doc.workorder.name':'Work Order','doc.jobcompletion.name':'Job Completion Note',
     'doc.receiptvoucher.name':'Receipt Voucher','doc.paymentvoucher.name':'Payment Voucher','doc.taxinvoiceabbr.name':'Abbreviated Tax Invoice',
     'doc.leaseagreement.name':'Lease Agreement','doc.purchreq.name':'Purchase Requisition','doc.acceptancenote.name':'Acceptance Note',
-    'doc.statement.name':'Statement','doc.expenseclaim.name':'Expense Claim','doc.warranty.name':'Warranty Card','doc.poa.name':'Power of Attorney',
+    'doc.statement.name':'Statement','doc.expenseclaim.name':'Expense Claim','doc.warranty.name':'Warranty Card','doc.poa.name':'Power of Attorney','doc.progressinv.name':'Progress Invoice','doc.goodsreturn.name':'Goods Return','doc.materialreq.name':'Material Requisition','doc.expensereport.name':'Expense Report','doc.transmittal.name':'Document Transmittal',
     'sig.quotation0':'Quoted By','sig.quotation1':'Approved By','sig.invoice0':'Issued By','sig.invoice1':'Received By',
     'sig.receipt0':'Received By','sig.receipt1':'Paid By','sig.delivery0':'Delivered By','sig.delivery1':'Received By',
     'sig.billing0':'Billed By','sig.billing1':'Received By','sig.creditnote0':'Issued By','sig.creditnote1':'Received By',
@@ -2334,7 +2530,7 @@ const I18N = {
     'sig.statement0':'Issued By','sig.statement1':'Received By',
     'sig.expenseclaim0':'Claimed By','sig.expenseclaim1':'Approved By',
     'sig.warranty0':'Seller / Service Provider','sig.warranty1':'Buyer / Recipient',
-    'sig.poa0':'Authorizer','sig.poa1':'Authorized Person',
+    'sig.poa0':'Authorizer','sig.poa1':'Authorized Person','sig.progressinv0':'Issued By','sig.progressinv1':'Approved By','sig.goodsreturn0':'Returned By','sig.goodsreturn1':'Received By','sig.materialreq0':'Requested By','sig.materialreq1':'Approved By','sig.expensereport0':'Prepared By','sig.expensereport1':'Approved By','sig.transmittal0':'Sent By','sig.transmittal1':'Received By',
     'sig.default0':'Issued By','sig.default1':'Received By'
   },
   zh: {
@@ -2832,11 +3028,17 @@ function selectDoc(type) {
   document.getElementById('wht-rate').value = '0';
   document.getElementById('vat-rate').value = '7';
   // Show/hide fields
-  document.getElementById('due-date-row').style.display = (type==='invoice'||type==='billing'||type==='taxinvoice') ? 'block' : 'none';
+  document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice','deposit','po'].includes(type)) ? 'block' : 'none';
+  const refDocRow = document.getElementById('ref-doc-row'); if(refDocRow) refDocRow.style.display = (['creditnote','debitnote'].includes(type)) ? 'block' : 'none';
+  const refDocDateRow = document.getElementById('ref-doc-date-row'); if(refDocDateRow) refDocDateRow.style.display = (['creditnote','debitnote'].includes(type)) ? 'block' : 'none';
+  const whtIncomeRow = document.getElementById('wht-income-type-row'); if(whtIncomeRow) whtIncomeRow.style.display = (type==='whtcert') ? 'block' : 'none';
+  const whtPayRow = document.getElementById('wht-pay-type-row'); if(whtPayRow) whtPayRow.style.display = (type==='whtcert') ? 'block' : 'none';
   const slipRow = document.getElementById('receipt-slip-row');
   if (slipRow) slipRow.style.display = (type==='receipt') ? 'block' : 'none';
   const slipSel = document.getElementById('receipt-slip-variant');
   if (slipSel && type!=='receipt') slipSel.value = 'off';
+  const payMethodRow = document.getElementById('payment-method-row'); if(payMethodRow) payMethodRow.style.display = (['receipt','receiptvoucher','paymentvoucher'].includes(type)) ? 'block' : 'none';
+  const buyerSection = document.getElementById('buyer-section'); if(buyerSection) buyerSection.style.display = (type==='taxinvoiceabbr') ? 'none' : 'block';
   const isCmp = type === 'comparison';
   document.getElementById('items-section').style.display = isCmp ? 'none' : 'block';
   document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
@@ -2868,7 +3070,10 @@ function renderItems() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="color:var(--text-muted);font-size:11px;text-align:center">${i+1}</td>
-      <td><input type="text" value="${esc(it.desc)}" placeholder="รายละเอียดสินค้า/บริการ" oninput="items[${i}].desc=this.value"></td>
+      <td>
+        <input type="text" value="${esc(it.desc)}" placeholder="รายละเอียดสินค้า/บริการ" oninput="items[${i}].desc=this.value;scheduleAutosave()">
+        <input type="text" value="${esc(it.note||'')}" placeholder="หมายเหตุ/รายละเอียดเพิ่มเติม (ไม่บังคับ)" oninput="items[${i}].note=this.value;scheduleAutosave()" style="margin-top:3px;font-size:0.82em;color:var(--text-muted);border-color:transparent;background:transparent;padding:2px 6px" class="item-note-input">
+      </td>
       <td><input type="number" value="${it.qty}" min="1" style="text-align:center" oninput="items[${i}].qty=+this.value||0;calcTotal();updRow(${i})"></td>
       <td><input type="text" value="${esc(it.unit)}" placeholder="ชิ้น" oninput="items[${i}].unit=this.value"></td>
       <td><input type="number" value="${it.price}" min="0" placeholder="0.00" oninput="items[${i}].price=+this.value||0;calcTotal();updRow(${i})"></td>
@@ -2879,7 +3084,121 @@ function renderItems() {
   });
 }
 function updRow(i){ const el=document.getElementById('rt'+i); if(el) el.value=fmt(items[i].qty*items[i].price); }
-function addItem(){ items.push({desc:'',qty:1,unit:'ชิ้น',price:0}); renderItems(); scheduleAutosave(); }
+
+/* ===== DOC LAYOUT ===== */
+let _layoutStyles = {
+  classic: {
+    headerBg: '',
+    headerColor: '',
+    dividerStyle: 'border-top: 3px solid var(--doc-theme);',
+    titleColor: '',
+    tableHeadBg: 'var(--doc-theme)',
+    tableHeadColor: '#fff',
+    partyBorder: 'border-left: 3px solid var(--doc-theme)',
+    docBorder: '',
+    extraClass: ''
+  },
+  modern: {
+    headerBg: 'background: linear-gradient(135deg, var(--doc-theme) 0%, color-mix(in srgb, var(--doc-theme) 70%, #000) 100%); color:#fff; padding:20px; margin:-20px -20px 20px; border-radius:8px 8px 0 0;',
+    headerColor: 'color:#fff!important',
+    dividerStyle: 'display:none',
+    titleColor: 'color:#fff',
+    tableHeadBg: 'var(--doc-theme)',
+    tableHeadColor: '#fff',
+    partyBorder: 'border-left: 3px solid rgba(255,255,255,0.5)',
+    docBorder: '',
+    extraClass: 'layout-modern'
+  },
+  minimal: {
+    headerBg: '',
+    headerColor: '',
+    dividerStyle: 'border-top: 1px solid #374151; opacity:0.2',
+    titleColor: 'color:#374151',
+    tableHeadBg: '#374151',
+    tableHeadColor: '#fff',
+    partyBorder: '',
+    docBorder: '',
+    extraClass: 'layout-minimal'
+  },
+  bold: {
+    headerBg: 'background:var(--doc-theme); color:#fff; padding:20px; margin:-20px -20px 0; border-radius:8px 8px 0 0;',
+    headerColor: 'color:#fff!important',
+    dividerStyle: 'border-top: 4px solid #000; opacity:0.1',
+    titleColor: 'color:#fff; font-size:1.5em',
+    tableHeadBg: '#1f2937',
+    tableHeadColor: '#fff',
+    partyBorder: '',
+    docBorder: 'box-shadow:none; border:3px solid var(--doc-theme)',
+    extraClass: 'layout-bold'
+  },
+  elegant: {
+    headerBg: '',
+    headerColor: '',
+    dividerStyle: 'border-top: 1px solid var(--doc-theme)',
+    titleColor: 'color:var(--doc-theme); font-family:Georgia,serif; letter-spacing:2px',
+    tableHeadBg: 'transparent',
+    tableHeadColor: 'var(--doc-theme)',
+    partyBorder: '',
+    docBorder: 'border: 1px solid #e5e7eb',
+    extraClass: 'layout-elegant'
+  },
+  compact: {
+    headerBg: '',
+    headerColor: '',
+    dividerStyle: 'border-top: 2px solid var(--doc-theme); opacity:0.5',
+    titleColor: '',
+    tableHeadBg: 'var(--doc-theme)',
+    tableHeadColor: '#fff',
+    partyBorder: 'border-left: 2px solid var(--doc-theme)',
+    docBorder: '',
+    extraClass: 'layout-compact'
+  }
+};
+
+function setDocLayout(layout, btn) {
+  currentLayout = layout;
+  document.querySelectorAll('.layout-btn').forEach(b => b.classList.remove('selected'));
+  if (btn) btn.classList.add('selected');
+  // inject layout-specific CSS overrides into preview
+  applyLayoutToPreview();
+  scheduleAutosave();
+}
+
+function applyLayoutToPreview() {
+  // Remove old layout style tag
+  const old = document.getElementById('layout-style-tag');
+  if (old) old.remove();
+  const s = _layoutStyles[currentLayout] || _layoutStyles.classic;
+  const css = `
+    #doc-preview-content .doc-header { ${s.headerBg} }
+    #doc-preview-content .doc-company-name { ${s.headerColor} }
+    #doc-preview-content .doc-company-info { ${s.headerColor} }
+    #doc-preview-content .doc-title { ${s.titleColor} }
+    #doc-preview-content .doc-divider { ${s.dividerStyle} }
+    #doc-preview-content thead tr th, #doc-preview-content thead tr { background: ${s.tableHeadBg} !important; color: ${s.tableHeadColor} !important; }
+    #doc-preview-content .doc-party-info { ${s.headerColor} }
+    ${s.docBorder ? `#doc-preview-content { ${s.docBorder} }` : ''}
+    ${s.extraClass === 'layout-minimal' ? `
+      #doc-preview-content .doc-title { font-size: 1.1em; font-weight:600; }
+      #doc-preview-content thead tr th { background: transparent !important; color: #374151 !important; border-bottom: 2px solid #374151; }
+    ` : ''}
+    ${s.extraClass === 'layout-elegant' ? `
+      #doc-preview-content thead tr th { background: transparent !important; color: var(--doc-theme) !important; border-bottom: 1px solid var(--doc-theme); font-style: italic; }
+      #doc-preview-content .doc-title { font-family: Georgia,serif; }
+      #doc-preview-content .doc-divider { border-top: 1px solid var(--doc-theme); margin: 12px 0; }
+    ` : ''}
+    ${s.extraClass === 'layout-compact' ? `
+      #doc-preview-content { font-size: 0.88em; }
+      #doc-preview-content .doc-header { padding-bottom: 10px; }
+      #doc-preview-content td, #doc-preview-content th { padding: 5px 8px !important; }
+    ` : ''}
+  `;
+  const tag = document.createElement('style');
+  tag.id = 'layout-style-tag';
+  tag.textContent = css;
+  document.head.appendChild(tag);
+}
+function addItem(){ items.push({desc:'',note:'',qty:1,unit:'ชิ้น',price:0}); renderItems(); scheduleAutosave(); }
 function remItem(i){ if(items.length<=1) return; items.splice(i,1); renderItems(); calcTotal(); scheduleAutosave(); }
 
 /* FORMAT */
@@ -3028,17 +3347,44 @@ function showPreview(){
   const slipVariant = currentDocType==='receipt' ? (document.getElementById('receipt-slip-variant')?.value || 'off') : 'off';
   const html = currentDocType==='comparison'
     ? buildCmpPreview(info)
-    : slipVariant==='cash'
-      ? buildSlipPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
-      : slipVariant==='conv'
-        ? buildSlip711Preview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
-        : slipVariant==='boutique'
-          ? buildSlipBoutiquePreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
-          : slipVariant==='mono'
-            ? buildSlipMonoPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
-            : buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate);
+    : currentDocType==='whtcert'
+      ? buildWhtPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+      : (['serviceagreement','leaseagreement'].includes(currentDocType))
+        ? buildAgreementPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+        : currentDocType==='poa'
+          ? buildPoaFormPreview(info)
+          : currentDocType==='receiptvoucher'
+            ? buildReceiptVoucherPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+            : currentDocType==='paymentvoucher'
+              ? buildPaymentVoucherPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+              : currentDocType==='workorder'
+                ? buildWorkOrderPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                : currentDocType==='jobcompletion'
+                  ? buildJobCompletionPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                  : currentDocType==='delivery'
+                    ? buildDeliveryPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                    : currentDocType==='progressinv'
+                      ? buildProgressInvPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                      : currentDocType==='goodsreturn'
+                        ? buildGoodsReturnPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                        : currentDocType==='materialreq'
+                          ? buildMaterialReqPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                          : currentDocType==='expensereport'
+                            ? buildExpenseReportPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                            : currentDocType==='transmittal'
+                              ? buildTransmittalPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                              : slipVariant==='cash'
+                      ? buildSlipPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                      : slipVariant==='conv'
+                        ? buildSlip711Preview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                        : slipVariant==='boutique'
+                          ? buildSlipBoutiquePreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                          : slipVariant==='mono'
+                            ? buildSlipMonoPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate)
+                            : buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate);
   const preview = document.getElementById('doc-preview');
   preview.innerHTML = html;
+  applyLayoutToPreview();
   preview.style.fontFamily = currentFont;
   preview.style.setProperty('--doc-font-size', currentFontSize + 'px');
   document.getElementById('modal-title').textContent = t('pv.preview')+' '+info[currentLang];
@@ -3049,7 +3395,7 @@ function showPreview(){
 }
 
 function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
-  const dueDateRow = ((currentDocType==='invoice'||currentDocType==='billing'||currentDocType==='taxinvoice') && getV('doc-due-date'))
+  const dueDateRow = (['invoice','billing','taxinvoice','deposit','po'].includes(currentDocType) && getV('doc-due-date'))
     ? `<div class="doc-meta-item"><label>${t('pv.duedate')}</label><span>${getV('doc-due-date')}</span></div>` : '';
   const sigMap = {
     quotation: [t('sig.quotation0'),t('sig.quotation1')],
@@ -3071,13 +3417,22 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     taxinvoiceabbr:  [t('sig.taxinvoiceabbr0'),t('sig.taxinvoiceabbr1')],
     leaseagreement:  [t('sig.leaseagreement0'),t('sig.leaseagreement1')],
     purchreq:        [t('sig.purchreq0'),t('sig.purchreq1')],
-    acceptancenote:  [t('sig.acceptancenote0'),t('sig.acceptancenote1')]
+    acceptancenote:  [t('sig.acceptancenote0'),t('sig.acceptancenote1')],
+    statement:       [t('sig.statement0'),t('sig.statement1')],
+    expenseclaim:    [t('sig.expenseclaim0'),t('sig.expenseclaim1')],
+    warranty:        [t('sig.warranty0'),t('sig.warranty1')],
+    poa:             [t('sig.poa0'),t('sig.poa1')],
+    progressinv:    [t('sig.progressinv0'),t('sig.progressinv1')],
+    goodsreturn:    [t('sig.goodsreturn0'),t('sig.goodsreturn1')],
+    materialreq:    [t('sig.materialreq0'),t('sig.materialreq1')],
+    expensereport:  [t('sig.expensereport0'),t('sig.expensereport1')],
+    transmittal:    [t('sig.transmittal0'),t('sig.transmittal1')]
   };
   const sigs=sigMap[currentDocType]||[t('sig.default0'),t('sig.default1')];
   const itemsHtml=items.map((it,i)=>`
     <tr>
       <td class="col-num" style="color:#9ca3af">${i+1}</td>
-      <td class="col-item">${it.desc||'-'}</td>
+      <td class="col-item">${it.desc||'-'}${it.note?`<div style="font-size:0.82em;color:#9ca3af;margin-top:2px;font-style:italic">${it.note}</div>`:''}</td>
       <td class="col-qty">${it.qty}</td>
       <td class="col-unit">${it.unit}</td>
       <td class="col-price">${fmtN(it.price)}</td>
@@ -3105,6 +3460,7 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
         <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
         <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
         <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
       </div>
     </div>
     <div class="doc-divider"></div>
@@ -3122,6 +3478,8 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     <div class="doc-meta">
       <div class="doc-meta-item"><label>${t('f.docdate')}</label><span>${getV('doc-date')||'-'}</span></div>
       ${dueDateRow}
+      ${getV('doc-ref-no')?`<div class="doc-meta-item"><label>เลขที่อ้างอิง</label><span style="color:var(--doc-theme);font-weight:600">${getV('doc-ref-no')}</span></div>`:''}
+      ${(['creditnote','debitnote'].includes(currentDocType) && (getV('ref-doc-number')||getV('ref-doc-date'))) ? `<div class="doc-meta-item" style="grid-column:1/-1;background:rgba(239,68,68,0.07);border-radius:6px;padding:4px 10px"><label style="color:#dc2626">อ้างอิงใบกำกับภาษีเดิม</label><span style="color:#dc2626;font-weight:600">${getV('ref-doc-number')||'-'}${getV('ref-doc-date')?' วันที่ '+getV('ref-doc-date'):''}</span></div>` : ''}
     </div>
     <table class="preview-table">
       <thead><tr><th class="col-num">#</th><th class="col-item">${t('th.item')}</th><th class="col-qty" style="text-align:center">${t('th.qty')}</th><th class="col-unit" style="text-align:center">${t('th.unit')}</th><th class="col-price" style="text-align:right">${t('th.price')}</th><th class="col-total">${t('th.total')}</th></tr></thead>
@@ -3136,6 +3494,7 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
     </table>
     ${grand>0 ? `<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-top:6px;font-style:italic">(${bahtText(grand)})</div>` : ''}
     <div style="margin-bottom:20px"></div>
+    ${currentDocType==='receipt' ? `<div style="display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:7px 14px;font-size:0.9em;margin-bottom:12px"><i class="ti ti-cash" style="color:#16a34a"></i><span style="color:#6b7280">วิธีชำระเงิน:</span> <b style="color:#16a34a">${document.getElementById('payment-method')?.options[document.getElementById('payment-method')?.selectedIndex]?.text||'เงินสด'}</b></div>` : ''}
     ${notesHtml}
     <div class="doc-sig">
       <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
@@ -3146,6 +3505,1230 @@ function buildDocPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
       <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
         <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
         <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+
+/* ===== SHARED HELPERS ===== */
+function getRefNoHtml() {
+  const ref = document.getElementById('doc-ref-no')?.value;
+  return ref ? `<div class="doc-meta-item"><label>เลขที่อ้างอิง</label><span style="color:var(--doc-theme);font-weight:600">${ref}</span></div>` : '';
+}
+
+/* ===== WHT CERTIFICATE PREVIEW (หนังสือรับรองหัก ณ ที่จ่าย - ป.รัษฎากร ม.50 ทวิ) ===== */
+
+/* ===== RECEIPT VOUCHER PREVIEW (ใบสำคัญรับ) ===== */
+
+/* ===== PROGRESS INVOICE PREVIEW (ใบแจ้งหนี้งวด) ===== */
+function buildProgressInvPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo?`<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`:'';
+  const sigs=[t('sig.progressinv0'),t('sig.progressinv1')];
+  const notesHtml=getV('doc-notes')?`<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:'';
+  const totalPct = items.length ? Math.round(items.reduce((s,it)=>s+(it.qty*it.price),0)/grand*100)||100 : 0;
+  const itemsHtml=items.map((it,i)=>{
+    const amt=it.qty*it.price;
+    const pct=grand>0?Math.round(amt/grand*100):0;
+    return `<tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:right">${fmtN(amt)}</td>
+      <td style="padding:8px 10px;text-align:center">
+        <div style="background:#e5e7eb;border-radius:99px;height:6px;width:80px;overflow:hidden;display:inline-block;vertical-align:middle">
+          <div style="background:var(--doc-theme);height:100%;width:${pct}%"></div>
+        </div>
+        <span style="font-size:0.8em;color:var(--doc-theme);margin-left:4px">${pct}%</span>
+      </td>
+    </tr>`;}).join('');
+  return `
+    <div class="doc-header">
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getV('doc-due-date')?`<div class="doc-number" style="color:#dc2626">ครบกำหนด: <b>${getV('doc-due-date')}</b></div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div><div class="doc-party-label">ผู้รับจ้าง / ผู้ออกเอกสาร</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div><div class="doc-party-label">ผู้ว่าจ้าง / ผู้รับเอกสาร</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead><tr style="background:var(--doc-theme);color:#fff">
+        <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+        <th style="padding:7px 10px;text-align:left">งวดงาน / รายละเอียด</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">หน่วย</th>
+        <th style="padding:7px 10px;text-align:right;width:18%">มูลค่างวด (บาท)</th>
+        <th style="padding:7px 10px;text-align:center;width:20%">ความคืบหน้า</th>
+      </tr></thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td><td></td></tr>`:''}
+        ${discAmt>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">ส่วนลด</td><td style="text-align:right;padding:6px 10px;color:#6b7280">-${fmtN(discAmt)}</td><td></td></tr>`:''}
+        ${vr>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td><td></td></tr>`:''}
+        ${whtAmt>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">หัก WHT ${whtRate}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">-${fmtN(whtAmt)}</td><td></td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="3" style="text-align:right;font-weight:700;padding:9px 10px">ยอดแจ้งหนี้งวดนี้</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px;font-size:1.05em">${fmtN(grand)}</td><td></td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:12px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+/* ===== GOODS RETURN PREVIEW (ใบคืนสินค้า) ===== */
+function buildGoodsReturnPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml=currentLogo?`<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`:'';
+  const sigs=[t('sig.goodsreturn0'),t('sig.goodsreturn1')];
+  const notesHtml=getV('doc-notes')?`<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:'';
+  const reasons=['ชำรุด/เสียหาย','สินค้าไม่ตรงสเปก','ผิดรุ่น/ผิดสี','สินค้าหมดอายุ','จำนวนเกิน','อื่นๆ'];
+  const itemsHtml=items.map((it,i)=>{
+    const m=it.desc.match(/—\s*(.+?)\s*\(/);
+    const reason=m?m[1]:'ชำรุด/เสียหาย';
+    return `<tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:right">${fmtN(it.price)}</td>
+      <td style="padding:8px 10px;text-align:right;color:#dc2626;font-weight:600">${fmtN(it.qty*it.price)}</td>
+    </tr>`;}).join('');
+  return `
+    <div class="doc-header">
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title" style="color:#dc2626">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:#dc2626">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div style="height:3px;background:#dc2626;border-radius:2px;margin-bottom:16px;opacity:0.7"></div>
+    <div class="doc-parties">
+      <div><div class="doc-party-label">ผู้คืนสินค้า (ลูกค้า)</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+      <div><div class="doc-party-label">ผู้รับคืน (ผู้ขาย)</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead><tr style="background:#dc2626;color:#fff">
+        <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+        <th style="padding:7px 10px;text-align:left">รายการสินค้าที่คืน / เหตุผล</th>
+        <th style="padding:7px 10px;text-align:center;width:8%">จำนวน</th>
+        <th style="padding:7px 10px;text-align:center;width:8%">หน่วย</th>
+        <th style="padding:7px 10px;text-align:right;width:15%">ราคา/หน่วย</th>
+        <th style="padding:7px 10px;text-align:right;width:15%">มูลค่าคืน</th>
+      </tr></thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${vr>0?`<tr><td colspan="5" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td></tr>`:''}
+        <tr style="border-top:2px solid #dc2626">
+          <td colspan="5" style="text-align:right;font-weight:700;padding:9px 10px">มูลค่าคืนสินค้ารวม</td>
+          <td style="text-align:right;font-weight:700;color:#dc2626;padding:9px 10px;font-size:1.05em">${fmtN(grand)}</td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:0.85em">
+      <b style="color:#dc2626">การดำเนินการที่ต้องการ:</b>
+      <div style="display:flex;gap:20px;margin-top:6px">
+        <label style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span>คืนเงิน</label>
+        <label style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span>เปลี่ยนสินค้า</label>
+        <label style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span>ออกใบลดหนี้</label>
+        <label style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span>อื่นๆ</label>
+      </div>
+    </div>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+      <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+    </div>`;
+}
+
+/* ===== MATERIAL REQUISITION PREVIEW (ใบเบิกวัสดุ) ===== */
+function buildMaterialReqPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml=currentLogo?`<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`:'';
+  const sigs=[t('sig.materialreq0'),t('sig.materialreq1')];
+  const notesHtml=getV('doc-notes')?`<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:'';
+  const itemsHtml=items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:center"><span style="display:inline-block;width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px"></span></td>
+      <td style="padding:8px 10px;text-align:center">___________</td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div><div class="doc-party-label">ผู้เบิก / แผนก</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+      </div>
+      <div><div class="doc-party-label">แผนกคลังพัสดุ / ผู้จ่าย</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead><tr style="background:var(--doc-theme);color:#fff">
+        <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+        <th style="padding:7px 10px;text-align:left">รายการวัสดุ / อุปกรณ์</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">จำนวนขอ</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">หน่วย</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">อนุมัติ</th>
+        <th style="padding:7px 10px;text-align:center;width:15%">จำนวนจ่าย</th>
+      </tr></thead>
+      <tbody>${itemsHtml}</tbody>
+    </table>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+      <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(..............................)</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+    </div>`;
+}
+
+/* ===== EXPENSE REPORT PREVIEW (ใบรายงานค่าใช้จ่าย) ===== */
+function buildExpenseReportPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml=currentLogo?`<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`:'';
+  const sigs=[t('sig.expensereport0'),t('sig.expensereport1')];
+  const notesHtml=getV('doc-notes')?`<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:'';
+  const cats={travel:'✈️ เดินทาง',meal:'🍽️ อาหาร',accommodation:'🏨 ที่พัก',registration:'📋 ลงทะเบียน',material:'📦 วัสดุ',other:'📎 อื่นๆ'};
+  const itemsHtml=items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:right">${fmtN(it.price)}</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:600">${fmtN(it.qty*it.price)}</td>
+      <td style="padding:8px 10px;text-align:center"><span style="display:inline-block;width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px"></span></td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div><div class="doc-party-label">ผู้รายงาน / ผู้เบิก</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-party-info">Tel: ${getV('seller-phone')}</div>`:''}
+      </div>
+      <div><div class="doc-party-label">ยื่นถึง / ฝ่ายการเงิน</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead><tr style="background:var(--doc-theme);color:#fff">
+        <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+        <th style="padding:7px 10px;text-align:left">รายการค่าใช้จ่าย</th>
+        <th style="padding:7px 10px;text-align:center;width:8%">จำนวน</th>
+        <th style="padding:7px 10px;text-align:center;width:8%">หน่วย</th>
+        <th style="padding:7px 10px;text-align:right;width:14%">ราคา/หน่วย</th>
+        <th style="padding:7px 10px;text-align:right;width:14%">รวม (บาท)</th>
+        <th style="padding:7px 10px;text-align:center;width:8%">ใบเสร็จ</th>
+      </tr></thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="5" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td><td></td></tr>`:''}
+        ${vr>0?`<tr><td colspan="5" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td><td></td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="5" style="text-align:right;font-weight:700;padding:9px 10px">ยอดขอเบิกทั้งสิ้น</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px;font-size:1.05em">${fmtN(grand)}</td><td></td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+      <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(..............................)</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+    </div>`;
+}
+
+/* ===== DOCUMENT TRANSMITTAL PREVIEW (ใบนำส่งเอกสาร) ===== */
+function buildTransmittalPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml=currentLogo?`<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">`:'';
+  const sigs=[t('sig.transmittal0'),t('sig.transmittal1')];
+  const notesHtml=getV('doc-notes')?`<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>`:'';
+  const purposeOpts=['เพื่อพิจารณา','เพื่อตรวจสอบ','เพื่ออนุมัติ','เพื่อทราบ','เพื่อใช้งาน','ตามที่ได้ตกลง'];
+  const itemsHtml=items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:center"><span style="display:inline-block;width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px"></span></td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>${logoHtml}<div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div><div class="doc-party-label">จาก (ผู้ส่ง)</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-party-info">Tel: ${getV('seller-phone')}</div>`:''}
+      </div>
+      <div><div class="doc-party-label">ถึง (ผู้รับ)</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <!-- วัตถุประสงค์ -->
+    <div style="background:#f9fafb;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:0.85em">
+      <div style="font-weight:700;color:var(--doc-theme);margin-bottom:8px">วัตถุประสงค์การนำส่ง</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        ${purposeOpts.map(p=>`<label style="display:flex;align-items:center;gap:5px"><span style="width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span>${p}</label>`).join('')}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead><tr style="background:var(--doc-theme);color:#fff">
+        <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+        <th style="padding:7px 10px;text-align:left">รายการเอกสาร</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">จำนวน</th>
+        <th style="padding:7px 10px;text-align:center;width:10%">หน่วย</th>
+        <th style="padding:7px 10px;text-align:center;width:12%">รับแล้ว ✓</th>
+      </tr></thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="2" style="padding:8px 10px;font-weight:700">รวมเอกสารทั้งหมด</td>
+          <td style="text-align:center;font-weight:700;padding:8px 10px">${items.reduce((s,it)=>s+it.qty,0)}</td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box"><div class="sig-label">${sigs[0]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">วันที่ส่ง _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box"><div class="sig-label">${sigs[1]}</div><div>_______________________</div>
+        <div style="margin-top:5px">(..............................)</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">วันที่รับ _______________</div>
+      </div>
+    </div>`;
+}
+
+function buildReceiptVoucherPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const sigs = [t('sig.receiptvoucher0'), t('sig.receiptvoucher1')];
+  const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const itemsHtml = items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit||'-'}</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:600;color:var(--doc-theme)">${fmtN(it.qty*it.price)}</td>
+    </tr>`).join('');
+  const pmEl = document.getElementById('payment-method');
+  const pmLabel = pmEl ? pmEl.options[pmEl.selectedIndex]?.text : 'เงินสด';
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">รับเงินจาก</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับเงิน</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:center;width:6%">#</th>
+          <th style="padding:7px 10px;text-align:left">รายการ / เหตุผลการรับเงิน</th>
+          <th style="padding:7px 10px;text-align:center;width:12%">หน่วย</th>
+          <th style="padding:7px 10px;text-align:right;width:20%">จำนวนเงิน (บาท)</th>
+        </tr>
+      </thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td></tr>`:''}
+        ${vr>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td></tr>`:''}
+        ${whtAmt>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">หัก WHT ${whtRate}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">-${fmtN(whtAmt)}</td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="3" style="text-align:right;font-weight:700;padding:9px 10px">ยอดรับรวมทั้งสิ้น</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px;font-size:1.08em">${fmtN(grand)}</td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    <div style="display:flex;gap:20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:0.9em;flex-wrap:wrap">
+      <div><span style="color:#6b7280">วิธีชำระ:</span> <b style="color:#16a34a">${pmLabel}</b></div>
+      <div><span style="color:#6b7280">วันที่รับเงิน:</span> <b>${getV('doc-date')||'-'}</b></div>
+    </div>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+    </div>`;
+}
+
+/* ===== PAYMENT VOUCHER PREVIEW (ใบสำคัญจ่าย) ===== */
+function buildPaymentVoucherPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const sigs = [t('sig.paymentvoucher0'), t('sig.paymentvoucher1')];
+  const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const pmEl = document.getElementById('payment-method');
+  const pmLabel = pmEl ? pmEl.options[pmEl.selectedIndex]?.text : 'โอนเงิน';
+  const itemsHtml = items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit||'-'}</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:600;color:var(--doc-theme)">${fmtN(it.qty*it.price)}</td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้จ่ายเงิน</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับเงิน</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:center;width:6%">#</th>
+          <th style="padding:7px 10px;text-align:left">รายการ / เหตุผลการจ่ายเงิน</th>
+          <th style="padding:7px 10px;text-align:center;width:12%">หน่วย</th>
+          <th style="padding:7px 10px;text-align:right;width:20%">จำนวนเงิน (บาท)</th>
+        </tr>
+      </thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td></tr>`:''}
+        ${vr>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td></tr>`:''}
+        ${whtAmt>0?`<tr><td colspan="3" style="text-align:right;padding:6px 10px;color:#6b7280">หัก WHT ${whtRate}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">-${fmtN(whtAmt)}</td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="3" style="text-align:right;font-weight:700;padding:9px 10px">ยอดจ่ายรวมทั้งสิ้น</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px;font-size:1.08em">${fmtN(grand)}</td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    <div style="display:flex;gap:20px;background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:0.9em;flex-wrap:wrap">
+      <div><span style="color:#6b7280">วิธีจ่าย:</span> <b style="color:#92400e">${pmLabel}</b></div>
+      <div><span style="color:#6b7280">วันที่จ่ายเงิน:</span> <b>${getV('doc-date')||'-'}</b></div>
+    </div>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+/* ===== WORK ORDER PREVIEW (ใบสั่งงาน) ===== */
+function buildWorkOrderPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const sigs = [t('sig.workorder0'), t('sig.workorder1')];
+  const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const dueDate = getV('doc-due-date');
+  const itemsHtml = items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:right">${fmtN(it.price)}</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:600">${fmtN(it.qty*it.price)}</td>
+      <td style="padding:8px 10px;text-align:center"><span style="display:inline-block;width:16px;height:16px;border:1.5px solid #d1d5db;border-radius:3px"></span></td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${dueDate?`<div class="doc-number" style="color:#dc2626">กำหนดส่ง: <b>${dueDate}</b></div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้สั่งงาน</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับงาน / ผู้ดำเนินการ</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+          <th style="padding:7px 10px;text-align:left">รายละเอียดงาน</th>
+          <th style="padding:7px 10px;text-align:center;width:8%">จำนวน</th>
+          <th style="padding:7px 10px;text-align:center;width:8%">หน่วย</th>
+          <th style="padding:7px 10px;text-align:right;width:14%">ราคา/หน่วย</th>
+          <th style="padding:7px 10px;text-align:right;width:14%">รวม</th>
+          <th style="padding:7px 10px;text-align:center;width:10%">เสร็จ</th>
+        </tr>
+      </thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="5" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td><td></td></tr>`:''}
+        ${vr>0?`<tr><td colspan="5" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td><td></td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="5" style="text-align:right;font-weight:700;padding:9px 10px">มูลค่างานรวม</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px">${fmtN(grand)}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:12px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+/* ===== JOB COMPLETION PREVIEW (ใบส่งงาน) ===== */
+function buildJobCompletionPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const sigs = [t('sig.jobcompletion0'), t('sig.jobcompletion1')];
+  const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const itemsHtml = items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:right;font-weight:600">${fmtN(it.qty*it.price)}</td>
+      <td style="padding:8px 10px;text-align:center">
+        <span style="display:inline-flex;align-items:center;gap:4px;background:#dcfce7;color:#16a34a;font-size:0.8em;padding:2px 8px;border-radius:99px;font-weight:600">✓ เสร็จสิ้น</span>
+      </td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้ส่งงาน</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับงาน / ผู้ตรวจรับ</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <!-- สถานะงาน -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:0.9em">
+      <span style="font-size:1.2em">✅</span>
+      <span style="font-weight:700;color:#16a34a">งานเสร็จสมบูรณ์ — พร้อมส่งมอบ</span>
+      <span style="margin-left:auto;color:#6b7280">วันที่ส่งงาน: <b>${getV('doc-date')||'-'}</b></span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+          <th style="padding:7px 10px;text-align:left">รายละเอียดงานที่ส่งมอบ</th>
+          <th style="padding:7px 10px;text-align:center;width:8%">จำนวน</th>
+          <th style="padding:7px 10px;text-align:center;width:8%">หน่วย</th>
+          <th style="padding:7px 10px;text-align:right;width:16%">มูลค่า</th>
+          <th style="padding:7px 10px;text-align:center;width:14%">สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>${itemsHtml}</tbody>
+      <tfoot>
+        ${sub!==grand?`<tr><td colspan="4" style="text-align:right;padding:6px 10px;color:#6b7280">ยอดรวม</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(sub)}</td><td></td></tr>`:''}
+        ${vr>0?`<tr><td colspan="4" style="text-align:right;padding:6px 10px;color:#6b7280">VAT ${vr}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">${fmtN(vat)}</td><td></td></tr>`:''}
+        ${whtAmt>0?`<tr><td colspan="4" style="text-align:right;padding:6px 10px;color:#6b7280">หัก WHT ${whtRate}%</td><td style="text-align:right;padding:6px 10px;color:#6b7280">-${fmtN(whtAmt)}</td><td></td></tr>`:''}
+        <tr style="border-top:2px solid var(--doc-theme)">
+          <td colspan="4" style="text-align:right;font-weight:700;padding:9px 10px">มูลค่างานสุทธิ</td>
+          <td style="text-align:right;font-weight:700;color:var(--doc-theme);padding:9px 10px">${fmtN(grand)}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    ${grand>0?`<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(grand)})</div>`:''}
+    ${notesHtml}
+    <!-- ผลการตรวจรับ -->
+    <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:14px">
+      <div style="font-size:0.85em;font-weight:700;color:var(--doc-theme);margin-bottom:10px">ผลการตรวจรับงาน</div>
+      <div style="display:flex;gap:24px;font-size:0.9em">
+        <label style="display:flex;align-items:center;gap:6px;cursor:default"><span style="width:16px;height:16px;border:1.5px solid #16a34a;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#16a34a;font-size:0.8em">✓</span> ผ่านการตรวจรับ</label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:default"><span style="width:16px;height:16px;border:1.5px solid #d1d5db;border-radius:3px;display:inline-block"></span> ไม่ผ่าน / แก้ไขเพิ่มเติม</label>
+      </div>
+      <div style="margin-top:10px;font-size:0.85em;color:#6b7280">หมายเหตุการตรวจรับ: _______________________________________________</div>
+    </div>
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+/* ===== DELIVERY ORDER PREVIEW (ใบส่งของ) ===== */
+function buildDeliveryPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const sigs = [t('sig.delivery0'), t('sig.delivery1')];
+  const notesHtml = getV('doc-notes') ? `<div class="doc-notes"><b>${t('pv.notes')}</b> ${getV('doc-notes')}</div>` : '';
+  const itemsHtml = items.map((it,i)=>`
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;color:#9ca3af;text-align:center">${i+1}</td>
+      <td style="padding:8px 10px">${it.desc||'-'}</td>
+      <td style="padding:8px 10px;text-align:center">${it.qty}</td>
+      <td style="padding:8px 10px;text-align:center">${it.unit}</td>
+      <td style="padding:8px 10px;text-align:center"><span style="display:inline-block;width:16px;height:16px;border:1.5px solid #d1d5db;border-radius:3px"></span></td>
+    </tr>`).join('');
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้ส่งของ</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-party-info">Tel: ${getV('seller-phone')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับของ / ที่อยู่จัดส่ง</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <!-- ข้อมูลการขนส่ง -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;font-size:0.85em">
+      <div style="background:#f9fafb;border-radius:6px;padding:8px 12px;border-left:3px solid var(--doc-theme)">
+        <div style="color:#9ca3af;margin-bottom:2px">พนักงานขนส่ง</div>
+        <div style="font-weight:600">_____________________</div>
+      </div>
+      <div style="background:#f9fafb;border-radius:6px;padding:8px 12px;border-left:3px solid var(--doc-theme)">
+        <div style="color:#9ca3af;margin-bottom:2px">ทะเบียนรถ</div>
+        <div style="font-weight:600">_____________________</div>
+      </div>
+      <div style="background:#f9fafb;border-radius:6px;padding:8px 12px;border-left:3px solid var(--doc-theme)">
+        <div style="color:#9ca3af;margin-bottom:2px">วันที่จัดส่ง</div>
+        <div style="font-weight:600">${getV('doc-date')||'_________________'}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:center;width:5%">#</th>
+          <th style="padding:7px 10px;text-align:left">รายการสินค้า</th>
+          <th style="padding:7px 10px;text-align:center;width:10%">จำนวน</th>
+          <th style="padding:7px 10px;text-align:center;width:10%">หน่วย</th>
+          <th style="padding:7px 10px;text-align:center;width:12%">รับแล้ว ✓</th>
+        </tr>
+      </thead>
+      <tbody>${itemsHtml}</tbody>
+    </table>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">วันที่ส่ง _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(..............................)</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">วันที่รับ _______________</div>
+      </div>
+    </div>`;
+}
+
+function buildWhtPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const incomeType = document.getElementById('wht-income-type')?.value || '40(2)';
+  const payType    = document.getElementById('wht-pay-type')?.value    || '1';
+  const payTypeLabel = {'1':'หัก ณ ที่จ่าย','2':'ออกให้ครั้งเดียว','3':'ออกให้ตลอดไป'}[payType] || 'หัก ณ ที่จ่าย';
+  const incomeAmt  = sub;   // ยอดเงินได้ก่อนหัก
+  const whtPct     = whtRate;
+  const whtBaht    = whtAmt;
+  const sigs       = [t('sig.whtcert0'), t('sig.whtcert1')];
+  const notesHtml  = getV('doc-notes') ? `<div class="doc-notes"><b>หมายเหตุ:</b> ${getV('doc-notes')}</div>` : '';
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-email')?`<div class="doc-company-info">${getV('seller-email')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้จ่ายเงิน (ผู้หักภาษี)</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้มีเงินได้ (ผู้ถูกหักภาษี)</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">${t('pv.taxid')} ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <!-- ตารางประเภทเงินได้ตามแบบฟอร์ม 50 ทวิ -->
+    <table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:14px">
+      <thead>
+        <tr style="background:var(--doc-theme);color:#fff">
+          <th style="padding:7px 10px;text-align:left;width:30%">ประเภทเงินได้ (มาตรา 40)</th>
+          <th style="padding:7px 10px;text-align:right;width:25%">จำนวนเงินที่จ่าย (บาท)</th>
+          <th style="padding:7px 10px;text-align:right;width:20%">อัตราภาษี (%)</th>
+          <th style="padding:7px 10px;text-align:right;width:25%">ภาษีที่หัก (บาท)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #e5e7eb">
+          <td style="padding:8px 10px">${incomeType}</td>
+          <td style="padding:8px 10px;text-align:right">${fmtN(incomeAmt)}</td>
+          <td style="padding:8px 10px;text-align:right">${whtPct}%</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--doc-theme)">${fmtN(whtBaht)}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background:#f9fafb;border-top:2px solid var(--doc-theme)">
+          <td style="padding:8px 10px;font-weight:700">รวม</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:700">${fmtN(incomeAmt)}</td>
+          <td></td>
+          <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--doc-theme)">${fmtN(whtBaht)}</td>
+        </tr>
+      </tfoot>
+    </table>
+    ${whtBaht>0 ? `<div style="text-align:right;font-size:0.85em;color:#4b5563;margin-bottom:10px;font-style:italic">(${bahtText(whtBaht)})</div>` : ''}
+    <!-- วิธีนำส่ง -->
+    <div style="display:flex;gap:24px;margin-bottom:14px;font-size:0.9em;background:#f0fdf4;border-radius:8px;padding:10px 14px">
+      <div><span style="color:#6b7280">วิธีนำส่งภาษี:</span> <b style="color:var(--doc-theme)">${payTypeLabel}</b></div>
+      <div><span style="color:#6b7280">วันที่จ่ายเงิน:</span> <b>${getV('doc-date')||'-'}</b></div>
+    </div>
+    ${notesHtml}
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp ? `<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">` : ''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>`;
+}
+
+/* ===== SERVICE / LEASE AGREEMENT PREVIEW (สัญญาว่าจ้าง / สัญญาเช่า) ===== */
+function buildAgreementPreview(info,sub,discAmt,vat,whtAmt,grand,vr,whtRate){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const isLease = currentDocType === 'leaseagreement';
+  const party0  = isLease ? 'ผู้ให้เช่า' : 'ผู้ว่าจ้าง';
+  const party1  = isLease ? 'ผู้เช่า'    : 'ผู้รับจ้าง';
+  const sigs    = [t(isLease?'sig.leaseagreement0':'sig.serviceagreement0'), t(isLease?'sig.leaseagreement1':'sig.serviceagreement1')];
+  const startDate = getV('doc-date') || '_______________';
+  const endDate   = getV('doc-due-date') || '_______________';
+  const sellerName = getV('seller-name') || '..............................';
+  const buyerName  = getV('buyer-name')  || '..............................';
+  const sellerAddr = (getV('seller-address')||'').replace(/\n/g,'<br>');
+  const buyerAddr  = (getV('buyer-address') ||'').replace(/\n/g,'<br>');
+  const sellerTax  = getV('seller-tax') || '';
+  const buyerTax   = getV('buyer-tax')  || '';
+
+  // Parse user notes into numbered clauses; fallback to defaults
+  const notesRaw = getV('doc-notes') || '';
+  const userLines = notesRaw.split('\n').map(l=>l.trim()).filter(Boolean);
+  const userClauses = userLines.filter(l=>/^\d+[\.\)]|^ข้อ\s*\d+/.test(l));
+  const freeText    = userLines.filter(l=>!/^\d+[\.\)]|^ข้อ\s*\d+/.test(l)).join(' ');
+
+  // Default clauses per contract type
+  const defaultClauses = isLease ? [
+    `ผู้ให้เช่าตกลงให้เช่า และผู้เช่าตกลงเช่าทรัพย์สินตามรายละเอียดในสัญญานี้ โดยผู้เช่าจะใช้ทรัพย์สินเพื่อวัตถุประสงค์ที่ระบุไว้เท่านั้น`,
+    `ระยะเวลาเช่า: ตั้งแต่วันที่ <b>${startDate}</b> ถึงวันที่ <b>${endDate}</b> หากครบกำหนดและคู่สัญญามิได้บอกเลิกสัญญาล่วงหน้าอย่างน้อย 30 วัน ให้ถือว่าสัญญาเช่านี้ต่ออายุโดยอัตโนมัติคราวละ 1 เดือน`,
+    `ค่าเช่า: ผู้เช่าตกลงชำระค่าเช่าเป็นจำนวน <b>฿${fmtN(grand)}</b> ${grand>0?`(${bahtText(grand)})`:''}  ชำระภายในวันที่ 5 ของทุกเดือน วิธีชำระ: โอนเงินเข้าบัญชีผู้ให้เช่า`,
+    `ผู้เช่าจะไม่โอนสิทธิการเช่าหรือให้บุคคลอื่นใช้ทรัพย์สินที่เช่าโดยมิได้รับอนุญาตเป็นลายลักษณ์อักษรจากผู้ให้เช่า`,
+    `ผู้เช่าต้องรักษาทรัพย์สินที่เช่าให้อยู่ในสภาพดี และรับผิดชอบค่าซ่อมแซมความเสียหายที่เกิดจากการใช้งานของผู้เช่า`,
+    `เมื่อสัญญาสิ้นสุด ผู้เช่าต้องคืนทรัพย์สินในสภาพที่ดีเช่นเดียวกับเมื่อรับมอบ ยกเว้นความเสื่อมสภาพตามปกติ`,
+    `หากคู่สัญญาฝ่ายใดผิดสัญญา อีกฝ่ายมีสิทธิบอกเลิกสัญญาได้โดยแจ้งเป็นลายลักษณ์อักษรล่วงหน้า 30 วัน และเรียกค่าเสียหายได้ตามกฎหมาย`,
+    `สัญญาฉบับนี้อยู่ภายใต้บังคับและตีความตามกฎหมายไทย ข้อพิพาทให้อยู่ในเขตอำนาจศาลที่มีเขตอำนาจเหนือภูมิลำเนาของผู้ให้เช่า`,
+  ] : [
+    `ผู้ว่าจ้างตกลงว่าจ้าง และผู้รับจ้างตกลงรับจ้างทำงานตามรายละเอียดและขอบเขตงานที่ระบุไว้ในสัญญาฉบับนี้`,
+    `ขอบเขตงาน: ผู้รับจ้างจะดำเนินการตามรายละเอียดที่ตกลงกัน โดยเริ่มงานตั้งแต่วันที่ <b>${startDate}</b> และส่งมอบงานสำเร็จภายในวันที่ <b>${endDate}</b>`,
+    `ค่าตอบแทน: ผู้ว่าจ้างตกลงชำระค่าจ้างเป็นจำนวน <b>฿${fmtN(grand)}</b> ${grand>0?`(${bahtText(grand)})`:''}  ชำระตามความคืบหน้าของงานหรือเมื่อส่งมอบงานสำเร็จ`,
+    `ผู้รับจ้างต้องดำเนินงานด้วยความชำนาญ และปฏิบัติตามมาตรฐานวิชาชีพ รวมทั้งจัดหาวัสดุอุปกรณ์ที่จำเป็นเองเว้นแต่จะตกลงเป็นอย่างอื่น`,
+    `หากผู้รับจ้างไม่สามารถส่งมอบงานภายในกำหนด ผู้ว่าจ้างมีสิทธิปรับ ______% ของค่าจ้างต่อวันที่ล่าช้า หรือบอกเลิกสัญญาและเรียกค่าเสียหาย`,
+    `ผู้รับจ้างรับประกันงานที่ส่งมอบเป็นเวลา ______ วัน/เดือน หากพบข้อบกพร่องอันเกิดจากฝีมือหรือวัสดุ ผู้รับจ้างจะแก้ไขโดยไม่คิดค่าใช้จ่ายเพิ่มเติม`,
+    `คู่สัญญาตกลงรักษาข้อมูลอันเป็นความลับที่ได้รับจากอีกฝ่ายและจะไม่เปิดเผยแก่บุคคลภายนอกโดยไม่ได้รับอนุญาต`,
+    `สัญญาฉบับนี้อยู่ภายใต้บังคับและตีความตามกฎหมายไทย ข้อพิพาทให้อยู่ในเขตอำนาจศาลที่มีเขตอำนาจเหนือภูมิลำเนาของผู้ว่าจ้าง`,
+  ];
+
+  // Use user-defined clauses if provided, else defaults
+  const clauses = userClauses.length ? userClauses : defaultClauses;
+  const clausesHtml = clauses.map((c,i)=>`
+    <div style="display:flex;gap:10px;margin-bottom:10px;font-size:0.88em;line-height:1.75">
+      <span style="min-width:28px;font-weight:700;color:var(--doc-theme)">ข้อ ${i+1}.</span>
+      <span style="color:#374151">${c}</span>
+    </div>`).join('');
+
+  const extraText = freeText ? `<div style="margin-top:8px;font-size:0.88em;color:#6b7280;line-height:1.75">${freeText}</div>` : '';
+
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${sellerName}</div>
+        <div class="doc-company-info">${sellerAddr}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${sellerTax?`<div class="doc-company-info">${t('pv.taxid')} ${sellerTax}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${startDate}</div>
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+
+    <!-- คู่สัญญา -->
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">${party0}</div>
+        <div class="doc-party-name">${sellerName}</div>
+        <div class="doc-party-info">${sellerAddr}</div>
+        ${sellerTax?`<div class="doc-party-info">${t('pv.taxid')} ${sellerTax}</div>`:''}
+        ${getV('seller-phone')?`<div class="doc-party-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-email')?`<div class="doc-party-info">${getV('seller-email')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">${party1}</div>
+        <div class="doc-party-name">${buyerName}</div>
+        <div class="doc-party-info">${buyerAddr}</div>
+        ${buyerTax?`<div class="doc-party-info">${t('pv.taxid')} ${buyerTax}</div>`:''}
+        ${getV('buyer-phone')?`<div class="doc-party-info">Tel: ${getV('buyer-phone')}</div>`:''}
+      </div>
+    </div>
+
+    <!-- ระยะเวลาสัญญา -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:24px;font-size:0.9em">
+      <div><span style="color:#6b7280">วันที่ทำสัญญา:</span> <b>${startDate}</b></div>
+      <div><span style="color:#6b7280">${isLease?'สิ้นสุดการเช่า':'กำหนดส่งมอบงาน'}:</span> <b style="color:var(--doc-theme)">${endDate}</b></div>
+    </div>
+
+    <!-- ข้อสัญญา -->
+    <div style="font-size:0.8em;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--doc-theme);margin-bottom:10px;border-bottom:2px solid var(--doc-theme);padding-bottom:6px">
+      ${isLease ? 'ข้อตกลงและเงื่อนไขการเช่า' : 'ข้อตกลงและเงื่อนไขการว่าจ้าง'}
+    </div>
+    <div style="margin-bottom:16px">
+      ${clausesHtml}
+      ${extraText}
+    </div>
+
+    <!-- ยอดเงิน summary box -->
+    ${grand>0 ? `
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:0.85em;color:#6b7280">${isLease?'ค่าเช่ารวม (ต่อรอบ)':'มูลค่าสัญญารวม'}${vr>0?` (รวม VAT ${vr}%)`:''}</div>
+      <div>
+        <span style="font-size:1.3em;font-weight:700;color:var(--doc-theme)">฿${fmtN(grand)}</span>
+        <div style="font-size:0.8em;color:#9ca3af;text-align:right;font-style:italic">(${bahtText(grand)})</div>
+      </div>
+    </div>` : ''}
+
+    <!-- ประโยคปิดท้าย -->
+    <div style="font-size:0.85em;color:#6b7280;line-height:1.7;margin-bottom:16px;border-top:1px dashed #e5e7eb;padding-top:12px">
+      สัญญาฉบับนี้ทำขึ้นสองฉบับมีข้อความตรงกัน คู่สัญญาทั้งสองฝ่ายได้อ่านและเข้าใจข้อความในสัญญาโดยตลอดแล้ว 
+      เห็นว่าถูกต้องตรงตามเจตนาของตน จึงได้ลงลายมือชื่อไว้เป็นสำคัญต่อหน้าพยาน และต่างเก็บรักษาไว้ฝ่ายละฉบับหนึ่ง
+    </div>
+
+    <!-- ลายเซ็น -->
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">${sigs[0]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${sellerName})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">${sigs[1]}</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${buyerName})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>
+
+    <!-- พยาน -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;border-top:1px dashed #d1d5db;padding-top:14px">
+      <div style="text-align:center;font-size:0.85em;color:#6b7280">
+        <div style="margin-bottom:20px">พยาน</div>
+        <div>_______________________</div>
+        <div style="margin-top:4px">(..............................)</div>
+      </div>
+      <div style="text-align:center;font-size:0.85em;color:#6b7280">
+        <div style="margin-bottom:20px">พยาน</div>
+        <div>_______________________</div>
+        <div style="margin-top:4px">(..............................)</div>
+      </div>
+    </div>`;
+}
+
+
+/* ===== POA FORM PREVIEW (หนังสือมอบอำนาจ) ===== */
+function buildPoaFormPreview(info){
+  const logoHtml = currentLogo ? `<img src="${currentLogo}" style="max-height:56px;max-width:140px;object-fit:contain;display:block;margin-bottom:6px" alt="logo">` : '';
+  const notesRaw = getV('doc-notes') || '';
+  // Parse scope lines: lines starting with (1), (2)... or numbered
+  const lines = notesRaw.split('\n');
+  const scopeLines = lines.filter(l => /^\(\d+\)/.test(l.trim()));
+  const otherLines = lines.filter(l => !/^\(\d+\)/.test(l.trim()) && l.trim());
+  const scopeHtml = scopeLines.length
+    ? scopeLines.map(l=>`<div style="display:flex;gap:10px;margin-bottom:8px"><span style="min-width:28px;font-weight:700;color:var(--doc-theme)">${l.match(/^\(\d+\)/)[0]}</span><span>${l.replace(/^\(\d+\)\s*/,'')}</span></div>`).join('')
+    : `<div style="color:#9ca3af;font-style:italic">-</div>`;
+  const validityLine = otherLines.find(l => l.includes('มีผลตั้งแต่')) || '';
+  const witnessLine  = otherLines.find(l => l.includes('พยานที่')) || '';
+  const noteLine     = otherLines.filter(l => !l.includes('มีผลตั้งแต่') && !l.includes('พยานที่')).join(' ');
+  // Parse witnesses
+  const w1match = witnessLine.match(/พยานที่ 1[:\s]+([^/]+)/);
+  const w2match = witnessLine.match(/พยานที่ 2[:\s]+(.+)/);
+  const witness1 = w1match ? w1match[1].trim() : '..............................';
+  const witness2 = w2match ? w2match[1].trim() : '..............................';
+  // Parse validity dates
+  const fromMatch  = validityLine.match(/มีผลตั้งแต่[:\s]+([^\s]+)/);
+  const untilMatch = validityLine.match(/ถึง[:\s]+(.+)/);
+  const validFrom  = fromMatch  ? fromMatch[1].trim()  : getV('doc-date') || '-';
+  const validUntil = untilMatch ? untilMatch[1].trim() : '-';
+  return `
+    <div class="doc-header">
+      <div>
+        ${logoHtml}
+        <div class="doc-company-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-company-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-phone')?`<div class="doc-company-info">Tel: ${getV('seller-phone')}</div>`:''}
+        ${getV('seller-tax')?`<div class="doc-company-info">เลขบัตรประชาชน: ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div class="doc-title-block">
+        <div class="doc-title">${info[currentLang]}</div>
+        <div style="font-size:0.846em;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">${info.en}</div>
+        <div class="doc-number">${t('pv.docno')} <b style="color:var(--doc-theme)">${getV('doc-number')||'-'}</b></div>
+        <div class="doc-number">${t('pv.date')} ${getV('doc-date')||'-'}</div>
+        ${getRefNoHtml()}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <!-- คู่สัญญา -->
+    <div class="doc-parties">
+      <div>
+        <div class="doc-party-label">ผู้มอบอำนาจ</div>
+        <div class="doc-party-name">${getV('seller-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('seller-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('seller-tax')?`<div class="doc-party-info">เลขบัตรประชาชน: ${getV('seller-tax')}</div>`:''}
+      </div>
+      <div>
+        <div class="doc-party-label">ผู้รับมอบอำนาจ</div>
+        <div class="doc-party-name">${getV('buyer-name')||'-'}</div>
+        <div class="doc-party-info">${(getV('buyer-address')||'').replace(/\n/g,'<br>')}</div>
+        ${getV('buyer-tax')?`<div class="doc-party-info">เลขบัตรประชาชน: ${getV('buyer-tax')}</div>`:''}
+      </div>
+    </div>
+    <div class="doc-divider"></div>
+    <!-- ข้อความมอบอำนาจ -->
+    <div style="line-height:1.8;margin-bottom:14px;font-size:0.92em">
+      ข้าพเจ้า <b>${getV('seller-name')||'.............................'}</b> ขอมอบอำนาจให้ <b>${getV('buyer-name')||'.............................'}</b> เป็นตัวแทนดำเนินการดังต่อไปนี้แทนข้าพเจ้า:
+    </div>
+    <!-- ขอบเขตอำนาจ -->
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.85em;font-weight:700;color:var(--doc-theme);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">ขอบเขตการมอบอำนาจ</div>
+      ${scopeHtml}
+    </div>
+    <!-- ระยะเวลา -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 16px;margin-bottom:14px;display:flex;gap:32px;font-size:0.9em">
+      <div><span style="color:#6b7280">มีผลตั้งแต่:</span> <b>${validFrom}</b></div>
+      <div><span style="color:#6b7280">ถึงวันที่:</span> <b style="color:var(--doc-theme)">${validUntil}</b></div>
+    </div>
+    ${noteLine?`<div class="doc-notes"><b>หมายเหตุ:</b> ${noteLine}</div>`:''}
+    <!-- ลายเซ็น -->
+    <div class="doc-sig">
+      <div class="sig-box">
+        <div class="sig-label">ผู้มอบอำนาจ</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('seller-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+        ${currentStamp?`<img src="${currentStamp}" style="max-height:64px;max-width:120px;object-fit:contain;opacity:0.85;margin-top:8px;display:block" alt="ตราประทับ">`:''}
+      </div>
+      <div class="sig-box">
+        <div class="sig-label">ผู้รับมอบอำนาจ</div>
+        <div>_______________________</div>
+        <div style="margin-top:5px">(${getV('buyer-name')||'..............................'})</div>
+        <div style="font-size:0.769em;color:#6b7280;margin-top:3px">${t('pv.datesig')} _______________</div>
+      </div>
+    </div>
+    <!-- พยาน -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;border-top:1px dashed #d1d5db;padding-top:14px">
+      <div style="text-align:center;font-size:0.85em;color:#6b7280">
+        <div style="margin-bottom:20px">พยานที่ 1</div>
+        <div>_______________________</div>
+        <div style="margin-top:4px">(${witness1})</div>
+      </div>
+      <div style="text-align:center;font-size:0.85em;color:#6b7280">
+        <div style="margin-bottom:20px">พยานที่ 2</div>
+        <div>_______________________</div>
+        <div style="margin-top:4px">(${witness2})</div>
       </div>
     </div>`;
 }
@@ -3567,6 +5150,7 @@ const sampleData = {
     sellerPhone: '02-274-6688', sellerEmail: 'finance@brightelec.co.th', sellerTax: '0-1055-45566-77-8',
     buyer: 'บริษัท เมกะ โฮมมาร์ท จำกัด', buyerAddr: '88 ถนนบางนา-ตราด กม.5 เขตบางนา กรุงเทพฯ 10260', buyerTax: '0-1055-33445-56-9',
     docNo: 'CN-2568-012', docDate: '27/06/2568',
+    refDocNumber: 'TXI-2568-032', refDocDate: '2568-06-01',
     items: [
       {desc:'คืนสินค้าชำรุด รุ่น BE-220 (อ้างอิงใบแจ้งหนี้ INV-2568-009)', qty:5, unit:'ชิ้น', price:1490},
       {desc:'ส่วนลดพิเศษหลังการตรวจสอบคุณภาพ', qty:1, unit:'รายการ', price:800},
@@ -3620,6 +5204,7 @@ const sampleData = {
     sellerPhone: '02-580-2233', sellerEmail: 'sales@officesupplypro.co.th', sellerTax: '0-1055-66778-89-2',
     buyer: 'บริษัท เวิลด์ไวด์ เทรดดิ้ง จำกัด', buyerAddr: '300 ถนนเจริญกรุง เขตบางรัก กรุงเทพฯ 10500', buyerTax: '0-1055-33221-10-3',
     docNo: 'DN-2568-008', docDate: '27/06/2568',
+    refDocNumber: 'TXI-2568-018', refDocDate: '2568-05-15',
     items: [
       {desc:'ค่าขนส่งเพิ่มเติมกรณีเร่งด่วน (อ้างอิงใบแจ้งหนี้ INV-2568-011)', qty:1, unit:'รายการ', price:1500},
       {desc:'ส่วนต่างราคาสินค้าที่ปรับเพิ่มตามสัญญา', qty:1, unit:'รายการ', price:3200},
@@ -3630,16 +5215,20 @@ const sampleData = {
   },
   serviceagreement: {
     seller: 'บริษัท ครีเอทีฟ สตูดิโอ จำกัด', sellerAddr: '22 ซอยสุขุมวิท 31 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110',
-    sellerPhone: '02-258-9911', sellerEmail: 'contact@creativestudio.co.th', sellerTax: '0-1055-44332-21-0',
-    buyer: 'บริษัท เนกซ์เจน สตาร์ทอัพ จำกัด', buyerAddr: '10 อาคารทรู ดิจิทัล ปาร์ค ถนนสุขุมวิท เขตบางจาก กรุงเทพฯ 10260', buyerTax: '0-1055-99887-66-5',
-    docNo: 'SA-2568-006', docDate: '27/06/2568',
-    items: [
-      {desc:'ออกแบบและพัฒนาแบรนด์องค์กร (Brand Identity)', qty:1, unit:'โครงการ', price:65000},
-      {desc:'ผลิตวิดีโอแนะนำองค์กร ความยาว 3 นาที', qty:1, unit:'ชิ้น', price:35000},
-      {desc:'จัดทำเว็บไซต์บริษัท (5 หน้า)', qty:1, unit:'โครงการ', price:28000},
-    ],
+    sellerPhone: '02-258-9911', sellerEmail: 'contact@creativestudio.co.th', sellerTax: '0-1055-45678-90-1',
+    buyer: 'บริษัท เอบีซี คอร์ปอเรชั่น จำกัด', buyerAddr: '100 ถนนวิทยุ แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330', buyerTax: '0-1055-11223-34-5',
+    docNo: 'SA-2568-012', docDate: '2568-06-01', docDueDate: '2568-08-31',
+    items: [],
     vat: 7, wht: 3, disc: 0,
-    notes: 'ระยะเวลาดำเนินงาน 60 วันนับจากวันเซ็นสัญญา ชำระเงินงวดที่ 1 จำนวน 50% เมื่อเซ็นสัญญา ส่วนที่เหลือชำระเมื่องานเสร็จสมบูรณ์',
+    notes: [
+      'ข้อ 1. ผู้ว่าจ้างตกลงว่าจ้างผู้รับจ้างออกแบบและพัฒนาเว็บไซต์องค์กรพร้อมระบบจัดการเนื้อหา (CMS) ตามขอบเขตงานที่ตกลงกัน',
+      'ข้อ 2. ระยะเวลาดำเนินงานตั้งแต่วันที่ 1 มิ.ย. 2568 ถึง 31 ส.ค. 2568 รวม 90 วัน แบ่งส่งมอบงานเป็น 3 ระยะ',
+      'ข้อ 3. ค่าตอบแทนรวมทั้งสิ้น ฿180,000 (รวม VAT 7%) ชำระแบ่ง 3 งวด: งวดแรก 40% เมื่อลงนาม งวดสอง 30% เมื่อส่ง Prototype งวดสุดท้าย 30% เมื่อส่งมอบงานสำเร็จ',
+      'ข้อ 4. ผู้รับจ้างรับประกันผลงานเป็นเวลา 90 วันหลังส่งมอบ หากพบข้อบกพร่องจากฝีมือหรือโค้ด จะแก้ไขโดยไม่คิดค่าใช้จ่าย',
+      'ข้อ 5. ลิขสิทธิ์ผลงานทั้งหมดตกเป็นของผู้ว่าจ้างเมื่อชำระค่าจ้างครบถ้วนแล้ว',
+      'ข้อ 6. คู่สัญญาทั้งสองฝ่ายตกลงรักษาความลับทางธุรกิจและข้อมูลที่ได้รับระหว่างการดำเนินงาน',
+      'ข้อ 7. สัญญาฉบับนี้อยู่ภายใต้กฎหมายไทย ข้อพิพาทให้เสนอต่อศาลแพ่งกรุงเทพใต้',
+    ].join('\n'),
     sigs: ['ผู้ว่าจ้าง','ผู้รับจ้าง']
   },
   whtcert: {
@@ -3685,7 +5274,7 @@ const sampleData = {
   receiptvoucher: {
     seller: 'บริษัท กรีนวิว การ์เด้น จำกัด', sellerAddr: '9 ถนนบางนา-ตราด แขวงบางนา เขตบางนา กรุงเทพฯ 10260',
     sellerPhone: '02-399-4411', sellerEmail: 'account@greenviewgarden.co.th', sellerTax: '0-1055-77889-90-1',
-    buyer: 'คุณสมชาย วัฒนกิจ', buyerAddr: '25 ถนนลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '',
+    buyer: 'คุณสมชาย วัฒนกิจ', buyerAddr: '30 ถนนลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '',
     docNo: 'RV-2568-019', docDate: '27/06/2568',
     items: [
       {desc:'รับชำระค่ามัดจำงานจัดสวนตามสัญญาเลขที่ SA-2568-004', qty:1, unit:'งวด', price:20000},
@@ -3723,15 +5312,20 @@ const sampleData = {
   },
   leaseagreement: {
     seller: 'บริษัท ทรัพย์อนันต์ พร็อพเพอร์ตี้ จำกัด', sellerAddr: '88 ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310',
-    sellerPhone: '02-717-8899', sellerEmail: 'lease@suparnont.co.th', sellerTax: '0-1055-55221-34-7',
-    buyer: 'บริษัท บลูมมิ่ง คอฟฟี่ จำกัด', buyerAddr: '88 ถนนพระราม 9 (พื้นที่เช่าเลขที่ 1A) แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310', buyerTax: '0-1055-99001-12-3',
-    docNo: 'LS-2568-011', docDate: '27/06/2568',
-    items: [
-      {desc:'ค่าเช่าพื้นที่ร้านค้าชั้น 1 ขนาด 45 ตร.ม. ระยะเวลา 12 เดือน', qty:1, unit:'สัญญา', price:432000},
-      {desc:'ค่าเช่าที่จอดรถส่วนกลาง 2 คัน', qty:12, unit:'เดือน', price:1500},
-    ],
-    vat: 7, wht: 5, disc: 0,
-    notes: 'สัญญาเช่ามีผลตั้งแต่วันที่ 1 ก.ค. 2568 ถึงวันที่ 30 มิ.ย. 2569 ชำระค่าเช่าล่วงหน้าทุกวันที่ 1 ของเดือน พร้อมเงินประกันการเช่า 2 เดือน',
+    sellerPhone: '02-717-8899', sellerEmail: 'lease@supsub.co.th', sellerTax: '0-1055-99887-76-5',
+    buyer: 'นาย วิชัย ประสิทธิ์ผล', buyerAddr: '55/3 หมู่บ้านกรีนวิลล์ ถนนบางนา-ตราด กม.10 สมุทรปราการ 10540', buyerTax: '3-1099-55443-32-1',
+    docNo: 'LA-2568-007', docDate: '2568-07-01', docDueDate: '2569-06-30',
+    items: [],
+    vat: 0, wht: 0, disc: 0,
+    notes: [
+      'ข้อ 1. ผู้ให้เช่าตกลงให้เช่าพื้นที่สำนักงาน ชั้น 8 อาคารเพลินจิตทาวเวอร์ ขนาด 120 ตร.ม. แก่ผู้เช่า เพื่อใช้เป็นสำนักงานเท่านั้น',
+      'ข้อ 2. ระยะเวลาเช่า 1 ปี ตั้งแต่ 1 ก.ค. 2568 ถึง 30 มิ.ย. 2569 หากประสงค์ต่อสัญญาต้องแจ้งล่วงหน้าไม่น้อยกว่า 60 วัน',
+      'ข้อ 3. ค่าเช่า ฿45,000 ต่อเดือน ชำระภายในวันที่ 5 ของทุกเดือน มัดจำ 2 เดือน = ฿90,000 ชำระเมื่อลงนามสัญญา',
+      'ข้อ 4. ผู้เช่าต้องชำระค่าสาธารณูปโภค (ไฟฟ้า ประปา โทรศัพท์) ตามมาตรที่ใช้จริง',
+      'ข้อ 5. ผู้เช่าจะไม่ดัดแปลงหรือต่อเติมสถานที่เช่าโดยไม่ได้รับอนุญาตเป็นลายลักษณ์อักษร',
+      'ข้อ 6. ผู้เช่าจะไม่โอนสิทธิการเช่าหรือให้บุคคลอื่นเช่าช่วงโดยมิได้รับอนุญาต',
+      'ข้อ 7. เมื่อสิ้นสุดสัญญา ผู้เช่าต้องคืนสถานที่ในสภาพดีเช่นเดียวกับที่รับมอบ มิฉะนั้นผู้ให้เช่ามีสิทธิหักค่าซ่อมแซมจากเงินมัดจำ',
+    ].join('\n'),
     sigs: ['ผู้ให้เช่า','ผู้เช่า']
   },
   purchreq: {
@@ -3760,6 +5354,141 @@ const sampleData = {
     vat: 7, wht: 0, disc: 0,
     notes: 'ตรวจรับพัสดุ/งานตามรายการข้างต้นแล้ว สภาพสมบูรณ์ตรงตามข้อกำหนด พร้อมอนุมัติให้เบิกจ่ายตามเงื่อนไขสัญญา',
     sigs: ['ผู้ส่งมอบ','ผู้ตรวจรับ']
+  },
+  statement: {
+    seller: 'บริษัท อินเตอร์ เทรด ซัพพลาย จำกัด', sellerAddr: '88 ถนนสีลม แขวงสีลม เขตบางรัก กรุงเทพฯ 10500',
+    sellerPhone: '02-234-5566', sellerEmail: 'ar@intertradesupply.co.th', sellerTax: '0-1055-34567-89-0',
+    buyer: 'บริษัท ไทยรีเทล กรุ๊ป จำกัด', buyerAddr: '555 ถนนลาดพร้าว แขวงจันทรเกษม เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '0-1055-76543-21-9',
+    docNo: 'ST-2568-014', docDate: '27/06/2568',
+    items: [
+      {desc:'ยอดค้างชำระใบแจ้งหนี้ INV-2568-021 (วันที่ 03/06/2568)', qty:1, unit:'รายการ', price:38500},
+      {desc:'ยอดค้างชำระใบแจ้งหนี้ INV-2568-025 (วันที่ 12/06/2568)', qty:1, unit:'รายการ', price:27000},
+      {desc:'ยอดค้างชำระใบแจ้งหนี้ INV-2568-028 (วันที่ 20/06/2568)', qty:1, unit:'รายการ', price:15800},
+    ],
+    vat: 0, wht: 0, disc: 0,
+    notes: 'กรุณาชำระยอดค้างชำระทั้งหมดภายในวันที่ 15 ก.ค. 2568 หากมีข้อสงสัยกรุณาติดต่อฝ่ายบัญชี โทร 02-234-5566',
+    sigs: ['ผู้ออกใบแจ้งยอด','ผู้รับเอกสาร']
+  },
+  expenseclaim: {
+    seller: 'นาย ธนากร วิชัยดิษฐ์ (พนักงานฝ่ายขาย)', sellerAddr: 'บริษัท โกลบอล มาร์เก็ตติ้ง จำกัด 200 ถนนสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110',
+    sellerPhone: '089-123-4567', sellerEmail: 'thanakorn@globalmarketing.co.th', sellerTax: '',
+    buyer: 'ฝ่ายบัญชี / การเงิน บริษัท โกลบอล มาร์เก็ตติ้ง จำกัด', buyerAddr: '200 ถนนสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110', buyerTax: '',
+    docNo: 'EXP-2568-042', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าเดินทางเยี่ยมลูกค้า (น้ำมัน + ทางด่วน) วันที่ 20-24 มิ.ย. 2568', qty:1, unit:'ครั้ง', price:2850},
+      {desc:'ค่าอาหารเลี้ยงรับรองลูกค้า (5 ท่าน) ร้าน The Dining Room', qty:1, unit:'ครั้ง', price:4200},
+      {desc:'ค่าที่พัก โรงแรม Amari พัทยา (2 คืน)', qty:2, unit:'คืน', price:1800},
+      {desc:'ค่าวัสดุสำนักงานและเครื่องเขียน', qty:1, unit:'รายการ', price:650},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'แนบใบเสร็จต้นฉบับครบถ้วน รวม 8 ใบ / ขอเบิกคืนภายใน 7 วันทำการหลังได้รับอนุมัติ',
+    sigs: ['ผู้เบิก','ผู้อนุมัติ']
+  },
+  warranty: {
+    seller: 'บริษัท เทคโนเฮ้าส์ อิเล็กทรอนิกส์ จำกัด', sellerAddr: '99 ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310',
+    sellerPhone: '02-645-7788', sellerEmail: 'warranty@technohouse.co.th', sellerTax: '0-1055-87654-32-1',
+    buyer: 'คุณพิมพ์ใจ สุขสมบัติ', buyerAddr: '12/5 หมู่บ้านเพอร์เฟค มาสเตอร์พีซ ถนนแจ้งวัฒนะ นนทบุรี 11000', buyerTax: '',
+    docNo: 'WR-2568-308', docDate: '27/06/2568',
+    items: [
+      {desc:'เครื่องปรับอากาศ Daikin รุ่น FTKF25TV2S 9,500 BTU (S/N: DK25-8826441)', qty:1, unit:'เครื่อง', price:18900},
+      {desc:'ค่าติดตั้งและทดสอบระบบ', qty:1, unit:'งาน', price:1500},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'รับประกันตัวเครื่อง 3 ปี / คอมเพรสเซอร์ 5 ปี นับจากวันที่ซื้อ บริการซ่อมฟรีตลอดอายุการรับประกัน กรุณาเก็บใบรับประกันไว้เป็นหลักฐาน',
+    sigs: ['ผู้ขาย/ผู้ให้บริการ','ผู้ซื้อ/ผู้รับประกัน']
+  },
+  poa: {
+    seller: 'นาย สมศักดิ์ ธรรมวิทย์', sellerAddr: '45/2 ถนนพระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150',
+    sellerPhone: '081-987-6543', sellerEmail: 'somsak@email.com', sellerTax: '3-1099-12345-67-8',
+    buyer: 'นาง วิไลพร ธรรมวิทย์', buyerAddr: '45/2 ถนนพระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150', buyerTax: '3-1099-98765-43-2',
+    docNo: 'POA-2568-005', docDate: '27/06/2568',
+    items: [],
+    vat: 0, wht: 0, disc: 0,
+    poaScope: [
+      'ดำเนินการยื่นขอจดทะเบียนพาณิชย์ ณ สำนักงานพาณิชย์จังหวัดกรุงเทพมหานคร',
+      'ลงนามในเอกสารราชการและเอกสารที่เกี่ยวข้องทั้งหมดในนามของผู้มอบอำนาจ',
+      'ชำระค่าธรรมเนียมและค่าใช้จ่ายต่างๆ ที่เกี่ยวข้องกับการจดทะเบียนดังกล่าว',
+    ],
+    poaValidFrom: '27/06/2568',
+    poaValidUntil: '31/12/2568',
+    poaWitness1: 'นาย กิตติ์ สมใจ',
+    poaWitness2: 'นาง มาลี รักดี',
+    notes: 'หนังสือมอบอำนาจฉบับนี้ให้มีผลสมบูรณ์นับแต่วันที่ผู้มอบอำนาจได้ลงลายมือชื่อเป็นต้นไป',
+    sigs: ['ผู้มอบอำนาจ','ผู้รับมอบอำนาจ']
+  },
+  progressinv: {
+    seller: 'บริษัท บิลด์เทค คอนสตรัคชั่น จำกัด', sellerAddr: '123 ถนนพระราม 4 แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110',
+    sellerPhone: '02-671-5544', sellerEmail: 'billing@buildtech.co.th', sellerTax: '0-1055-23456-78-9',
+    buyer: 'การเคหะแห่งชาติ', buyerAddr: '905 ถนนนวมินทร์ แขวงคลองจั่น เขตบึงกุ่ม กรุงเทพฯ 10240', buyerTax: '0-9940-00001-00-0',
+    docNo: 'PIN-2568-003', docDate: '27/06/2568', docDueDate: '2568-07-27',
+    items: [
+      {desc:'งวดที่ 1/4 — งานฐานราก (สำเร็จ 100%)', qty:1, unit:'งวด', price:850000},
+      {desc:'งวดที่ 2/4 — งานโครงสร้างชั้น 1–3 (สำเร็จ 100%)', qty:1, unit:'งวด', price:1200000},
+      {desc:'งวดที่ 3/4 — งานโครงสร้างชั้น 4–6 (สำเร็จ 75%)', qty:1, unit:'งวด', price:900000},
+    ],
+    vat: 7, wht: 3, disc: 0,
+    notes: 'อ้างอิงสัญญาก่อสร้างเลขที่ NHA-2568-CON-001 / แนบรายงานความคืบหน้างานประจำงวด',
+    sigs: ['ผู้ออกเอกสาร','ผู้อนุมัติ']
+  },
+  goodsreturn: {
+    seller: 'บริษัท เมกาซัพพลาย จำกัด', sellerAddr: '55 ถนนบางนา-ตราด กม.3 แขวงบางนา เขตบางนา กรุงเทพฯ 10260',
+    sellerPhone: '02-744-6655', sellerEmail: 'returns@megasupply.co.th', sellerTax: '0-1055-34567-89-0',
+    buyer: 'บริษัท โปรดักส์พลัส จำกัด', buyerAddr: '200 ถนนลาดพร้าว แขวงจันทรเกษม เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '0-1055-98765-43-2',
+    docNo: 'GR-2568-018', docDate: '27/06/2568',
+    items: [
+      {desc:'กระดาษ A4 80g (รีม) — ชำรุด/เปียกน้ำ (อ้างอิง INV-2568-045)', qty:50, unit:'รีม', price:120},
+      {desc:'หมึกพิมพ์ Brother TN-2380 — ผิดรุ่น (อ้างอิง INV-2568-045)', qty:10, unit:'กล่อง', price:850},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'คืนสินค้าตามเหตุผลที่ระบุ กรุณาออกใบลดหนี้และจัดส่งสินค้าใหม่ที่ถูกต้องภายใน 7 วันทำการ',
+    sigs: ['ผู้คืนสินค้า','ผู้รับคืน']
+  },
+  materialreq: {
+    seller: 'นาย ประสิทธิ์ วงศ์ไพบูลย์ (แผนกซ่อมบำรุง)', sellerAddr: 'บริษัท อุตสาหกรรมไทย จำกัด 99 นิคมอุตสาหกรรมลาดกระบัง กรุงเทพฯ 10520',
+    sellerPhone: '081-234-5678', sellerEmail: 'prasit@thaind.co.th', sellerTax: '',
+    buyer: 'แผนกคลังพัสดุ บริษัท อุตสาหกรรมไทย จำกัด', buyerAddr: '99 นิคมอุตสาหกรรมลาดกระบัง กรุงเทพฯ 10520', buyerTax: '',
+    docNo: 'MR-2568-156', docDate: '27/06/2568',
+    items: [
+      {desc:'น้ำมันไฮดรอลิก ISO VG 46 (ถัง 200 ลิตร)', qty:2, unit:'ถัง', price:3200},
+      {desc:'ใบมีดตัด SKD11 ขนาด 300×25×3 mm', qty:10, unit:'ชิ้น', price:450},
+      {desc:'ลูกปืน SKF 6205-2RS', qty:8, unit:'ตลับ', price:280},
+      {desc:'ซีลยาง NBR O-Ring ชุดซ่อมปั๊ม', qty:3, unit:'ชุด', price:650},
+    ],
+    vat: 0, wht: 0, disc: 0,
+    notes: 'เบิกเพื่อซ่อมบำรุงเชิงป้องกัน (PM) เครื่องปั๊มไฮดรอลิก Line B กำหนดดำเนินการ 28/06/2568',
+    sigs: ['ผู้เบิก','ผู้อนุมัติ']
+  },
+  expensereport: {
+    seller: 'นาง สุภาพร ชัยมงคล (ผู้จัดการฝ่ายการตลาด)', sellerAddr: 'บริษัท โกลบอล มาร์เก็ตติ้ง จำกัด 200 ถนนสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110',
+    sellerPhone: '089-876-5432', sellerEmail: 'supapon@globalmarketing.co.th', sellerTax: '',
+    buyer: 'ฝ่ายบัญชีและการเงิน บริษัท โกลบอล มาร์เก็ตติ้ง จำกัด', buyerAddr: '200 ถนนสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110', buyerTax: '',
+    docNo: 'ER-2568-024', docDate: '27/06/2568',
+    items: [
+      {desc:'ค่าเดินทางและโรงแรม งาน Marketing Summit เชียงใหม่ (22-24 มิ.ย.)', qty:1, unit:'ครั้ง', price:12500},
+      {desc:'ค่าลงทะเบียนสัมมนา "Digital Marketing 2025"', qty:1, unit:'ครั้ง', price:8900},
+      {desc:'ค่าอาหารเลี้ยงรับรองลูกค้า (8 ท่าน) Grand Hyatt', qty:1, unit:'มื้อ', price:7200},
+      {desc:'ค่าแท็กซี่/Grab ระหว่างงาน (5 วัน)', qty:5, unit:'วัน', price:420},
+      {desc:'ค่าวัสดุสำหรับบูธแสดงสินค้า', qty:1, unit:'รายการ', price:3800},
+    ],
+    vat: 7, wht: 0, disc: 0,
+    notes: 'แนบใบเสร็จต้นฉบับ 12 ใบ / รวมค่าใช้จ่ายเดือนมิถุนายน 2568 / ขอเบิกคืนภายใน 5 วันทำการ',
+    sigs: ['ผู้รายงาน','ผู้อนุมัติ']
+  },
+  transmittal: {
+    seller: 'บริษัท แอดวานซ์ เอ็นจิเนียริ่ง จำกัด', sellerAddr: '45 อาคารสาทรซิตี้ทาวเวอร์ ถนนสาทรใต้ เขตสาทร กรุงเทพฯ 10120',
+    sellerPhone: '02-286-7788', sellerEmail: 'doc@adveng.co.th', sellerTax: '0-1055-56789-01-2',
+    buyer: 'บริษัท พร็อพเพอร์ตี้ ดีเวลลอปเมนท์ จำกัด', buyerAddr: '888 ถนนพหลโยธิน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900', buyerTax: '0-1055-77889-90-3',
+    docNo: 'DT-2568-041', docDate: '27/06/2568',
+    items: [
+      {desc:'แบบสถาปัตยกรรม (Architectural Drawing) Rev.3 — A1 ชุด', qty:3, unit:'ชุด', price:0},
+      {desc:'แบบวิศวกรรมโครงสร้าง (Structural Drawing) Rev.2', qty:3, unit:'ชุด', price:0},
+      {desc:'รายการคำนวณโครงสร้าง (Structural Calculation)', qty:1, unit:'เล่ม', price:0},
+      {desc:'รายงานการสำรวจดิน (Soil Investigation Report)', qty:2, unit:'เล่ม', price:0},
+      {desc:'ไฟล์ดิจิทัล (DWG + PDF) บน USB Drive', qty:1, unit:'ชุด', price:0},
+    ],
+    vat: 0, wht: 0, disc: 0,
+    notes: 'โปรดตรวจสอบเอกสารและลงนามตอบกลับสำเนาหนึ่งชุด หากมีข้อสงสัยโปรดติดต่อ 02-286-7788',
+    sigs: ['ผู้ส่งเอกสาร','ผู้รับเอกสาร']
   }
 };
 
@@ -3787,6 +5516,7 @@ function showSampleDoc(type, btn) {
   if(btn) btn.classList.add('active');
   currentSampleType = type;
   if(type === 'comparison') { renderCompareSample(); return; }
+  if(type === 'poa') { renderPoaSample(); return; }
   const d = sampleData[type];
   if(!d) return;
   const sub = d.items.reduce((s,it)=>s+it.qty*it.price,0);
@@ -3876,6 +5606,107 @@ function showSampleDoc(type, btn) {
           <div style="font-weight:600;color:#111827;margin-bottom:24px">${d.sigs[1]}</div>
           <div>_______________________</div>
           <div style="margin-top:5px">(${d.buyer})</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderPoaSample() {
+  const d = sampleData['poa'];
+  if(!d) return;
+  const tc = getComputedStyle(document.documentElement).getPropertyValue('--theme').trim() || '#043222';
+  const sampleLogoHtml = currentLogo
+    ? `<img src="${currentLogo}" style="max-height:48px;max-width:130px;width:auto;height:auto;object-fit:contain;object-position:left center;display:block;margin-bottom:4px" alt="logo">`
+    : '';
+  const scopeHtml = (d.poaScope||[]).map((s,i)=>`
+    <div style="display:flex;gap:10px;margin-bottom:8px;font-size:12px">
+      <span style="min-width:20px;font-weight:700;color:${tc}">(${i+1})</span>
+      <span>${s}</span>
+    </div>`).join('');
+  document.getElementById('sample-preview-area').innerHTML = `
+    <div style="max-width:100%;margin:0 auto;font-size:12px">
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+        <div>
+          ${sampleLogoHtml}
+          <div style="font-size:14px;font-weight:700;color:${tc}">${d.seller}</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:2px">${d.sellerAddr}</div>
+          <div style="font-size:10px;color:#6b7280">Tel: ${d.sellerPhone}</div>
+          ${d.sellerTax?`<div style="font-size:10px;color:#6b7280">เลขบัตรประชาชน/ผู้เสียภาษี: ${d.sellerTax}</div>`:''}
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:18px;font-weight:700">${docInfo['poa']?.th||'หนังสือมอบอำนาจ'}</div>
+          <div style="font-size:10px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase">Power of Attorney</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:4px">เลขที่: <b style="color:${tc}">${d.docNo}</b></div>
+          <div style="font-size:11px;color:#6b7280">วันที่: ${d.docDate}</div>
+        </div>
+      </div>
+      <div style="height:3px;background:${tc};border-radius:2px;opacity:0.7;margin-bottom:18px"></div>
+
+      <!-- ผู้มอบอำนาจ / ผู้รับมอบอำนาจ -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
+        <div style="background:#f9fafb;border-radius:8px;padding:12px 14px;border-left:3px solid ${tc}">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:${tc};margin-bottom:6px">ผู้มอบอำนาจ</div>
+          <div style="font-weight:600;font-size:13px">${d.seller}</div>
+          <div style="color:#6b7280;margin-top:3px">${d.sellerAddr}</div>
+          ${d.sellerTax?`<div style="color:#6b7280;margin-top:2px">เลขบัตรประชาชน: ${d.sellerTax}</div>`:''}
+        </div>
+        <div style="background:#f9fafb;border-radius:8px;padding:12px 14px;border-left:3px solid ${tc}">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:${tc};margin-bottom:6px">ผู้รับมอบอำนาจ</div>
+          <div style="font-weight:600;font-size:13px">${d.buyer}</div>
+          <div style="color:#6b7280;margin-top:3px">${d.buyerAddr}</div>
+          ${d.buyerTax?`<div style="color:#6b7280;margin-top:2px">เลขบัตรประชาชน: ${d.buyerTax}</div>`:''}
+        </div>
+      </div>
+
+      <!-- ขอบเขตการมอบอำนาจ -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:${tc};margin-bottom:10px;border-bottom:1px solid #e5e7eb;padding-bottom:6px">ขอบเขตการมอบอำนาจ</div>
+        <div style="line-height:1.7;color:#374151">
+          ข้าพเจ้า <b>${d.seller}</b> ขอมอบอำนาจให้ <b>${d.buyer}</b> เป็นตัวแทนและผู้รับมอบอำนาจในการดำเนินการดังต่อไปนี้แทนข้าพเจ้า:
+        </div>
+        <div style="margin-top:10px;padding-left:8px">${scopeHtml}</div>
+      </div>
+
+      <!-- ระยะเวลา -->
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;gap:32px;font-size:12px">
+        <div><span style="color:#6b7280">มีผลตั้งแต่:</span> <b>${d.poaValidFrom||d.docDate}</b></div>
+        <div><span style="color:#6b7280">ถึงวันที่:</span> <b style="color:${tc}">${d.poaValidUntil||'-'}</b></div>
+      </div>
+
+      <!-- หมายเหตุ -->
+      ${d.notes?`<div style="background:#f9fafb;border-radius:8px;padding:10px 12px;font-size:11px;color:#6b7280;margin-bottom:18px"><b>หมายเหตุ:</b> ${d.notes}</div>`:''}
+
+      <!-- ลายเซ็น -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px">
+        <div style="border-top:1px solid #e5e7eb;padding-top:8px;text-align:center;font-size:11px;color:#6b7280">
+          <div style="font-weight:600;color:#111827;margin-bottom:24px">ผู้มอบอำนาจ</div>
+          <div>_______________________</div>
+          <div style="margin-top:4px">(${d.seller})</div>
+          <div style="margin-top:2px">วันที่ ......./......./.......</div>
+        </div>
+        <div style="border-top:1px solid #e5e7eb;padding-top:8px;text-align:center;font-size:11px;color:#6b7280">
+          <div style="font-weight:600;color:#111827;margin-bottom:24px">ผู้รับมอบอำนาจ</div>
+          <div>_______________________</div>
+          <div style="margin-top:4px">(${d.buyer})</div>
+          <div style="margin-top:2px">วันที่ ......./......./.......</div>
+        </div>
+      </div>
+
+      <!-- พยาน -->
+      <div style="margin-top:20px;border-top:1px dashed #d1d5db;padding-top:14px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9ca3af;margin-bottom:10px">พยาน</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div style="text-align:center;font-size:11px;color:#6b7280">
+            <div style="margin-bottom:20px">พยานที่ 1</div>
+            <div>_______________________</div>
+            <div style="margin-top:4px">(${d.poaWitness1||'..........................'})</div>
+          </div>
+          <div style="text-align:center;font-size:11px;color:#6b7280">
+            <div style="margin-bottom:20px">พยานที่ 2</div>
+            <div>_______________________</div>
+            <div style="margin-top:4px">(${d.poaWitness2||'..........................'})</div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -4001,12 +5832,23 @@ function useSampleAsTemplate() {
     document.getElementById('buyer-name').value = d.buyer || '';
     document.getElementById('buyer-address').value = d.buyerAddr || '';
     document.getElementById('buyer-tax').value = d.buyerTax || '';
-    document.getElementById('doc-notes').value = d.notes || '';
     document.getElementById('vat-rate').value = String(d.vat ?? 7);
     document.getElementById('wht-rate').value = String(d.wht ?? 0);
     document.getElementById('discount-type').value = 'thb';
     document.getElementById('discount-value').value = String(d.disc ?? 0);
-    items = d.items.map(it => ({ desc: it.desc, qty: it.qty, unit: it.unit, price: it.price }));
+    // Fill ref-doc fields for creditnote/debitnote
+    const refNumFill = document.getElementById('ref-doc-number'); if(refNumFill) refNumFill.value = d.refDocNumber || '';
+    const refDateFill = document.getElementById('ref-doc-date'); if(refDateFill) refDateFill.value = d.refDocDate || '';
+    if (type === 'poa') {
+      const scopeText = (d.poaScope||[]).map((s,i)=>`(${i+1}) ${s}`).join('\n');
+      const validityText = `มีผลตั้งแต่: ${d.poaValidFrom||''} ถึง ${d.poaValidUntil||''}`;
+      const witnessText = `พยานที่ 1: ${d.poaWitness1||''} / พยานที่ 2: ${d.poaWitness2||''}`;
+      document.getElementById('doc-notes').value = [scopeText, validityText, witnessText, d.notes||''].filter(Boolean).join('\n');
+      items = [];
+    } else {
+      document.getElementById('doc-notes').value = d.notes || '';
+      items = d.items.map(it => ({ desc: it.desc, note: it.note||'', qty: it.qty, unit: it.unit, price: it.price }));
+    }
     renderItems();
     calcTotal();
   }
@@ -4062,13 +5904,20 @@ function autosaveForm() {
       buyerTax:      document.getElementById('buyer-tax').value,
       docNumber:     document.getElementById('doc-number').value,
       docDate:       document.getElementById('doc-date').value,
+      docRefNo:      document.getElementById('doc-ref-no')?.value || '',
       docDueDate:    document.getElementById('doc-due-date').value,
+      refDocNumber:  document.getElementById('ref-doc-number')?.value || '',
+      refDocDate:    document.getElementById('ref-doc-date')?.value || '',
       docNotes:      document.getElementById('doc-notes').value,
       vatRate:       document.getElementById('vat-rate').value,
       whtRate:       document.getElementById('wht-rate').value,
       discountValue: document.getElementById('discount-value').value,
       discountType:  document.getElementById('discount-type').value,
       receiptSlipVariant: document.getElementById('receipt-slip-variant')?.value || 'off',
+      docLayout:     currentLayout || 'classic',
+      paymentMethod: document.getElementById('payment-method')?.value || 'เงินสด',
+      whtIncomeType: document.getElementById('wht-income-type')?.value || '40(2)',
+      whtPayType:    document.getElementById('wht-pay-type')?.value    || '1',
       ourName:       document.getElementById('v0-our')?.value || '',
       vendorCount:   document.getElementById('vendor-count')?.value || '2',
       v1: document.getElementById('v1')?.value || '',
@@ -4127,11 +5976,17 @@ function restoreAutosave() {
     document.getElementById('discount-type').value  = d.discountType  || 'thb';
 
     const isCmp = currentDocType === 'comparison';
-    document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(currentDocType)) ? 'block' : 'none';
+    document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice','deposit','po'].includes(currentDocType)) ? 'block' : 'none';
+    const refDocRowRA = document.getElementById('ref-doc-row'); if(refDocRowRA) refDocRowRA.style.display = (['creditnote','debitnote'].includes(currentDocType)) ? 'block' : 'none';
+    const refDocDateRowRA = document.getElementById('ref-doc-date-row'); if(refDocDateRowRA) refDocDateRowRA.style.display = (['creditnote','debitnote'].includes(currentDocType)) ? 'block' : 'none';
+    const whtIncomeRow = document.getElementById('wht-income-type-row'); if(whtIncomeRow) whtIncomeRow.style.display = (currentDocType==='whtcert') ? 'block' : 'none';
+    const whtPayRow = document.getElementById('wht-pay-type-row'); if(whtPayRow) whtPayRow.style.display = (currentDocType==='whtcert') ? 'block' : 'none';
     const slipRowRA = document.getElementById('receipt-slip-row');
     if (slipRowRA) slipRowRA.style.display = (currentDocType==='receipt') ? 'block' : 'none';
     const slipCbRA = document.getElementById('receipt-slip-variant');
     if (slipCbRA) slipCbRA.value = d.receiptSlipVariant || (d.receiptSlipStyle ? 'cash' : 'off');
+    const payMethodRow = document.getElementById('payment-method-row'); if(payMethodRow) payMethodRow.style.display = (['receipt','receiptvoucher','paymentvoucher'].includes(currentDocType)) ? 'block' : 'none';
+    const buyerSection = document.getElementById('buyer-section'); if(buyerSection) buyerSection.style.display = (currentDocType==='taxinvoiceabbr') ? 'none' : 'block';
     document.getElementById('items-section').style.display   = isCmp ? 'none' : 'block';
     document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
     document.getElementById('compare-vendors-row').style.display = isCmp ? 'block' : 'none';
@@ -4521,6 +6376,18 @@ function loadHistoryEntry(id) {
   document.getElementById('doc-number').value     = d.docNumber     || '';
   document.getElementById('doc-date').value       = d.docDate       || '';
   document.getElementById('doc-due-date').value   = d.docDueDate    || '';
+  const docRefNoEl = document.getElementById('doc-ref-no'); if(docRefNoEl) docRefNoEl.value = d.docRefNo || '';
+  const refNumEl = document.getElementById('ref-doc-number'); if(refNumEl) refNumEl.value = d.refDocNumber || '';
+  const refDateEl = document.getElementById('ref-doc-date'); if(refDateEl) refDateEl.value = d.refDocDate || '';
+  const pmEl = document.getElementById('payment-method'); if(pmEl) pmEl.value = d.paymentMethod || 'เงินสด';
+  if (d.docLayout && d.docLayout !== currentLayout) {
+    currentLayout = d.docLayout;
+    const layoutBtn = document.querySelector(`.layout-btn[onclick*="'${d.docLayout}'"]`);
+    document.querySelectorAll('.layout-btn').forEach(b=>b.classList.remove('selected'));
+    if (layoutBtn) layoutBtn.classList.add('selected');
+  }
+  const whtItEl = document.getElementById('wht-income-type'); if(whtItEl) whtItEl.value = d.whtIncomeType || '40(2)';
+  const whtPtEl = document.getElementById('wht-pay-type'); if(whtPtEl) whtPtEl.value = d.whtPayType || '1';
   document.getElementById('doc-notes').value      = d.docNotes      || '';
   document.getElementById('vat-rate').value       = d.vatRate       || '7';
   document.getElementById('wht-rate').value       = d.whtRate       || '0';
@@ -4528,11 +6395,17 @@ function loadHistoryEntry(id) {
   document.getElementById('discount-type').value  = d.discountType  || 'thb';
 
   const isCmp = currentDocType === 'comparison';
-  document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(currentDocType)) ? 'block' : 'none';
+  document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice','deposit','po'].includes(currentDocType)) ? 'block' : 'none';
+  const refDocRow = document.getElementById('ref-doc-row'); if(refDocRow) refDocRow.style.display = (['creditnote','debitnote'].includes(currentDocType)) ? 'block' : 'none';
+  const refDocDateRow = document.getElementById('ref-doc-date-row'); if(refDocDateRow) refDocDateRow.style.display = (['creditnote','debitnote'].includes(currentDocType)) ? 'block' : 'none';
+  const whtIncomeRow = document.getElementById('wht-income-type-row'); if(whtIncomeRow) whtIncomeRow.style.display = (currentDocType==='whtcert') ? 'block' : 'none';
+  const whtPayRow = document.getElementById('wht-pay-type-row'); if(whtPayRow) whtPayRow.style.display = (currentDocType==='whtcert') ? 'block' : 'none';
   const slipRowSD = document.getElementById('receipt-slip-row');
   if (slipRowSD) slipRowSD.style.display = (currentDocType==='receipt') ? 'block' : 'none';
   const slipCbSD = document.getElementById('receipt-slip-variant');
   if (slipCbSD) slipCbSD.value = d.receiptSlipVariant || (d.receiptSlipStyle ? 'cash' : 'off');
+  const payMethodRow = document.getElementById('payment-method-row'); if(payMethodRow) payMethodRow.style.display = (['receipt','receiptvoucher','paymentvoucher'].includes(currentDocType)) ? 'block' : 'none';
+  const buyerSection = document.getElementById('buyer-section'); if(buyerSection) buyerSection.style.display = (currentDocType==='taxinvoiceabbr') ? 'none' : 'block';
   document.getElementById('items-section').style.display   = isCmp ? 'none' : 'block';
   document.getElementById('compare-section').style.display = isCmp ? 'block' : 'none';
   document.getElementById('compare-vendors-row').style.display = isCmp ? 'block' : 'none';
@@ -4584,11 +6457,17 @@ function convertDocTo(newType) {
   document.getElementById('doc-type-badge').textContent = info.en;
   document.getElementById('doc-number').value = generateDocNumber(newType);
   document.getElementById('doc-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice'].includes(newType)) ? 'block' : 'none';
+  document.getElementById('due-date-row').style.display = (['invoice','billing','taxinvoice','deposit','po'].includes(newType)) ? 'block' : 'none';
+  const refDocRow = document.getElementById('ref-doc-row'); if(refDocRow) refDocRow.style.display = (['creditnote','debitnote'].includes(newType)) ? 'block' : 'none';
+  const refDocDateRow = document.getElementById('ref-doc-date-row'); if(refDocDateRow) refDocDateRow.style.display = (['creditnote','debitnote'].includes(newType)) ? 'block' : 'none';
+  const whtIncomeRow = document.getElementById('wht-income-type-row'); if(whtIncomeRow) whtIncomeRow.style.display = (newType==='whtcert') ? 'block' : 'none';
+  const whtPayRow = document.getElementById('wht-pay-type-row'); if(whtPayRow) whtPayRow.style.display = (newType==='whtcert') ? 'block' : 'none';
   const slipRowCV = document.getElementById('receipt-slip-row');
   if (slipRowCV) slipRowCV.style.display = (newType==='receipt') ? 'block' : 'none';
   const slipCbCV = document.getElementById('receipt-slip-variant');
   if (slipCbCV && newType!=='receipt') slipCbCV.value = 'off';
+  const payMethodRowCV = document.getElementById('payment-method-row'); if(payMethodRowCV) payMethodRowCV.style.display = (['receipt','receiptvoucher','paymentvoucher'].includes(newType)) ? 'block' : 'none';
+  const buyerSectionCV = document.getElementById('buyer-section'); if(buyerSectionCV) buyerSectionCV.style.display = (newType==='taxinvoiceabbr') ? 'none' : 'block';
   document.querySelectorAll('#form-page .doc-card').forEach(c => c.classList.remove('selected'));
   const card = document.getElementById('card-'+newType);
   if (card) card.classList.add('selected');
